@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="40dp">
+
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="57dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_android_black_24dp" />
+
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="205dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/reci_nam_ne_to_o_sebi"
+            android:textColor="#673AB7"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.791"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="133dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="52dp"
+            android:text="@string/godina_ro_enja"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/editTextNumber"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="89dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="308dp"
+            android:text="@string/fakultet"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="60dp"
+            android:layout_height="33dp"
+            android:layout_marginTop="104dp"
+            android:text="@string/spol"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextNumber"
+            android:layout_width="74dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.554"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="145dp"
+            android:layout_height="83dp"
+            android:layout_marginTop="92dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.409"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/roomateAndApartment"
+                android:layout_width="137dp"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/mu_ko" />
+
+            <RadioButton
+                android:id="@+id/roommate"
+                android:layout_width="138dp"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/ensko" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="137dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="204dp"
+            android:text="@string/ja_sam_pu_a"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup4"
+            android:layout_width="145dp"
+            android:layout_height="83dp"
+            android:layout_marginTop="192dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.77"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/radio_jesam"
+                android:layout_width="137dp"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/da" />
+
+            <RadioButton
+                android:id="@+id/radio_nemam"
+                android:layout_width="138dp"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/ne" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="137dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="500dp"
+            android:text="@string/imam_ljubimca"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup3"
+            android:layout_width="145dp"
+            android:layout_height="83dp"
+            android:layout_marginTop="492dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.78"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/da"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="chooseAnimal"
+                android:text="@string/da" />
+
+            <RadioButton
+                android:id="@+id/ne"
+                android:layout_width="138dp"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/ne" />
+
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/radioGroup5"
+            android:layout_width="254dp"
+            android:layout_height="82dp"
+            android:layout_marginTop="380dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/peaceful"
+                android:layout_width="211dp"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/volim_miran_ivot" />
+
+            <RadioButton
+                android:id="@+id/party"
+                android:layout_width="211dp"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/volim_partijati" />
+
+        </RadioGroup>
+
+        <CheckBox
+            android:id="@+id/dog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="608dp"
+            android:clickable="false"
+            android:text="@string/pas"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/rabbit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="664dp"
+            android:clickable="false"
+            android:text="@string/zec"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/cat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="608dp"
+            android:text="@string/ma_ka"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.231"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/parrot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="608dp"
+            android:text="@string/papiga"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.803"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/hamster"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="608dp"
+            android:text="@string/hr_ak"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.517"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="664dp"
+            android:text="@string/drugo"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.205"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinner3"
+            android:layout_width="199dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="308dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.77"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="700dp"
+            android:onClick="findApartmentRoommate"
+            android:text="@string/dalje"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.553"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
