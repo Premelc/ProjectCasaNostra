@@ -13,10 +13,6 @@
         <activity android:name=".ApartmentAndRoommate" />
         <activity android:name=".FindApartmentRoommate" />
         <activity android:name=".HomePage" />
-        <activity
-            android:name=".ScrollingActivity"
-            android:label="@string/title_activity_scrolling"
-            android:theme="@style/Theme.CN.NoActionBar" />
         <activity android:name=".Register" />
         <activity android:name=".AboutYou" />
         <activity android:name=".MainPage" />

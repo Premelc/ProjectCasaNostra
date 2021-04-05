@@ -15,13 +15,12 @@
 
         <Button
             android:id="@+id/button4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="800dp"
-            android:onClick="findApartmentRoommate"
-            android:text="Dalje"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
+            android:layout_marginStart="124dp"
+            android:layout_marginTop="776dp"
+            android:onClick="toMainPage"
+            android:text="@string/dalje"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,40 +38,35 @@
 
         <TextView
             android:id="@+id/textView9"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="92dp"
-            android:text="Cijena stana:"
+            android:text="@string/cijena_stana"
             android:textColor="#000000"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView10"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="156dp"
-            android:text="Lokacija:"
+            android:text="@string/lokacija"
             android:textColor="#000000"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView11"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="372dp"
-            android:text="Spol cimera:"
+            android:layout_marginTop="340dp"
+            android:text="@string/spol_cimera"
             android:textColor="#000000"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,12 +74,11 @@
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="536dp"
-            android:text="Godište cimera između:"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="500dp"
+            android:text="@string/godi_te_cimera_izme_u"
             android:textColor="#000000"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -93,35 +86,32 @@
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="536dp"
-            android:text="i"
+            android:layout_marginStart="256dp"
+            android:layout_marginTop="500dp"
+            android:text="@string/i"
             android:textColor="#000000"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.81"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
             android:id="@+id/spinner3"
-            android:layout_width="115dp"
+            android:layout_width="0dp"
             android:layout_height="36dp"
-            android:layout_marginTop="92dp"
+            android:layout_marginStart="124dp"
+            android:layout_marginTop="84dp"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.567"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
             android:id="@+id/radioGroup"
-            android:layout_width="157dp"
+            android:layout_width="0dp"
             android:layout_height="135dp"
-            android:layout_marginTop="364dp"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="328dp"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.685"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -129,114 +119,106 @@
                 android:id="@+id/roomateAndApartment"
                 android:layout_width="132dp"
                 android:layout_height="wrap_content"
-                android:text="Muško" />
+                android:text="@string/mu_ko" />
 
             <RadioButton
                 android:id="@+id/roommate"
-                android:layout_width="132dp"
+                android:layout_width="118dp"
                 android:layout_height="wrap_content"
-                android:text="Žensko" />
+                android:text="@string/ensko" />
 
             <RadioButton
                 android:id="@+id/roommate2"
-                android:layout_width="134dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Svejedno" />
+                android:text="@string/svejedno" />
 
         </RadioGroup>
 
         <CheckBox
             android:id="@+id/checkBox"
-            android:layout_width="115dp"
-            android:layout_height="30dp"
+            android:layout_width="100dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="88dp"
             android:layout_marginTop="156dp"
-            android:text="Zapad"
+            android:text="@string/zapad"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.449"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
             android:id="@+id/checkBox2"
-            android:layout_width="115dp"
+            android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_marginTop="196dp"
-            android:text="Istok"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="188dp"
+            android:text="@string/istok"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.44"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
             android:id="@+id/checkBox3"
-            android:layout_width="115dp"
+            android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_marginTop="236dp"
-            android:text="Centar"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="220dp"
+            android:text="@string/centar"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.44"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
             android:id="@+id/checkBox4"
-            android:layout_width="115dp"
+            android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_marginTop="276dp"
-            android:text="Prigrad"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="256dp"
+            android:text="@string/prigrad"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.44"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
             android:id="@+id/checkBox5"
-            android:layout_width="115dp"
+            android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_marginTop="316dp"
-            android:text="Svejedno"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="288dp"
+            android:text="@string/svejedno"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.44"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/editTextNumber2"
-            android:layout_width="55dp"
-            android:layout_height="27dp"
-            android:layout_marginTop="536dp"
+            android:layout_width="46dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="268dp"
+            android:layout_marginTop="500dp"
             android:ems="10"
             android:inputType="number"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.735"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextNumber4"
-            android:layout_width="55dp"
-            android:layout_height="27dp"
-            android:layout_marginTop="536dp"
+            android:id="@+id/editTextNumber5"
+            android:layout_width="46dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="204dp"
+            android:layout_marginTop="500dp"
             android:ems="10"
             android:inputType="number"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
             android:id="@+id/tt"
-            android:layout_width="312dp"
+            android:layout_width="0dp"
             android:layout_height="94dp"
-            android:layout_marginTop="576dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="540dp"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -244,14 +226,14 @@
                 android:id="@+id/smoke"
                 android:layout_width="265dp"
                 android:layout_height="wrap_content"
-                android:text="Ne želim da je cimer pušač."
+                android:text="@string/ne_elim_da_je_cimer_pu_a"
                 android:textSize="18sp" />
 
             <RadioButton
                 android:id="@+id/smokeNosSoke"
-                android:layout_width="266dp"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:text="Svejedno mi je"
+                android:text="@string/svejedno_mi_je"
                 android:textSize="18sp" />
 
 
@@ -259,12 +241,11 @@
 
         <RadioGroup
             android:id="@+id/tt2"
-            android:layout_width="312dp"
+            android:layout_width="0dp"
             android:layout_height="94dp"
-            android:layout_marginTop="692dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="648dp"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -272,14 +253,14 @@
                 android:id="@+id/pet"
                 android:layout_width="265dp"
                 android:layout_height="wrap_content"
-                android:text="Ne želim da cimer ima kućnog ljubimca."
+                android:text="@string/ne_elim_da_cimer_ima_ku_nog_ljubimca"
                 android:textSize="18sp" />
 
             <RadioButton
                 android:id="@+id/petNoPet"
-                android:layout_width="266dp"
+                android:layout_width="244dp"
                 android:layout_height="wrap_content"
-                android:text="Svejedno mi je"
+                android:text="@string/svejedno_mi_je"
                 android:textSize="18sp" />
 
 

@@ -8,9 +8,12 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="139dp"
-        android:layout_height="69dp"
-        android:text="Welcome"
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="107dp" />
+        android:layout_width="214dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="336dp"
+        android:text="@string/homepage_in_progress"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
