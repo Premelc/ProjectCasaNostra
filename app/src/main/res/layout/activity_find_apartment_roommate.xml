@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="40dp">
+
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="81dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="116dp"
+            android:layout_marginTop="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_android_black_24dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="205dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="164dp"
+            android:text="@string/to_to_no_tra_i"
+            android:textAlignment="center"
+            android:textColor="#673AB7"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="243dp"
+            android:layout_height="84dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="204dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/roomateAndApartment"
+                android:layout_width="226dp"
+                android:layout_height="wrap_content"
+                android:onClick="roommateAndApartment"
+                android:text="@string/tra_im_i_cimera_i_stan" />
+
+            <RadioButton
+                android:id="@+id/roommate"
+                android:layout_width="226dp"
+                android:layout_height="wrap_content"
+                android:onClick="onlyRoommate"
+                android:text="@string/imam_stan_tra_im_cimera" />
+
+        </RadioGroup>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
