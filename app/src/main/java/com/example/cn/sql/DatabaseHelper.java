@@ -22,7 +22,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database Version
-    private static final int DATABASE_VERSION = 37;
+    private static final int DATABASE_VERSION = 42;
     // Database Name
     private static final String DATABASE_NAME = "CasaNostra.db";
 
@@ -243,11 +243,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_FAKULTET, null, values);
         values.put(FAKULTET_NAZIV, "Pravni fakultet u Rijeci");
         db.insert(TABLE_FAKULTET, null, values);
+        values.clear();
 
         db.execSQL(CREATE_KORISNIK_TABLE);
 
         db.execSQL(CREATE_LJUBIMAC_TABLE);
-        /*values.put(LJUBIMAC_VRSTA, "Pas");
+        values.put(LJUBIMAC_VRSTA, "Pas");
         db.insert(TABLE_LJUBIMAC, null, values);
         values.put(LJUBIMAC_VRSTA, "Mačka");
         db.insert(TABLE_LJUBIMAC, null, values);
@@ -258,8 +259,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(LJUBIMAC_VRSTA, "Zec");
         db.insert(TABLE_LJUBIMAC, null, values);
         values.put(LJUBIMAC_VRSTA, "Zmija");
-        db.insert(TABLE_LJUBIMAC, null, values);*/
-        // ne radi
+        db.insert(TABLE_LJUBIMAC, null, values);
+        values.clear();
 
         db.execSQL(CREATE_KORISNIK_LJUBIMAC_RELATION);
 
@@ -272,6 +273,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_LOKACIJA, null, values);
         values.put(LOKACIJA_NAZIV, "Prigrad");
         db.insert(TABLE_LOKACIJA, null, values);
+        values.clear();
 
         db.execSQL(CREATE_KVART_TABLE);
         values.put(KVART_NAZIV, "Kantrida");
@@ -379,6 +381,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KVART_NAZIV, "Kostrena");
         values.put(KVART_ID_LOKACIJA, 4);
         db.insert(TABLE_KVART, null, values);
+        values.clear();
 
         db.execSQL(CREATE_TRAZIM_STAN_TABLE);
         db.execSQL(CREATE_NUDIM_STAN_TABLE);
