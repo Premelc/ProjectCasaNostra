@@ -22,7 +22,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database Version
-    private static final int DATABASE_VERSION = 42;
+    private static final int DATABASE_VERSION = 43;
     // Database Name
     private static final String DATABASE_NAME = "CasaNostra.db";
 

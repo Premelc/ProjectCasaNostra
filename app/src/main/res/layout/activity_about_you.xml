@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:fillViewport="true">
 
@@ -13,289 +13,276 @@
         android:padding="40dp">
 
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="54dp"
-            android:layout_height="38dp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_android_black_24dp" />
-
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="0dp"
-            android:layout_height="22dp"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/reci_nam_ne_to_o_sebi"
-            android:textColor="#673AB7"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="136dp"
-            android:layout_height="29dp"
-            android:layout_marginTop="52dp"
-            android:text="@string/godina_ro_enja"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="82dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="308dp"
-            android:text="@string/fakultet"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="56dp"
-            android:layout_height="29dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="112dp"
-            android:text="@string/spol"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/editTextNumber"
-            android:layout_width="59dp"
-            android:layout_height="31dp"
-            android:layout_marginStart="148dp"
-            android:layout_marginTop="52dp"
-            android:ems="10"
-            android:inputType="number"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="0dp"
-            android:layout_height="83dp"
-            android:layout_marginStart="76dp"
-            android:layout_marginTop="104dp"
+        <LinearLayout
+            android:layout_width="308dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="55dp"
+            android:layout_marginEnd="10dp"
             android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <RadioButton
-                android:id="@+id/roomateAndApartment"
-                android:layout_width="137dp"
-                android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
-                android:text="@string/mu_ko" />
-
-            <RadioButton
-                android:id="@+id/roommate"
-                android:layout_width="138dp"
-                android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
-                android:text="@string/ensko" />
-
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="0dp"
-            android:layout_height="34dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="196dp"
-            android:text="@string/ja_sam_pu_a"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <RadioGroup
-            android:id="@+id/radioGroup4"
-            android:layout_width="0dp"
-            android:layout_height="83dp"
-            android:layout_marginStart="136dp"
-            android:layout_marginTop="196dp"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <RadioButton
-                android:id="@+id/radio_jesam"
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:onClick="onRadioButtonClicked"
-                android:text="@string/da" />
-
-            <RadioButton
-                android:id="@+id/radio_nemam"
-                android:layout_width="138dp"
-                android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
-                android:text="@string/ne" />
-
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="0dp"
-            android:layout_height="34dp"
-            android:layout_marginTop="500dp"
-            android:text="@string/imam_ljubimca"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <RadioGroup
-            android:id="@+id/radioGroup3"
-            android:layout_width="0dp"
-            android:layout_height="83dp"
-            android:layout_marginStart="144dp"
-            android:layout_marginTop="500dp"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <RadioButton
-                android:id="@+id/da"
-                android:layout_width="144dp"
-                android:layout_height="wrap_content"
-                android:onClick="chooseAnimal"
-                android:text="@string/da" />
-
-            <RadioButton
-                android:id="@+id/ne"
-                android:layout_width="157dp"
-                android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
-                android:text="@string/ne" />
-
-        </RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/radioGroup5"
-            android:layout_width="0dp"
-            android:layout_height="82dp"
-            android:layout_marginTop="380dp"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <RadioButton
-                android:id="@+id/peaceful"
-                android:layout_width="211dp"
-                android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
-                android:text="@string/volim_miran_ivot" />
-
-            <RadioButton
-                android:id="@+id/party"
-                android:layout_width="211dp"
-                android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
-                android:text="@string/volim_partijati" />
-
-        </RadioGroup>
-
-        <CheckBox
-            android:id="@+id/dog"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="608dp"
-            android:clickable="false"
-            android:text="@string/pas"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <CheckBox
-            android:id="@+id/rabbit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="664dp"
-            android:clickable="false"
-            android:text="@string/zec"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <CheckBox
-            android:id="@+id/cat"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="608dp"
-            android:text="@string/ma_ka"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <CheckBox
-            android:id="@+id/parrot"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:layout_marginTop="608dp"
-            android:text="@string/papiga"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <CheckBox
-            android:id="@+id/hamster"
-            android:layout_width="0dp"
-            android:layout_height="47dp"
-            android:layout_marginStart="132dp"
-            android:layout_marginTop="608dp"
-            android:text="@string/hr_ak"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <CheckBox
-            android:id="@+id/other"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="664dp"
-            android:text="@string/drugo"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Spinner
-            android:id="@+id/spinner3"
-            android:layout_width="142dp"
-            android:layout_height="31dp"
-            android:layout_marginStart="104dp"
-            android:layout_marginTop="308dp"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="81dp"
-            android:layout_height="58dp"
-            android:layout_marginTop="720dp"
-            android:onClick="findApartmentRoommate"
-            android:text="@string/dalje"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="54dp"
+                    android:layout_height="38dp"
+                    app:srcCompat="@drawable/ic_android_black_24dp" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/reci_nam_ne_to_o_sebi"
+                    android:textColor="#673AB7"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="136dp"
+                    android:layout_height="29dp"
+                    android:text="@string/godina_ro_enja"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/editTextNumber"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/spol"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/roomateAndApartment"
+                        android:layout_width="108dp"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="@string/mu_ko" />
+
+                    <RadioButton
+                        android:id="@+id/roommate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="@string/ensko" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="133dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/ja_sam_pu_a"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio_jesam"
+                        android:layout_width="83dp"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="@string/da" />
+
+                    <RadioButton
+                        android:id="@+id/radio_nemam"
+                        android:layout_width="85dp"
+                        android:layout_height="wrap_content"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="@string/ne" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="98dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/fakultet"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/spinner3"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/radioGroup5"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/peaceful"
+                    android:layout_width="157dp"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:onClick="onRadioButtonClicked"
+                    android:text="@string/volim_miran_ivot" />
+
+                <RadioButton
+                    android:id="@+id/party"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onRadioButtonClicked"
+                    android:text="@string/volim_partijati" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="138dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/imam_ljubimca"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/da"
+                        android:layout_width="89dp"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:onClick="chooseAnimal"
+                        android:text="@string/da" />
+
+                    <RadioButton
+                        android:id="@+id/ne"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="noAnimal"
+                        android:text="@string/ne" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/dog"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="@string/pas"
+                android:visibility="visible" />
+
+            <CheckBox
+                android:id="@+id/cat"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="@string/ma_ka"
+                android:visibility="visible" />
+
+            <CheckBox
+                android:id="@+id/hamster"
+                android:layout_width="90dp"
+                android:layout_height="47dp"
+                android:text="@string/hr_ak"
+                android:visibility="visible" />
+
+            <CheckBox
+                android:id="@+id/parrot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/papiga"
+                android:visibility="visible" />
+
+            <CheckBox
+                android:id="@+id/rabbit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:text="@string/zec"
+                android:visibility="visible" />
+
+            <CheckBox
+                android:id="@+id/other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/drugo"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:onClick="findApartmentRoommate"
+                android:text="@string/dalje" />
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
