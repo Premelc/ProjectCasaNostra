@@ -77,16 +77,20 @@ public class AboutYou extends AppCompatActivity {
 
         }
     }
-    public void onRadioButtonClicked(View v){
+    public void noAnimal(View v){
         RadioButton animal = (RadioButton) v;
         if(animal.isChecked()){
-            findViewById(R.id.dog).setVisibility(View.INVISIBLE);
-            findViewById(R.id.cat).setVisibility(View.INVISIBLE);
-            findViewById(R.id.rabbit).setVisibility(View.INVISIBLE);
-            findViewById(R.id.hamster).setVisibility(View.INVISIBLE);
-            findViewById(R.id.parrot).setVisibility(View.INVISIBLE);
-            findViewById(R.id.other).setVisibility(View.INVISIBLE);
+            findViewById(R.id.dog).setVisibility(View.GONE);
+            findViewById(R.id.cat).setVisibility(View.GONE);
+            findViewById(R.id.rabbit).setVisibility(View.GONE);
+            findViewById(R.id.hamster).setVisibility(View.GONE);
+            findViewById(R.id.parrot).setVisibility(View.GONE);
+            findViewById(R.id.other).setVisibility(View.GONE);
         }
+    }
+
+    public void onRadioButtonClicked(View v){
+        RadioButton btn = (RadioButton) v;
     }
 
     /*Next intent on button click*/
