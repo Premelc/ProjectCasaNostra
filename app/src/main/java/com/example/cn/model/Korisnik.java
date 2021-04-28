@@ -1,6 +1,6 @@
 package com.example.cn.model;
 
-public class Korisnik {
+public abstract class Korisnik {
     private int id_korisnik;
     // private String username;
     // private String email;
@@ -10,14 +10,18 @@ public class Korisnik {
     private String opis;
     private char spol;
     private int id_fakultet;
+
     private boolean pusac;
     private boolean ljubimac;
+    private boolean miran_zivot;
+
+    private  boolean trazimStan;
     private char cimer_spol;
     private int cimer_godine_od;
     private int cimer_godine_do;
     private boolean cimer_pusac;
     private boolean cimer_ljubimac;
-    private boolean miran_zivot;
+
 
     public int getId_korisnik() {
         return id_korisnik;
@@ -45,6 +49,15 @@ public class Korisnik {
          this.password = password;
      }
  */
+
+    public boolean isTrazimStan() {
+        return trazimStan;
+    }
+
+    public void setTrazimStan(boolean trazimStan) {
+        this.trazimStan = trazimStan;
+    }
+
     public String getIme() {
         return ime;
     }

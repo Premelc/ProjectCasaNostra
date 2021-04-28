@@ -7,6 +7,8 @@ public class activeUser extends Korisnik {
     private String email;
     private String password;
 
+
+
     public activeUser(){
         super();
     }

@@ -509,7 +509,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Traversing through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Korisnik korisnik = new Korisnik();
+                Korisnik korisnik = new otherUser();
                 korisnik.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_ID))));
                /* korisnik.setUsername(cursor.getString(cursor.getColumnIndex(KORISNIK_USERNAME)));
                 korisnik.setEmail(cursor.getString(cursor.getColumnIndex(KORISNIK_EMAIL)));
@@ -838,6 +838,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return trazimStanList;
     }
 
+    //Query koji vraca klasu trazimstan za jednog korisnika
+    public TrazimStan singleQueryTrazimStan(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_TRAZIM_STAN, //Table to query
+                null,    //columns to return
+                whereClause,        //columns for the WHERE clause
+                whereArgs,        //The values for the WHERE clause
+                groupBy,       //group the rows
+                having,       //filter by row groups
+                orderBy); //The sort order
+        // Traversing through all rows and adding to list
+        TrazimStan trazimStan = new TrazimStan();
+        if (cursor.moveToFirst()) {
+            do {
+                trazimStan.setId_potraga(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ID_POTRAGA))));
+                trazimStan.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ID_KORISNIK))));
+                trazimStan.setCijena_od(Double.parseDouble(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_CIJENA_OD))));
+                trazimStan.setCijena_do(Double.parseDouble(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_CIJENA_DO))));
+                if(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA) == 1){
+                    trazimStan.setZasebna_soba(true);
+                } else if(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA) == 0) {
+                    trazimStan.setZasebna_soba(false);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        // return user list
+        return trazimStan;
+    }
+
+
     public List<NudimStan> queryNudimStan(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
 
         List<NudimStan> nudimStanList = new ArrayList<NudimStan>();
@@ -873,6 +906,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // return user list
         return nudimStanList;
     }
+
+    //Query koji vraca klasu nudimStan za jednog korisnika
+    public NudimStan singleQueryNudimStan(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        NudimStan nudimStan = new NudimStan();
+        Cursor cursor = db.query(TABLE_NUDIM_STAN, //Table to query
+                null,    //columns to return
+                whereClause,        //columns for the WHERE clause
+                whereArgs,        //The values for the WHERE clause
+                groupBy,       //group the rows
+                having,       //filter by row groups
+                orderBy); //The sort order
+        if (cursor.moveToFirst()) {
+            do {
+
+                nudimStan.setId_stan(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ID_STAN))));
+                nudimStan.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ID_KORISNIK))));
+                nudimStan.setCijena(Double.parseDouble(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_CIJENA))));
+                nudimStan.setId_kvart(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ID_KVART))));
+                if(cursor.getColumnIndex(NUDIM_STAN_ZASEBNA_SOBA) == 1){
+                    nudimStan.setZasebna_soba(true);
+                } else if(cursor.getColumnIndex(NUDIM_STAN_ZASEBNA_SOBA) == 0){
+                    nudimStan.setZasebna_soba(false);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return nudimStan;
+    }
+
 
     public List<PotragaLokacija> queryPotragaLokacija(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
 
