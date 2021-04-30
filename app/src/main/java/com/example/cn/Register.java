@@ -2,22 +2,15 @@ package com.example.cn;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.widget.NestedScrollView;
 
 import com.example.cn.helpers.InputValidation;
-import com.example.cn.model.Korisnik;
 import com.example.cn.sql.DatabaseHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -44,7 +37,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
     private DatabaseHelper databaseHelper;
 
     private ConstraintLayout constraint;
-    ActiveUser userActive;
+    activeUser userActive;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +79,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
     private void initObjects() {
         inputValidation = new InputValidation(activity);
         databaseHelper = new DatabaseHelper(activity);
-        userActive = new ActiveUser();
+        userActive = new activeUser();
     }
     /**
      * This implemented method is to listen the click on view

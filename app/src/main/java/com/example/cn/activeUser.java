@@ -4,12 +4,12 @@ import com.example.cn.model.Korisnik;
 
 import java.io.Serializable;
 
-public class ActiveUser extends Korisnik implements Serializable {
+public class activeUser extends Korisnik implements Serializable {
     private String username;
     private String email;
     private String password;
 
-    public ActiveUser(){
+    public activeUser(){
         super();
     }
 

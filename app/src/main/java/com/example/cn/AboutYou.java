@@ -36,7 +36,7 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
     private Spinner dropdown;
     private AppCompatButton appCompatButtonAboutYou;
 
-    ActiveUser korisnik;
+    activeUser korisnik;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -109,7 +109,7 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
         /*Na ovaj nacin se nasljeduje objekt instanciran od prethodnog activityja
         * Valjda https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android */
         Intent i  = getIntent();
-        korisnik = (ActiveUser)i.getSerializableExtra("InhUser");
+        korisnik = (activeUser)i.getSerializableExtra("InhUser");
     }
 
     /**

@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 
 public class FindApartmentRoommate extends AboutYou{
     private AppCompatActivity activity = FindApartmentRoommate.this;
@@ -22,7 +20,7 @@ public class FindApartmentRoommate extends AboutYou{
         initObjects();
 
         Intent i  = getIntent();
-        korisnik = (ActiveUser)i.getSerializableExtra("InhUser2");
+        korisnik = (activeUser)i.getSerializableExtra("InhUser2");
 
     }
 
@@ -36,7 +34,7 @@ public class FindApartmentRoommate extends AboutYou{
         /*Na ovaj nacin se nasljeduje objekt instanciran od prethodnog activityja
          * Valjda https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android */
         Intent i  = getIntent();
-        //korisnik = (ActiveUser)i.getSerializableExtra("InhUser");
+        //korisnik = (activeUser)i.getSerializableExtra("InhUser");
     }
 
     public void onlyRoommate(View v){
