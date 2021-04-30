@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import com.example.cn.activeUser;
+import com.example.cn.model.Admin;
 import com.example.cn.model.Fakultet;
 import com.example.cn.model.Korisnik;
 import com.example.cn.model.KorisnikLjubimac;
@@ -24,7 +24,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database Version
-    private static final int DATABASE_VERSION = 43;
+    private static final int DATABASE_VERSION = 44;
     // Database Name
     private static final String DATABASE_NAME = "CasaNostra.db";
 
@@ -38,6 +38,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             FAKULTET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             FAKULTET_NAZIV + " varchar(255) NOT NULL" +
             ")";
+
+    //Tablica admin
+    private static final String TABLE_ADMIN = "Admin";
+    private static final String ADMIN_ID = "id_admin";
+    private static final String ADMIN_USERNAME = "username_admin";
+    private static final String ADMIN_PASSWORD = "password_admin";
+
+    private String CREATE_ADMIN_TABLE = "CREATE TABLE " + TABLE_ADMIN + " (" +
+            ADMIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            ADMIN_USERNAME + " varchar(255) NOT NULL, " + ADMIN_PASSWORD + " varchar(255) NOT NULL" +
+            ")";
+
 
     // Tablica korisnik
     private static final String TABLE_KORISNIK = "Korisnik";
@@ -211,6 +223,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private String DROP_NUDIM_STAN_TABLE = "DROP TABLE IF EXISTS " + TABLE_NUDIM_STAN;
     private String DROP_POTRAGA_LOKACIJA_RELATION = "DROP TABLE IF EXISTS " + RELATION_POTRAGA_LOKACIJA;
     private String DROP_SWIPE_TABLE = "DROP TABLE IF EXISTS " + TABLE_SWIPE;
+    private String DROP_ADMIN_TABLE = "DROP TABLE IF EXISTS " + TABLE_ADMIN;
+
 
 
     /**
@@ -229,7 +243,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
-
+        db.execSQL(CREATE_ADMIN_TABLE);
         db.execSQL(CREATE_FAKULTET_TABLE);
         values.put(FAKULTET_NAZIV, "Filozofski fakultet u Rijeci");
         db.insert(TABLE_FAKULTET, null, values);
@@ -394,6 +408,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //Drop User Table if exist
+        db.execSQL(DROP_ADMIN_TABLE);
         db.execSQL(DROP_SWIPE_TABLE);
         db.execSQL(DROP_POTRAGA_LOKACIJA_RELATION);
         db.execSQL(DROP_NUDIM_STAN_TABLE);
@@ -445,6 +460,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_TRAZIM_STAN, null, values);
         db.close();
     }
+
+    public void insertAdmin(Admin admin) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ADMIN_USERNAME, admin.getUsername());
+        values.put(ADMIN_PASSWORD, admin.getPassword());
+        db.insert(TABLE_ADMIN, null, values);
+        db.close();
+    }
+
 
     public void insertPotragaLokacija(PotragaLokacija potragaLokacija) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -568,7 +594,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //NOVO dodao Premo
     //Query koji vraca samo jednog korisnika (Koristi za dohvacanje aktivnog korisnika)
-    public Korisnik queryActiveUser(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
+    public activeUser queryActiveUser(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
 
         SQLiteDatabase db = this.getReadableDatabase();
         activeUser activeUser = new activeUser();

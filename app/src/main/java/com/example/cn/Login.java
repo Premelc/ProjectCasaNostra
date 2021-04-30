@@ -44,6 +44,11 @@ public class Login extends AppCompatActivity {
         startActivity(hPage);
     }
 
+    public void adminPage(View v){
+        Intent aPage = new Intent(this, AdminPage.class);
+        startActivity(aPage);
+    }
+
 
 
 }
