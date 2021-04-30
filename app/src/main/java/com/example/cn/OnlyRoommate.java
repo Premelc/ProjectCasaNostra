@@ -32,7 +32,7 @@ public class OnlyRoommate extends AppCompatActivity {
         listKvart = new ArrayList<Kvart>();
         databaseHelper = new DatabaseHelper(activity);
 
-        Spinner dropdown = findViewById(R.id.spinner3);
+        Spinner dropdown = findViewById(R.id.faculty);
 
         listKvart.clear();
         listKvart.addAll(databaseHelper.queryKvart(null, null, null, null, "naziv ASC"));

@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true">
 
@@ -14,13 +14,10 @@
 
 
         <LinearLayout
-            android:layout_width="308dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_width="330dp"
+            android:layout_height="1542dp"
             android:layout_marginTop="55dp"
-            android:layout_marginEnd="10dp"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -60,7 +57,7 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/editTextNumber"
+                    android:id="@+id/yearOfBirth"
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -89,7 +86,7 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/roomateAndApartment"
+                        android:id="@+id/roommateApartment"
                         android:layout_width="108dp"
                         android:layout_height="wrap_content"
                         android:checked="true"
@@ -128,7 +125,7 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radio_jesam"
+                        android:id="@+id/smoker"
                         android:layout_width="83dp"
                         android:layout_height="wrap_content"
                         android:checked="true"
@@ -136,7 +133,7 @@
                         android:text="@string/da" />
 
                     <RadioButton
-                        android:id="@+id/radio_nemam"
+                        android:id="@+id/nonSmoker"
                         android:layout_width="85dp"
                         android:layout_height="wrap_content"
                         android:onClick="onRadioButtonClicked"
@@ -160,7 +157,7 @@
                     android:textSize="18sp" />
 
                 <Spinner
-                    android:id="@+id/spinner3"
+                    android:id="@+id/faculty"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
@@ -176,7 +173,7 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/peaceful"
+                    android:id="@+id/noParty"
                     android:layout_width="157dp"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -213,7 +210,7 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/da"
+                        android:id="@+id/petYes"
                         android:layout_width="89dp"
                         android:layout_height="wrap_content"
                         android:checked="true"
@@ -221,7 +218,7 @@
                         android:text="@string/da" />
 
                     <RadioButton
-                        android:id="@+id/ne"
+                        android:id="@+id/petNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="noAnimal"
@@ -274,15 +271,17 @@
                 android:text="@string/drugo"
                 android:visibility="visible" />
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
-                android:onClick="findApartmentRoommate"
-                android:text="@string/dalje" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/appCompatButtonAboutYou"
+                android:layout_width="197dp"
+                android:layout_height="51dp"
 
+                android:layout_marginStart="112dp"
+                android:layout_marginTop="684dp"
+                android:text="@string/dalje" />
         </LinearLayout>
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

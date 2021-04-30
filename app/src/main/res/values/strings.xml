@@ -142,4 +142,36 @@
     <string name="registriraj_se">Registriraj se</string>
     <string name="dalje">dalje</string>
     <string name="homepage_in_progress">Homepage in progress</string>
+    <string name="email">Email</string>
+
+
+
+
+
+    <string name="text_accounts">All Accounts</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Potvrdite zaporku</string>
+    <string name="text_login">Login</string>
+    <string name="text_register">Register</string>
+    <string name="error_message_name">Unesite vaše ime</string>
+    <string name="error_message_email">Unesite ispravnu e-mail adresu</string>
+    <string name="error_message_age">Unesite godine</string>
+    <string name="error_message_password">Unesite zaporku</string>
+    <string name="success_message">Uspješna registracija!</string>
+    <string name="text_not_member">Nemate račun? Napravite ga!</string>
+    <string name="text_already_member">Već ste član? Ulogirajte se!</string>
+    <string name="error_email_exists">E-mail već postoji</string>
+    <string name="error_password_match">Zaporke se ne podudaraju</string>
+    <string name="error_valid_email_password">Krivi e-mail ili zaporka</string>
+    <string name="text_hello">Hello,</string>
+    <string name="text_title">Android Tutorials Hub</string>
+    <string name="already_a_member_login">Already a member? Login</string>
+    <string name="ime">Ime</string>
+    <string name="email_adresa">Email adresa</string>
+    <string name="ponovni_unos_zaporke">Ponovni unos zaporke</string>
+    <string name="register">Register</string>
+
+
 </resources>
