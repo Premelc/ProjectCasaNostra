@@ -59,6 +59,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         startActivity(hPage);
     }
 
+    public void adminPage(View v){
+        Intent aPage = new Intent(this, AdminPage.class);
+        startActivity(aPage);
+    }
+
+
     /**
      * This method is to initialize views
      */
