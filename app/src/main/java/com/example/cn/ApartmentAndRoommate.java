@@ -17,7 +17,7 @@ public class ApartmentAndRoommate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apartment_and_roommate);
 
-        Spinner dropdown = findViewById(R.id.spinner3);
+        Spinner dropdown = findViewById(R.id.faculty);
         String[] items = new String[]{"600 - 1000kn", "1000 - 1500kn", "1500 - 2000kn", "2000 - 2500kn", "2500 - 3000kn", "Cijena mi nije bitna"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);

@@ -107,7 +107,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
-            android:id="@+id/spinner3"
+            android:id="@+id/faculty"
             android:layout_width="115dp"
             android:layout_height="36dp"
             android:layout_marginStart="96dp"
@@ -128,7 +128,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
-                android:id="@+id/roomateAndApartment"
+                android:id="@+id/roommateApartment"
                 android:layout_width="132dp"
                 android:layout_height="wrap_content"
                 android:checked="true"
@@ -226,9 +226,10 @@
             android:id="@+id/tt3"
             android:layout_width="249dp"
             android:layout_height="81dp"
-            android:layout_marginStart="80dp"
             android:layout_marginTop="220dp"
             android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.913"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

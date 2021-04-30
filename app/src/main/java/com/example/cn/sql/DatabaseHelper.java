@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.cn.activeUser;
+import com.example.cn.ActiveUser;
 import com.example.cn.model.Fakultet;
 import com.example.cn.model.Korisnik;
 import com.example.cn.model.KorisnikLjubimac;
@@ -408,7 +408,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertKorisnika(activeUser korisnik) {
+    public void insertKorisnika(ActiveUser korisnik) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KORISNIK_USERNAME, korisnik.getUsername());
@@ -571,7 +571,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Korisnik queryActiveUser(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
 
         SQLiteDatabase db = this.getReadableDatabase();
-        activeUser activeUser = new activeUser();
+        ActiveUser activeUser = new ActiveUser();
 
         Cursor cursor = db.query(TABLE_KORISNIK, //Table to query
                 null,    //columns to return
@@ -1008,7 +1008,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      *
      * @param korisnik
      */
-    public void updateKorisnik(activeUser korisnik) {
+    public void updateKorisnik(ActiveUser korisnik) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KORISNIK_USERNAME, korisnik.getUsername());

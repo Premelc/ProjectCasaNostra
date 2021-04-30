@@ -2,9 +2,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout_id"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="false">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="fill_parent"
@@ -14,125 +16,121 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="178dp"
-            android:layout_height="107dp"
-            android:layout_marginTop="36dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            android:layout_width="106dp"
+            android:layout_height="74dp"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_android_black_24dp" />
 
-        <EditText
-            android:id="@+id/editTextTextPersonName4"
-            android:layout_width="212dp"
-            android:layout_height="58dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="264dp"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/e_mail"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.512"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutName"
+            android:layout_width="181dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="112dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/editTextTextPersonName3"
-            android:layout_width="208dp"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditTextName"
+            android:layout_width="180dp"
             android:layout_height="42dp"
-            android:layout_gravity="center"
+            android:layout_marginStart="64dp"
             android:layout_marginTop="164dp"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/korisnicko_ime"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:hint="@string/ime"
+            android:inputType="text"
+            android:maxLines="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/editTextTextPassword"
-            android:layout_width="217dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutEmail"
+            android:layout_width="180dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="220dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditTextEmail"
+            android:layout_width="180dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="280dp"
+            android:hint="@string/email_adresa"
+            android:inputType="text"
+            android:maxLines="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutPassword"
+            android:layout_width="192dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="336dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditTextPassword"
+            android:layout_width="190dp"
             android:layout_height="39dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="216dp"
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="408dp"
             android:ems="10"
-            android:gravity="center"
             android:hint="@string/zaporka"
             android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/editTextTextPassword2"
-            android:layout_width="208dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutConfirmPassword"
+            android:layout_width="193dp"
             android:layout_height="53dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="332dp"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/ponovi_unos_zaporke"
-            android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName5"
-            android:layout_width="206dp"
-            android:layout_height="45dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="392dp"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/tvoje_ime"
-            android:inputType="textPersonName"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="198dp"
-            android:layout_height="32dp"
-            android:layout_gravity="center"
+            android:layout_marginStart="64dp"
             android:layout_marginTop="484dp"
-            android:gravity="center"
-            android:text="@string/dodajte_slike_profla"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="167dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="592dp"
-            android:gravity="center"
-            android:onClick="aboutYou"
-            android:text="@string/registriraj_se"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditTextConfirmPassword"
+            android:layout_width="190dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="568dp"
+            android:ems="10"
+            android:hint="@string/ponovni_unos_zaporke"
+            android:inputType="textPassword"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="111dp"
-            android:layout_height="43dp"
-            android:layout_marginTop="528dp"
-            app:layout_constraintEnd_toEndOf="parent"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButtonRegister"
+            android:layout_width="190dp"
+            android:layout_height="48dp"
+
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="648dp"
+            android:text="@string/register"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_upload_you_tube" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextViewLoginLink"
+            android:layout_width="263dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="732dp"
+            android:gravity="center"
+            android:text="@string/already_a_member_login"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
