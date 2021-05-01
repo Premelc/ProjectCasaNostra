@@ -38,78 +38,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_android_black_24dp" />
 
-
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="92dp"
-            android:text="@string/cijena_stana"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="156dp"
-            android:text="@string/lokacija"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="340dp"
-            android:text="@string/spol_cimera"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="500dp"
-            android:text="@string/godi_te_cimera_izme_u"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="256dp"
-            android:layout_marginTop="500dp"
-            android:text="@string/i"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Spinner
-            android:id="@+id/faculty"
-            android:layout_width="0dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="124dp"
-            android:layout_marginTop="84dp"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="0dp"
@@ -139,8 +67,6 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="@string/svejedno" />
-
-
 
         </RadioGroup>
 
@@ -218,8 +144,6 @@
                 android:text="@string/svejedno_mi_je"
                 android:textSize="18sp" />
 
-
-
         </RadioGroup>
 
         <LinearLayout
@@ -295,33 +219,18 @@
 
             <TextView
                 android:id="@+id/textView12"
-                android:layout_width="wrap_content"
+                android:layout_width="176dp"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/poppins_medium"
                 android:text="@string/godi_te_cimera_izme_u"
                 android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/editTextNumber2"
-                android:layout_width="51dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:ems="10"
-                android:inputType="number" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/i"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/editTextNumber5"
-                android:layout_width="49dp"
-                android:layout_height="match_parent"
-                android:ems="10"
-                android:inputType="number" />
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="151dp"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown" />
 
         </LinearLayout>
 
