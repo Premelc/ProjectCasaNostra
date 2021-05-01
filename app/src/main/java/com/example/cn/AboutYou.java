@@ -2,14 +2,15 @@ package com.example.cn;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
@@ -19,10 +20,23 @@ import com.example.cn.sql.DatabaseHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AboutYou extends AppCompatActivity {
+public class AboutYou extends AppCompatActivity implements View.OnClickListener{
     private AppCompatActivity activity = AboutYou.this;
     private DatabaseHelper databaseHelper;
     private List<Fakultet> listFakultet;
+
+    /*Varijable iz kojih je potrebno citati odgovore*/
+    private EditText year;
+    private RadioButton genderF, genderM;
+    private RadioButton smoker,nonSmoker;
+    private Spinner faculty;
+    private RadioButton party, noParty;
+    private RadioButton pet, noPet;
+    private CheckBox dog, cat, parrot, hamster, rabbit, other;
+    private Spinner dropdown;
+    private AppCompatButton appCompatButtonAboutYou;
+
+    activeUser korisnik;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -30,11 +44,16 @@ public class AboutYou extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_you);
 
+        getSupportActionBar().hide();
+        initViews();
+        initListeners();
+        initObjects();
+
         listFakultet = new ArrayList<Fakultet>();
         databaseHelper = new DatabaseHelper(activity);
 
         // Dropdown
-        Spinner dropdown = findViewById(R.id.spinner3);
+         dropdown = findViewById(R.id.faculty);
         //create a list of items for the spinner.
 
         listFakultet.clear();
@@ -43,31 +62,140 @@ public class AboutYou extends AppCompatActivity {
         String[] items;
 
         items = listFakultet.stream().map(Fakultet::getNaziv).toArray(String[]::new);
-        //create an adapter to describe how the items are displayed, adapters are used in several places in android.
-        //There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        //set the spinners adapter to the previously created one.
         dropdown.setAdapter(adapter);
     }
-    /*Return arrows*/
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+
+    private void initViews() {
+        /*Inicijalizacija cijele stranice (tj. njezinih "objekata")- kasnije se unose podaci u tmp varijable i upisuju
+        * u klase metodom aboutYouDetails()*/
+
+        year = findViewById(R.id.yearOfBirth);
+
+        genderF = findViewById(R.id.roommate);
+        genderM = findViewById(R.id.roommateApartment);
+
+        smoker = findViewById(R.id.smoker);
+        nonSmoker = findViewById(R.id.nonSmoker);
+
+        dropdown = findViewById(R.id.faculty);
+
+        party = findViewById(R.id.party);
+        noParty = findViewById(R.id.noParty);
+
+        pet = findViewById(R.id.pet);
+        noPet = findViewById(R.id.petNo);
+
+        dog = findViewById(R.id.dog);
+        cat = findViewById(R.id.cat);
+        rabbit = findViewById(R.id.rabbit);
+        hamster = findViewById(R.id.hamster);
+        other = findViewById(R.id.other);
+
+        appCompatButtonAboutYou = findViewById(R.id.appCompatButtonAboutYou);
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
+    /**
+     * This method is to initialize listeners
+     */
+    private void initListeners() {
+        appCompatButtonAboutYou.setOnClickListener(this);
+    }
+
+    /**
+     * This method is to initialize objects to be used
+     */
+    private void initObjects() {
+        /*Na ovaj nacin se nasljeduje objekt instanciran od prethodnog activityja
+        * Valjda https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android */
+        Intent i  = getIntent();
+        korisnik = (activeUser)i.getSerializableExtra("InhUser");
+    }
+
+    /**
+     * This implemented method is to listen the click on view
+     *
+     * @param v
+     */
+
+    public void onClick(View v) {
+        /*Klikom ulazi u aboutYouDetails metodu pa onda ide na daljnju aktivnost*/
+        aboutYouDetails();
+        Intent roommate = new Intent(this, FindApartmentRoommate.class);
+        startActivity(roommate);
+    }
+
+    public void aboutYouDetails () {
+        /* Provjera godine --> ili staviti u dropdown */
+        int userYear =Integer.parseInt(year.getText().toString().trim());
+
+        char userGender;
+        if(genderF.isChecked()){
+            userGender = 'Z';
+        }else{
+            userGender = 'M';
+        }
+
+        boolean userSmoker;
+        if(smoker.isChecked()){
+            userSmoker = true;
+        }else{
+            userSmoker = false;
+        }
+
+        boolean lifestyle;
+        if(noParty.isChecked()){
+            lifestyle = true;
+        }else{
+            lifestyle = false;
+        }
+
+        boolean userHasPet;
+        if(pet.isChecked()){
+            userHasPet = true;
+        }else{
+            userHasPet = false;
+        }
+
+        /*String userPet = new String();
+        if(userHasPet){
+            if(dog.isChecked()){
+                userPet = "Pas";
+            }
+            if(cat.isChecked()){
+                userPet = "Mačka";
+            }
+            if(parrot.isChecked()){
+                userPet = "Papiga";
+            }
+            if(hamster.isChecked()){
+                userPet = "Hrčak";
+            }
+            if(other.isChecked()){
+                userPet = "Ostalo";
+            }
+        }*/
+
+        korisnik.setSpol(userGender);
+        korisnik.setPusac(userSmoker);
+        korisnik.setLjubimac(userHasPet);
+        korisnik.setGodina_rodenja(userYear);
+        korisnik.setMiran_zivot(lifestyle);
+        // korisnik.setVrstaLjubimca(userPet);
+
+        // Salje objekt dalje
+        Intent i2 = new Intent(this, FindApartmentRoommate.class);
+        i2.putExtra("InhUser2", korisnik);
+        startActivity(i2);
+
+        return;
     }
 
 
     /*Hide/show checkboxes*/
-    public void chooseAnimal(View view) {
+    public void chooseAnimal (View view){
         RadioButton animal = (RadioButton) view;
-        if(animal.isChecked()){
+        if (animal.isChecked()) {
             findViewById(R.id.dog).setVisibility(View.VISIBLE);
             findViewById(R.id.cat).setVisibility(View.VISIBLE);
             findViewById(R.id.rabbit).setVisibility(View.VISIBLE);
@@ -77,9 +205,9 @@ public class AboutYou extends AppCompatActivity {
 
         }
     }
-    public void noAnimal(View v){
+    public void noAnimal (View v){
         RadioButton animal = (RadioButton) v;
-        if(animal.isChecked()){
+        if (animal.isChecked()) {
             findViewById(R.id.dog).setVisibility(View.GONE);
             findViewById(R.id.cat).setVisibility(View.GONE);
             findViewById(R.id.rabbit).setVisibility(View.GONE);
@@ -89,14 +217,9 @@ public class AboutYou extends AppCompatActivity {
         }
     }
 
-    public void onRadioButtonClicked(View v){
+    public void onRadioButtonClicked (View v){
         RadioButton btn = (RadioButton) v;
     }
 
-    /*Next intent on button click*/
-    public void findApartmentRoommate(View v){
-        Intent roommate = new Intent(this, FindApartmentRoommate.class);
-        startActivity(roommate);
-    }
-
 }
+

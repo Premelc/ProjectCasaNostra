@@ -2,10 +2,14 @@ package com.example.cn;
 
 import com.example.cn.model.Korisnik;
 
-public class activeUser extends Korisnik {
+import java.io.Serializable;
+
+public class activeUser extends Korisnik implements Serializable {
     private String username;
     private String email;
     private String password;
+
+
 
     public activeUser(){
         super();

@@ -49,10 +49,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
-                android:id="@+id/roomateAndApartment"
+
+                android:id="@+id/roommateApartment"
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
-                android:onClick="roommateAndApartment"
+                android:onClick="roommateApartment"
                 android:text="@string/tra_im_i_cimera_i_stan" />
 
             <RadioButton
