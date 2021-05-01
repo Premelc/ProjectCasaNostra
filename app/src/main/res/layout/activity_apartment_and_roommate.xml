@@ -72,8 +72,8 @@
 
         <LinearLayout
             android:id="@+id/linearLayout4"
-            android:layout_width="320dp"
-            android:layout_height="175dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -151,7 +151,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -161,6 +161,7 @@
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="150dp"
+                android:textAllCaps="true"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
                 android:text="@string/cijena_stana"
@@ -191,6 +192,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
                 android:text="@string/lokacija"
+                android:textAllCaps="true"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -201,6 +203,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/spol_cimera"
+            android:textAllCaps="true"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -218,7 +221,7 @@
 
             <TextView
                 android:id="@+id/textView12"
-                android:layout_width="136dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/poppins_medium"
                 android:text="@string/godi_te_cimera_izme_u"
@@ -226,8 +229,9 @@
 
             <EditText
                 android:id="@+id/editTextNumber2"
-                android:layout_width="63dp"
+                android:layout_width="51dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
                 android:ems="10"
                 android:inputType="number" />
 
@@ -240,7 +244,7 @@
 
             <EditText
                 android:id="@+id/editTextNumber5"
-                android:layout_width="72dp"
+                android:layout_width="49dp"
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:inputType="number" />
