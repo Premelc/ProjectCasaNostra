@@ -46,7 +46,7 @@ public class FindApartmentRoommate extends AboutYou{
         }
     }
 
-    public void roommateAndApartment(View v){
+    public void roommateApartment(View v){
         RadioButton roommateApartment = (RadioButton)v;
         if(roommateApartment.isChecked()){
             // Zapis odg u bazu

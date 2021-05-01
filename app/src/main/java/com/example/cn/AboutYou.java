@@ -72,8 +72,8 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
 
         year = findViewById(R.id.yearOfBirth);
 
-        genderF = findViewById(R.id.roommate);
-        genderM = findViewById(R.id.roommateApartment);
+        genderF = findViewById(R.id.female);
+        genderM = findViewById(R.id.male);
 
         smoker = findViewById(R.id.smoker);
         nonSmoker = findViewById(R.id.nonSmoker);
@@ -129,31 +129,23 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
         /* Provjera godine --> ili staviti u dropdown */
         int userYear =Integer.parseInt(year.getText().toString().trim());
 
-        char userGender;
+        char userGender = 'M';
         if(genderF.isChecked()){
             userGender = 'Z';
-        }else{
-            userGender = 'M';
         }
 
-        boolean userSmoker;
-        if(smoker.isChecked()){
-            userSmoker = true;
-        }else{
+        boolean userSmoker = true;
+        if(nonSmoker.isChecked()){
             userSmoker = false;
         }
 
-        boolean lifestyle;
-        if(noParty.isChecked()){
-            lifestyle = true;
-        }else{
-            lifestyle = false;
+        boolean noPartyLifestyle = true;
+        if(party.isChecked()){
+            noPartyLifestyle = false;
         }
 
-        boolean userHasPet;
-        if(pet.isChecked()){
-            userHasPet = true;
-        }else{
+        boolean userHasPet = true;
+        if(noPet.isChecked()){
             userHasPet = false;
         }
 
@@ -176,11 +168,13 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
             }
         }*/
 
-        korisnik.setSpol(userGender);
-        korisnik.setPusac(userSmoker);
-        korisnik.setLjubimac(userHasPet);
-        korisnik.setGodina_rodenja(userYear);
-        korisnik.setMiran_zivot(lifestyle);
+        activeUser a = new activeUser();
+
+        a.setSpol(userGender);
+        a.setPusac(userSmoker);
+        a.setLjubimac(userHasPet);
+        a.setGodina_rodenja(userYear);
+        a.setMiran_zivot(noPartyLifestyle);
         // korisnik.setVrstaLjubimca(userPet);
 
         // Salje objekt dalje

@@ -14,14 +14,13 @@
 
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="5dp"
-
             android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -62,11 +61,9 @@
                     android:textSize="18sp" />
 
                 <EditText
-
                     android:id="@+id/yearOfBirth"
                     android:layout_width="82dp"
                     android:layout_height="match_parent"
-
                     android:ems="10"
                     android:inputType="number" />
 
@@ -92,7 +89,7 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/roommateApartment"
+                        android:id="@+id/male"
                         android:layout_width="108dp"
                         android:layout_height="wrap_content"
                         android:checked="true"
@@ -101,7 +98,7 @@
                         android:textColor="@color/primary_text" />
 
                     <RadioButton
-                        android:id="@+id/roommate"
+                        android:id="@+id/female"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="onRadioButtonClicked"
@@ -178,10 +175,8 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-
                     android:id="@+id/noParty"
                     android:layout_width="wrap_content"
-
                     android:layout_height="wrap_content"
                     android:layout_marginRight="3dp"
                     android:checked="true"
@@ -217,10 +212,8 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-
                         android:id="@+id/petYes"
                         android:layout_width="80dp"
-
                         android:layout_height="wrap_content"
                         android:checked="true"
                         android:layout_marginLeft="4dp"
@@ -228,10 +221,8 @@
                         android:text="@string/da" />
 
                     <RadioButton
-
                         android:id="@+id/petNo"
                         android:layout_width="80dp"
-
                         android:layout_height="wrap_content"
                         android:onClick="noAnimal"
                         android:text="@string/ne" />
@@ -289,6 +280,7 @@
                     android:visibility="visible" />
             </LinearLayout>
 
+            
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/appCompatButtonAboutYou"
@@ -299,13 +291,7 @@
                 android:onClick="findApartmentRoommate"
                 android:text="@string/dalje" />
 
-
-                android:layout_marginStart="112dp"
-                android:layout_marginTop="684dp"
-                android:text="@string/dalje" />
         </LinearLayout>
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
