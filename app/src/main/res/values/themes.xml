@@ -2,21 +2,53 @@
     <!-- Base application theme. -->
     <style name="Theme.CN" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorSecondaryVariant">@color/accent</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:fontFamily">@font/poppins_light</item>
+
+        <item name="android:radioButtonStyle">@style/MyRadioButtonStyle</item>
+        <item name="checkboxStyle">@style/MyCheckBoxStyle</item>
+        <item name="materialButtonStyle">@style/MyButtonStyle</item>
+        <item name="android:editTextStyle">@style/MyCustomEditTextStyle</item>
     </style>
 
     <style name="Theme.CN.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="MyRadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/secondary_text</item>
+        <item name="buttonTint">@color/accent</item>
+        <item name="background">@color/accent</item>
+    </style>
+
+    <style name="MyCheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@color/secondary_text</item>
+        <item name="buttonTint">@color/accent</item>
+    </style>
+
+    <style name="MyButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/round_button</item>
+
+    </style>
+
+
+    <style name="MyCustomEditTextStyle" parent="@android:style/Widget.EditText">
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@color/accent</item>
     </style>
 
     <style name="Theme.CN.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

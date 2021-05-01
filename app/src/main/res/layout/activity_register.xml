@@ -121,10 +121,12 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/appCompatTextViewLoginLink"
-            android:layout_width="263dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="52dp"
-            android:layout_marginTop="732dp"
+            style="@style/MyButtonStyle"
+            android:layout_width="167dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="592dp"
+
             android:gravity="center"
             android:text="@string/already_a_member_login"
             android:textSize="16dp"
