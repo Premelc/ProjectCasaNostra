@@ -47,20 +47,16 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
         getSupportActionBar().hide();
         initViews();
         initListeners();
-        initObjects();
 
         listFakultet = new ArrayList<Fakultet>();
         databaseHelper = new DatabaseHelper(activity);
 
-        // Dropdown
-         dropdown = findViewById(R.id.faculty);
-        //create a list of items for the spinner.
 
+        dropdown = findViewById(R.id.faculty);
         listFakultet.clear();
         listFakultet.addAll(databaseHelper.queryFakultet(null, null, null, null, "naziv ASC"));
 
         String[] items;
-
         items = listFakultet.stream().map(Fakultet::getNaziv).toArray(String[]::new);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
@@ -95,39 +91,21 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
         appCompatButtonAboutYou = findViewById(R.id.appCompatButtonAboutYou);
     }
 
-    /**
-     * This method is to initialize listeners
-     */
     private void initListeners() {
         appCompatButtonAboutYou.setOnClickListener(this);
     }
 
-    /**
-     * This method is to initialize objects to be used
-     */
-    private void initObjects() {
-        /*Na ovaj nacin se nasljeduje objekt instanciran od prethodnog activityja
-        * Valjda https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android */
-        Intent i  = getIntent();
-        korisnik = (activeUser)i.getSerializableExtra("InhUser");
-    }
-
-    /**
-     * This implemented method is to listen the click on view
-     *
-     * @param v
-     */
-
     public void onClick(View v) {
         /*Klikom ulazi u aboutYouDetails metodu pa onda ide na daljnju aktivnost*/
         aboutYouDetails();
-        Intent roommate = new Intent(this, FindApartmentRoommate.class);
-        startActivity(roommate);
     }
 
     public void aboutYouDetails () {
         /* Provjera godine --> ili staviti u dropdown */
-        int userYear =Integer.parseInt(year.getText().toString().trim());
+        /* TODO: Trebat ce dolaziti obavijesti ako user ne unese ispravnu godinu, kasnije cijenu stana itd*/
+        int userYear = Integer.parseInt(year.getText().toString().trim());
+
+        String faculty = dropdown.getSelectedItem().toString().trim();
 
         char userGender = 'M';
         if(genderF.isChecked()){
@@ -168,18 +146,18 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
             }
         }*/
 
-        activeUser a = new activeUser();
+        Intent i  = getIntent();
+        activeUser userActive = (activeUser)i.getSerializableExtra("InhUser");
 
-        a.setSpol(userGender);
-        a.setPusac(userSmoker);
-        a.setLjubimac(userHasPet);
-        a.setGodina_rodenja(userYear);
-        a.setMiran_zivot(noPartyLifestyle);
-        // korisnik.setVrstaLjubimca(userPet);
+        userActive.setSpol(userGender);
+        userActive.setMiran_zivot(noPartyLifestyle);
+        userActive.setPusac(userSmoker);
+        userActive.setLjubimac(userHasPet);
+        userActive.setGodina_rodenja(userYear);
 
-        // Salje objekt dalje
+        // Prosljedi dalje
         Intent i2 = new Intent(this, FindApartmentRoommate.class);
-        i2.putExtra("InhUser2", korisnik);
+        i2.putExtra("InhUser", userActive);
         startActivity(i2);
 
         return;

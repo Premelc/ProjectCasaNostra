@@ -13,18 +13,29 @@
         android:padding="40dp">
 
 
-        <Button
-            android:id="@+id/button4"
+        <Spinner
+            android:id="@+id/to"
+            android:layout_width="108dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="92dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/onlyRoommateButton"
+            style="@style/MyButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="800dp"
-            android:onClick="toMainPageRoommate"
+            android:layout_marginTop="856dp"
             android:text="Dalje"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <ImageView
             android:id="@+id/imageView3"
@@ -41,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="92dp"
-            android:text="@string/cijena_stana"
+            android:text="@string/cijena_stana_do"
             android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,10 +107,10 @@
 
         <TextView
             android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="260dp"
-            android:layout_marginTop="500dp"
+            android:layout_width="0dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="104dp"
+            android:layout_marginTop="536dp"
             android:text="@string/i"
             android:textColor="#000000"
             android:textSize="18sp"
@@ -128,20 +139,20 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
-                android:id="@+id/roommateApartment"
+                android:id="@+id/male"
                 android:layout_width="132dp"
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="@string/mu_ko" />
 
             <RadioButton
-                android:id="@+id/roommate"
+                android:id="@+id/female"
                 android:layout_width="132dp"
                 android:layout_height="wrap_content"
                 android:text="@string/ensko" />
 
             <RadioButton
-                android:id="@+id/roommate2"
+                android:id="@+id/femaleMale"
                 android:layout_width="134dp"
                 android:layout_height="wrap_content"
                 android:text="@string/svejedno" />
@@ -149,22 +160,22 @@
         </RadioGroup>
 
         <EditText
-            android:id="@+id/editTextNumber2"
+            android:id="@+id/year1"
             android:layout_width="55dp"
             android:layout_height="27dp"
-            android:layout_marginStart="196dp"
-            android:layout_marginTop="500dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="540dp"
             android:ems="10"
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextNumber4"
+            android:id="@+id/year2"
             android:layout_width="55dp"
             android:layout_height="27dp"
-            android:layout_marginStart="276dp"
-            android:layout_marginTop="500dp"
+            android:layout_marginStart="144dp"
+            android:layout_marginTop="548dp"
             android:ems="10"
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
@@ -174,7 +185,8 @@
             android:id="@+id/tt"
             android:layout_width="283dp"
             android:layout_height="96dp"
-            android:layout_marginTop="544dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="588dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -183,11 +195,13 @@
                 android:id="@+id/smoke"
                 android:layout_width="265dp"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="@string/ne_elim_da_je_cimer_pu_a"
                 android:textSize="18sp" />
 
+
             <RadioButton
-                android:id="@+id/smokeNosSoke"
+                android:id="@+id/noSmoke"
                 android:layout_width="266dp"
                 android:layout_height="wrap_content"
                 android:text="@string/svejedno_mi_je"
@@ -200,7 +214,8 @@
             android:id="@+id/tt2"
             android:layout_width="312dp"
             android:layout_height="94dp"
-            android:layout_marginTop="652dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="704dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -209,11 +224,12 @@
                 android:id="@+id/pet"
                 android:layout_width="265dp"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="@string/ne_elim_da_cimer_ima_ku_nog_ljubimca"
                 android:textSize="18sp" />
 
             <RadioButton
-                android:id="@+id/petNoPet"
+                android:id="@+id/noPet"
                 android:layout_width="266dp"
                 android:layout_height="wrap_content"
                 android:text="@string/svejedno_mi_je"
@@ -234,7 +250,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
-                android:id="@+id/room"
+                android:id="@+id/soloRoom"
                 android:layout_width="208dp"
                 android:layout_height="wrap_content"
                 android:checked="true"
@@ -250,17 +266,6 @@
 
 
         </RadioGroup>
-
-        <EditText
-            android:id="@+id/editTextNumber3"
-            android:layout_width="97dp"
-            android:layout_height="39dp"
-            android:layout_marginStart="112dp"
-            android:layout_marginTop="80dp"
-            android:ems="10"
-            android:inputType="number"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

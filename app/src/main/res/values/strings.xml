@@ -172,6 +172,7 @@
     <string name="email_adresa">Email adresa</string>
     <string name="ponovni_unos_zaporke">Ponovni unos zaporke</string>
     <string name="register">Register</string>
+    <string name="cijena_stana_do">Cijena stana do:</string>
 
 
 </resources>

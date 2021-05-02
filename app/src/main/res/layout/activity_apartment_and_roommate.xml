@@ -13,13 +13,13 @@
         android:padding="40dp">
 
 
-        <Button
-            android:id="@+id/button4"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/apartmentAndRoommateButton"
+            style="@style/MyButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="124dp"
-            android:layout_marginTop="776dp"
-            android:onClick="toMainPage"
+            android:layout_marginStart="116dp"
+            android:layout_marginTop="840dp"
             android:text="@string/dalje"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="92dp"
-            android:text="@string/cijena_stana"
+            android:text="Cijena stana do:"
             android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,8 +74,7 @@
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="500dp"
+            android:layout_marginTop="476dp"
             android:text="@string/godi_te_cimera_izme_u"
             android:textColor="#000000"
             android:textSize="18sp"
@@ -86,8 +85,8 @@
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="256dp"
-            android:layout_marginTop="500dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="532dp"
             android:text="@string/i"
             android:textColor="#000000"
             android:textSize="18sp"
@@ -95,10 +94,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
-            android:id="@+id/price"
+            android:id="@+id/to2"
             android:layout_width="0dp"
             android:layout_height="36dp"
-            android:layout_marginStart="124dp"
+            android:layout_marginStart="156dp"
             android:layout_marginTop="84dp"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown"
@@ -116,19 +115,20 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
-                android:id="@+id/roommateApartment"
+                android:id="@+id/male"
                 android:layout_width="132dp"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="@string/mu_ko" />
 
             <RadioButton
-                android:id="@+id/roommate"
+                android:id="@+id/female"
                 android:layout_width="118dp"
                 android:layout_height="wrap_content"
                 android:text="@string/ensko" />
 
             <RadioButton
-                android:id="@+id/roommate2"
+                android:id="@+id/femaleMale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/svejedno" />
@@ -136,7 +136,7 @@
         </RadioGroup>
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/west"
             android:layout_width="100dp"
             android:layout_height="33dp"
             android:layout_marginStart="88dp"
@@ -147,7 +147,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
-            android:id="@+id/checkBox2"
+            android:id="@+id/east"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginStart="88dp"
@@ -158,7 +158,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
-            android:id="@+id/checkBox3"
+            android:id="@+id/center"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginStart="88dp"
@@ -169,7 +169,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
-            android:id="@+id/checkBox4"
+            android:id="@+id/suburbs"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginStart="88dp"
@@ -180,7 +180,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
-            android:id="@+id/checkBox5"
+            android:id="@+id/other"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginStart="88dp"
@@ -191,33 +191,33 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextNumber2"
-            android:layout_width="46dp"
-            android:layout_height="26dp"
-            android:layout_marginStart="268dp"
-            android:layout_marginTop="500dp"
+            android:id="@+id/year2"
+            android:layout_width="75dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="532dp"
             android:ems="10"
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextNumber5"
-            android:layout_width="46dp"
-            android:layout_height="26dp"
-            android:layout_marginStart="204dp"
-            android:layout_marginTop="500dp"
+            android:id="@+id/year1"
+            android:layout_width="79dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="524dp"
             android:ems="10"
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
-            android:id="@+id/tt"
+            android:id="@+id/to"
             android:layout_width="0dp"
             android:layout_height="94dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="540dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="612dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -226,11 +226,12 @@
                 android:id="@+id/smoke"
                 android:layout_width="265dp"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="@string/ne_elim_da_je_cimer_pu_a"
                 android:textSize="18sp" />
 
             <RadioButton
-                android:id="@+id/smokeNosSoke"
+                android:id="@+id/noSmoke"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:text="@string/svejedno_mi_je"
@@ -243,8 +244,8 @@
             android:id="@+id/tt2"
             android:layout_width="0dp"
             android:layout_height="94dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="648dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="716dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -257,9 +258,10 @@
                 android:textSize="18sp" />
 
             <RadioButton
-                android:id="@+id/petNoPet"
+                android:id="@+id/noPet"
                 android:layout_width="244dp"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="@string/svejedno_mi_je"
                 android:textSize="18sp" />
 
