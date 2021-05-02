@@ -18,13 +18,16 @@ import android.widget.Spinner;
 import com.example.cn.model.Kvart;
 import com.example.cn.sql.DatabaseHelper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OnlyRoommate extends AppCompatActivity implements View.OnClickListener{
+public class OnlyRoommate extends AppCompatActivity implements View.OnClickListener {
     private AppCompatActivity activity = OnlyRoommate.this;
     private DatabaseHelper databaseHelper;
     private List<Kvart> listKvart;
+
+    activeUser userActive = new activeUser();
 
     private Spinner priceTo;
     private RadioButton room, shRoom;
@@ -145,7 +148,7 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
         /*Zapis u objekt*/
         // 1. uzmi objekt
         Intent i  = getIntent();
-        activeUser userActive = (activeUser)i.getSerializableExtra("InhUser");
+        userActive = (activeUser)i.getSerializableExtra("InhUser3");
 
         userActive.setCimer_godine_od(yearOfRoommateFrom);
         userActive.setCimer_godine_do(yearOfRoommateTo);
@@ -153,9 +156,12 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
         userActive.setCimer_spol(gender);
         userActive.setCimer_pusac(smoker);
 
+        userActive.setId_fakultet(1); // ISPRAVITI
+        databaseHelper.insertKorisnika(userActive);
+
         //2. prosljedi dalje
         Intent i2 = new Intent(this, HomePage.class);
-        i2.putExtra("InhUser", userActive);
+        i2.putExtra("InhUser4", userActive);
         startActivity(i2);
 
         /* ANGEL ----> mozes ovdje sve upisati u bazu jer je ovo zadnja stranica

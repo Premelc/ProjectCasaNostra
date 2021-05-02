@@ -1,16 +1,23 @@
 package com.example.cn;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 
-public class FindApartmentRoommate extends AboutYou{
+import java.io.Serializable;
+
+public class FindApartmentRoommate extends AboutYou {
     private AppCompatActivity activity = FindApartmentRoommate.this;
     private RadioButton roommateAndApartment, onlyRoommate;
 
+    activeUser userActive = new activeUser();
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,8 +26,8 @@ public class FindApartmentRoommate extends AboutYou{
         initViews();
         initObjects();
 
-        Intent i  = getIntent();
-        korisnik = (activeUser)i.getSerializableExtra("InhUser2");
+        /*Intent i  = getIntent();
+        korisnik = (activeUser)i.getSerializableExtra("InhUser2");*/
 
     }
 
@@ -33,23 +40,23 @@ public class FindApartmentRoommate extends AboutYou{
     private void initObjects() {
         /*Na ovaj nacin se nasljeduje objekt instanciran od prethodnog activityja
          * Valjda https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android */
-        Intent i  = getIntent();
-        //korisnik = (activeUser)i.getSerializableExtra("InhUser");
+        /*Intent i  = getIntent();
+        korisnik = (activeUser)i.getSerializableExtra("InhUser");*/
     }
 
     public void onlyRoommate(View v){
         RadioButton roommate = (RadioButton)v;
+
         if(roommate.isChecked()){
             // Zapis odgovora u klasu
             Intent i  = getIntent();
-            activeUser userActive = (activeUser)i.getSerializableExtra("InhUser");
+            activeUser userActive = (activeUser)i.getSerializableExtra("InhUser2");
+
             userActive.setTrazimStan(false);
 
             Intent i2 = new Intent(this, OnlyRoommate.class);
-            i2.putExtra("InhUser", userActive);
+            i2.putExtra("InhUser3", userActive);
             startActivity(i2);
-
-
         }
     }
 
@@ -58,11 +65,11 @@ public class FindApartmentRoommate extends AboutYou{
         if(roommateApartment.isChecked()){
 
             Intent i  = getIntent();
-            activeUser userActive = (activeUser)i.getSerializableExtra("InhUser");
+            activeUser userActive = (activeUser)i.getSerializableExtra("InhUser2");
             userActive.setTrazimStan(true);
 
             Intent i2 = new Intent(this, ApartmentAndRoommate.class);
-            i2.putExtra("InhUser", userActive);
+            i2.putExtra("InhUser3", userActive);
             startActivity(i2);
 
         }

@@ -17,10 +17,11 @@ import android.widget.Spinner;
 import com.example.cn.model.Fakultet;
 import com.example.cn.sql.DatabaseHelper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AboutYou extends AppCompatActivity implements View.OnClickListener{
+public class AboutYou extends AppCompatActivity implements View.OnClickListener {
     private AppCompatActivity activity = AboutYou.this;
     private DatabaseHelper databaseHelper;
     private List<Fakultet> listFakultet;
@@ -35,8 +36,7 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
     private CheckBox dog, cat, parrot, hamster, rabbit, other;
     private Spinner dropdown;
     private AppCompatButton appCompatButtonAboutYou;
-
-    activeUser korisnik;
+    activeUser userActive = new activeUser();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -56,7 +56,8 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
         listFakultet.clear();
         listFakultet.addAll(databaseHelper.queryFakultet(null, null, null, null, "naziv ASC"));
 
-        String[] items;
+        String[] items = new String[listFakultet.size()];
+
         items = listFakultet.stream().map(Fakultet::getNaziv).toArray(String[]::new);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
@@ -107,6 +108,12 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
 
         String faculty = dropdown.getSelectedItem().toString().trim();
 
+        String[] whereArgs = new String[1];
+        whereArgs[0] = faculty;
+        listFakultet.clear();
+        listFakultet.addAll(databaseHelper.queryFakultet("naziv = ?", whereArgs, null, null, null));
+        int idFaculty = listFakultet.get(0).getId_fakultet();
+
         char userGender = 'M';
         if(genderF.isChecked()){
             userGender = 'Z';
@@ -147,8 +154,9 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
         }*/
 
         Intent i  = getIntent();
-        activeUser userActive = (activeUser)i.getSerializableExtra("InhUser");
+        userActive = (activeUser)i.getSerializableExtra("InhUser");
 
+        //userActive.setId_fakultet(idFaculty);
         userActive.setSpol(userGender);
         userActive.setMiran_zivot(noPartyLifestyle);
         userActive.setPusac(userSmoker);
@@ -157,7 +165,7 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
 
         // Prosljedi dalje
         Intent i2 = new Intent(this, FindApartmentRoommate.class);
-        i2.putExtra("InhUser", userActive);
+        i2.putExtra("InhUser2", userActive);
         startActivity(i2);
 
         return;

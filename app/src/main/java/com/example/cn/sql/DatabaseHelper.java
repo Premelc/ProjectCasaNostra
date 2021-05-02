@@ -24,7 +24,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database Version
-    private static final int DATABASE_VERSION = 44;
+    private static final int DATABASE_VERSION = 45;
     // Database Name
     private static final String DATABASE_NAME = "CasaNostra.db";
 
@@ -77,9 +77,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             KORISNIK_USERNAME + " varchar(255) NOT NULL, " +
             KORISNIK_PASSWORD + " varchar(255) NOT NULL, " +
             KORISNIK_EMAIL + " varchar(255) NOT NULL, " +
-            KORISNIK_IME + " varchar(255) NOT NULL, " +
+            KORISNIK_IME + " varchar(255) DEFAULT NULL, " +
             KORISNIK_GODINA + " int(11) NOT NULL, " +
-            KORISNIK_OPIS + " varchar(255) DEFAULT NULL, " +
+            KORISNIK_OPIS + " varchar(255) NOT NULL, " +
             KORISNIK_SPOL + " char(8) NOT NULL, " +
             KORISNIK_ID_FAKULTET + " int(11) DEFAULT NULL," +
             KORISNIK_PUSAC + " tinyint(1) NOT NULL, " +
