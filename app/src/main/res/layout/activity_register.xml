@@ -26,8 +26,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutName"
-            android:layout_width="181dp"
-            android:layout_height="45dp"
+            android:layout_width="185dp"
+            android:layout_height="24dp"
             android:layout_marginStart="60dp"
             android:layout_marginTop="112dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,8 +37,8 @@
             android:id="@+id/textInputEditTextName"
             android:layout_width="180dp"
             android:layout_height="42dp"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="164dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="152dp"
             android:hint="@string/ime"
             android:inputType="text"
             android:maxLines="1"
@@ -79,8 +79,8 @@
             android:id="@+id/textInputEditTextPassword"
             android:layout_width="190dp"
             android:layout_height="39dp"
-            android:layout_marginStart="76dp"
-            android:layout_marginTop="408dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="400dp"
             android:ems="10"
             android:hint="@string/zaporka"
             android:inputType="textPassword"
@@ -100,34 +100,33 @@
             android:id="@+id/textInputEditTextConfirmPassword"
             android:layout_width="190dp"
             android:layout_height="39dp"
-            android:layout_marginStart="76dp"
-            android:layout_marginTop="568dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="564dp"
             android:ems="10"
             android:hint="@string/ponovni_unos_zaporke"
             android:inputType="textPassword"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/appCompatButtonRegister"
+            style="@style/MyButtonStyle"
             android:layout_width="190dp"
             android:layout_height="48dp"
 
-            android:layout_marginStart="76dp"
-            android:layout_marginTop="648dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="720dp"
             android:text="@string/register"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/appCompatTextViewLoginLink"
-            style="@style/MyButtonStyle"
-            android:layout_width="167dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="592dp"
-
-            android:gravity="center"
+            android:layout_width="263dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="644dp"
             android:text="@string/already_a_member_login"
             android:textSize="16dp"
             app:layout_constraintStart_toStartOf="parent"

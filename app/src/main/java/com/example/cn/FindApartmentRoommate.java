@@ -40,18 +40,31 @@ public class FindApartmentRoommate extends AboutYou{
     public void onlyRoommate(View v){
         RadioButton roommate = (RadioButton)v;
         if(roommate.isChecked()){
-            // Zapis odg u bazu
-            Intent next = new Intent(this, OnlyRoommate.class);
-            startActivity(next);
+            // Zapis odgovora u klasu
+            Intent i  = getIntent();
+            activeUser userActive = (activeUser)i.getSerializableExtra("InhUser");
+            userActive.setTrazimStan(false);
+
+            Intent i2 = new Intent(this, OnlyRoommate.class);
+            i2.putExtra("InhUser", userActive);
+            startActivity(i2);
+
+
         }
     }
 
-    public void roommateAndApartment(View v){
+    public void roommateApartment(View v){
         RadioButton roommateApartment = (RadioButton)v;
         if(roommateApartment.isChecked()){
-            // Zapis odg u bazu
-            Intent next = new Intent(this, ApartmentAndRoommate.class);
-            startActivity(next);
+
+            Intent i  = getIntent();
+            activeUser userActive = (activeUser)i.getSerializableExtra("InhUser");
+            userActive.setTrazimStan(true);
+
+            Intent i2 = new Intent(this, ApartmentAndRoommate.class);
+            i2.putExtra("InhUser", userActive);
+            startActivity(i2);
+
         }
     }
 

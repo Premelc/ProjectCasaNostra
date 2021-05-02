@@ -79,7 +79,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
     private void initObjects() {
         inputValidation = new InputValidation(activity);
         databaseHelper = new DatabaseHelper(activity);
-        userActive = new activeUser();
     }
     /**
      * This implemented method is to listen the click on view
@@ -93,12 +92,15 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
             case R.id.appCompatButtonRegister:
                 if(postDataToSQLite()){
                     // Ako je postData true onda ide na sljedeci activity
-                    Intent about = new Intent(this, AboutYou.class);
-                    startActivity(about);
+                    Intent i = new Intent(this, AboutYou.class);
+                    i.putExtra("InhUser", userActive);
+                    startActivity(i);
                 }
 
                 break;
             case R.id.appCompatTextViewLoginLink:
+                Intent login = new Intent(this, Login.class);
+                startActivity(login);
                 finish();
                 break;
         }
@@ -129,21 +131,17 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
         }
         if (!databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim())) {
 
-            /*Novo: ubacivanje dio po dio u privremene varijable pa kasnije u bazu
-            * Tmp varijable koje se kasnije salju u bazu*/
             String name = textInputEditTextName.getText().toString().trim();
             String email = textInputEditTextEmail.getText().toString().trim();
             String password = textInputEditTextPassword.getText().toString().trim();
 
             /*Tmp varijable zapisuju se u klasu active user*/
+            userActive = new activeUser();
+
             userActive.setIme(name);
             userActive.setEmail(email);
             userActive.setPassword(password);
 
-            /*Mozda ce se trebati prebaciti u grananje kod swicha di je intent za ic na novu str*/
-            Intent i = new Intent(this, AboutYou.class);
-            i.putExtra("InhUser", userActive);
-            startActivity(i);
 
             /*
             Dio za bazu - kada se sve unese u privremene varijable onda se koristi

@@ -47,20 +47,16 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
         getSupportActionBar().hide();
         initViews();
         initListeners();
-        initObjects();
 
         listFakultet = new ArrayList<Fakultet>();
         databaseHelper = new DatabaseHelper(activity);
 
-        // Dropdown
-         dropdown = findViewById(R.id.faculty);
-        //create a list of items for the spinner.
 
+        dropdown = findViewById(R.id.faculty);
         listFakultet.clear();
         listFakultet.addAll(databaseHelper.queryFakultet(null, null, null, null, "naziv ASC"));
 
         String[] items;
-
         items = listFakultet.stream().map(Fakultet::getNaziv).toArray(String[]::new);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
@@ -72,8 +68,8 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
 
         year = findViewById(R.id.yearOfBirth);
 
-        genderF = findViewById(R.id.roommate);
-        genderM = findViewById(R.id.roommateApartment);
+        genderF = findViewById(R.id.female);
+        genderM = findViewById(R.id.male);
 
         smoker = findViewById(R.id.smoker);
         nonSmoker = findViewById(R.id.nonSmoker);
@@ -95,65 +91,39 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
         appCompatButtonAboutYou = findViewById(R.id.appCompatButtonAboutYou);
     }
 
-    /**
-     * This method is to initialize listeners
-     */
     private void initListeners() {
         appCompatButtonAboutYou.setOnClickListener(this);
     }
 
-    /**
-     * This method is to initialize objects to be used
-     */
-    private void initObjects() {
-        /*Na ovaj nacin se nasljeduje objekt instanciran od prethodnog activityja
-        * Valjda https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android */
-        Intent i  = getIntent();
-        korisnik = (activeUser)i.getSerializableExtra("InhUser");
-    }
-
-    /**
-     * This implemented method is to listen the click on view
-     *
-     * @param v
-     */
-
     public void onClick(View v) {
         /*Klikom ulazi u aboutYouDetails metodu pa onda ide na daljnju aktivnost*/
         aboutYouDetails();
-        Intent roommate = new Intent(this, FindApartmentRoommate.class);
-        startActivity(roommate);
     }
 
     public void aboutYouDetails () {
         /* Provjera godine --> ili staviti u dropdown */
-        int userYear =Integer.parseInt(year.getText().toString().trim());
+        /* TODO: Trebat ce dolaziti obavijesti ako user ne unese ispravnu godinu, kasnije cijenu stana itd*/
+        int userYear = Integer.parseInt(year.getText().toString().trim());
 
-        char userGender;
+        String faculty = dropdown.getSelectedItem().toString().trim();
+
+        char userGender = 'M';
         if(genderF.isChecked()){
             userGender = 'Z';
-        }else{
-            userGender = 'M';
         }
 
-        boolean userSmoker;
-        if(smoker.isChecked()){
-            userSmoker = true;
-        }else{
+        boolean userSmoker = true;
+        if(nonSmoker.isChecked()){
             userSmoker = false;
         }
 
-        boolean lifestyle;
-        if(noParty.isChecked()){
-            lifestyle = true;
-        }else{
-            lifestyle = false;
+        boolean noPartyLifestyle = true;
+        if(party.isChecked()){
+            noPartyLifestyle = false;
         }
 
-        boolean userHasPet;
-        if(pet.isChecked()){
-            userHasPet = true;
-        }else{
+        boolean userHasPet = true;
+        if(noPet.isChecked()){
             userHasPet = false;
         }
 
@@ -176,16 +146,18 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener{
             }
         }*/
 
-        korisnik.setSpol(userGender);
-        korisnik.setPusac(userSmoker);
-        korisnik.setLjubimac(userHasPet);
-        korisnik.setGodina_rodenja(userYear);
-        korisnik.setMiran_zivot(lifestyle);
-        // korisnik.setVrstaLjubimca(userPet);
+        Intent i  = getIntent();
+        activeUser userActive = (activeUser)i.getSerializableExtra("InhUser");
 
-        // Salje objekt dalje
+        userActive.setSpol(userGender);
+        userActive.setMiran_zivot(noPartyLifestyle);
+        userActive.setPusac(userSmoker);
+        userActive.setLjubimac(userHasPet);
+        userActive.setGodina_rodenja(userYear);
+
+        // Prosljedi dalje
         Intent i2 = new Intent(this, FindApartmentRoommate.class);
-        i2.putExtra("InhUser2", korisnik);
+        i2.putExtra("InhUser", userActive);
         startActivity(i2);
 
         return;
