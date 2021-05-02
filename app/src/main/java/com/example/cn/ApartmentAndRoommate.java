@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
+import com.example.cn.sql.DatabaseHelper;
+
 public class ApartmentAndRoommate extends AppCompatActivity implements View.OnClickListener{
     private AppCompatActivity activity = ApartmentAndRoommate.this;
 
@@ -24,6 +26,7 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
     private RadioButton roommateSmoker, roommateNonSmoker;
     private RadioButton roommatePet, roommateNoPet;
     private AppCompatButton button;
+    private DatabaseHelper databaseHelper = new DatabaseHelper(activity);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +138,7 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
 
         // Preuzmi objekt
         Intent i  = getIntent();
-        activeUser userActive = (activeUser)i.getSerializableExtra("InhUser");
+        activeUser userActive = (activeUser)i.getSerializableExtra("InhUser3");
 
         // Zapis u objekt
         userActive.setCimer_pusac(smoker);
@@ -144,9 +147,13 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
         userActive.setCimer_godine_do(yearOfRoommateTo);
         userActive.setCimer_ljubimac(pet);
 
+        userActive.setId_fakultet(1); // ISPRAVITI
+        databaseHelper.insertKorisnika(userActive);
+
+
         //2. prosljedi dalje
         Intent i2 = new Intent(this, HomePage.class);
-        i2.putExtra("InhUser", userActive);
+        i2.putExtra("InhUser4", userActive);
         startActivity(i2);
 
         /* ANGEL ----> mozes ovdje sve upisati u bazu jer je ovo zadnja stranica

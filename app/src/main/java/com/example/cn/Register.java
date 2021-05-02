@@ -19,7 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.io.Serializable;
 
 
-public class Register extends AppCompatActivity implements View.OnClickListener, Serializable {
+public class Register extends AppCompatActivity implements View.OnClickListener {
 
     private final AppCompatActivity activity = Register.this;
     private ConstraintLayout nestedScrollView;
@@ -37,7 +37,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
     private DatabaseHelper databaseHelper;
 
     private ConstraintLayout constraint;
-    activeUser userActive;
+    activeUser userActive = new activeUser();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,23 +110,27 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
      */
     private boolean postDataToSQLite() {
         /*Provjere unosa*/
+        boolean check = true;
         if (!inputValidation.isInputEditTextFilled(textInputEditTextName, textInputLayoutName, getString(R.string.error_message_name))) {
-            return false;
+            check = false;
         }
         if (!inputValidation.isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
-            return false;
+            check = false;
         }
         if (!inputValidation.isInputEditTextEmail(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
-            return false;
+            check = false;
         }
         if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, getString(R.string.error_message_password))) {
-            return false;
+            check = false;
         }
         if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutConfirmPassword, getString(R.string.error_message_password))) {
-            return false;
+            check = false;
         }
         if (!inputValidation.isInputEditTextMatches(textInputEditTextPassword, textInputEditTextConfirmPassword,
                 textInputLayoutConfirmPassword, getString(R.string.error_password_match))) {
+            check = false;
+        }
+        if(!check){
             return false;
         }
         if (!databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim())) {
@@ -136,8 +140,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
             String password = textInputEditTextPassword.getText().toString().trim();
 
             /*Tmp varijable zapisuju se u klasu active user*/
-            userActive = new activeUser();
 
+            userActive.setUsername(name);
             userActive.setIme(name);
             userActive.setEmail(email);
             userActive.setPassword(password);
