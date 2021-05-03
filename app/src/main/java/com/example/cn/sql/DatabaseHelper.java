@@ -828,6 +828,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return kvartList;
     }
 
+    public Kvart singleQueryKvart(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
+
+        Kvart kvart = new Kvart();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_KVART, //Table to query
+                null,    //columns to return
+                whereClause,        //columns for the WHERE clause
+                whereArgs,        //The values for the WHERE clause
+                groupBy,       //group the rows
+                having,       //filter by row groups
+                orderBy); //The sort order
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                kvart.setId_kvart(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KVART_ID))));
+                kvart.setNaziv(cursor.getString(cursor.getColumnIndex(KVART_NAZIV)));
+                kvart.setId_lokacija(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KVART_ID_LOKACIJA))));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return kvart;
+    }
+
     public List<TrazimStan> queryTrazimStan(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
 
         List<TrazimStan> trazimStanList = new ArrayList<TrazimStan>();
@@ -993,6 +1019,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         // return user list
         return potragaLokacijaList;
+    }
+
+    public PotragaLokacija singleQueryPotragaLokacija(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        PotragaLokacija potLok = new PotragaLokacija();
+
+        Cursor cursor = db.query(RELATION_POTRAGA_LOKACIJA, //Table to query
+                null,    //columns to return
+                whereClause,        //columns for the WHERE clause
+                whereArgs,        //The values for the WHERE clause
+                groupBy,       //group the rows
+                having,       //filter by row groups
+                orderBy); //The sort order
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                potLok.setId_potraga(Integer.parseInt(cursor.getString(cursor.getColumnIndex(RELATION_POTRAGA_ID))));
+                potLok.setId_lokacija(Integer.parseInt(cursor.getString(cursor.getColumnIndex(RELATION_LOKACIJA_ID))));
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        // return user list
+
+        return potLok;
     }
 
     public List<Ljubimac> queryLjubimac(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {

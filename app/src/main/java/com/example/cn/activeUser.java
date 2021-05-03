@@ -33,4 +33,69 @@ public class activeUser extends Korisnik implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public void setCijenaMin(int cijena) {
+
+    }
+
+    @Override
+    public void setCijenaMax(int cijena_do) {
+
+    }
+
+    @Override
+    public int getCijenaMin() {
+        return 0;
+    }
+
+    @Override
+    public void setZasebnaSoba(boolean b) {
+
+    }
+
+    @Override
+    public void setModifier(int b) {
+
+    }
+
+    @Override
+    public int getModifier() {
+        return 0;
+    }
+
+    @Override
+    public void setGrade(int b) {
+
+    }
+
+    @Override
+    public int getGrade() {
+        return 0;
+    }
+
+    @Override
+    public void setId_kvart(int b) {
+
+    }
+
+    @Override
+    public int getId_kvart() {
+        return 0;
+    }
+
+    @Override
+    public void setId_lokacija(int b) {
+
+    }
+
+    @Override
+    public int getId_lokacija() {
+        return 0;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
 }
