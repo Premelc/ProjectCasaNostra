@@ -7,8 +7,34 @@ public class otherUser extends Korisnik implements Comparable {
     private  int cijenaMax = 0;
     private int cijenaMin = 0;
     private boolean zasebnaSoba;
-
+    private int modifier = 1;
     private int grade = 0;
+    private int id_kvart;
+    private int id_lokacija;
+
+    public int getId_lokacija() {
+        return id_lokacija;
+    }
+
+    public void setId_lokacija(int id_lokacija) {
+        this.id_lokacija = id_lokacija;
+    }
+
+    public int getId_kvart() {
+        return id_kvart;
+    }
+
+    public void setId_kvart(int id_kvart) {
+        this.id_kvart = id_kvart;
+    }
+
+    public int getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(int modifier) {
+        this.modifier = modifier;
+    }
 
     public int getCijenaMin() {
         return cijenaMin;

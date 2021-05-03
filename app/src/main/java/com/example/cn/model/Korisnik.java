@@ -1,6 +1,6 @@
 package com.example.cn.model;
 
-public abstract class Korisnik {
+public abstract class Korisnik implements Comparable {
     private int id_korisnik;
     // private String username;
     // private String email;
@@ -161,4 +161,25 @@ public abstract class Korisnik {
     public void setMiran_zivot(boolean miran_zivot) {
         this.miran_zivot = miran_zivot;
     }
+
+    public abstract void setCijenaMin(int cijena);
+
+    public abstract void setCijenaMax(int cijena_do);
+
+    public abstract int getCijenaMin();
+
+    public abstract void setZasebnaSoba(boolean b);
+
+    public abstract void setModifier(int b);
+    public abstract int getModifier();
+
+    public abstract void setGrade(int b);
+    public abstract int getGrade();
+
+    public abstract void setId_kvart(int b);
+    public abstract int getId_kvart();
+
+    public abstract void setId_lokacija(int b);
+    public abstract int getId_lokacija();
+
 }
