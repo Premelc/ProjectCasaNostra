@@ -14,7 +14,18 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
+import com.example.cn.model.Korisnik;
+import com.example.cn.model.KorisnikLjubimac;
+import com.example.cn.model.Kvart;
+import com.example.cn.model.NudimStan;
+import com.example.cn.model.PotragaLokacija;
+import com.example.cn.model.TrazimStan;
 import com.example.cn.sql.DatabaseHelper;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ApartmentAndRoommate extends AppCompatActivity implements View.OnClickListener{
     private AppCompatActivity activity = ApartmentAndRoommate.this;
@@ -27,6 +38,10 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
     private RadioButton roommatePet, roommateNoPet;
     private AppCompatButton button;
     private DatabaseHelper databaseHelper = new DatabaseHelper(activity);
+
+    TrazimStan needApt = new TrazimStan();
+    KorisnikLjubimac havePet = new KorisnikLjubimac();
+    PotragaLokacija area = new PotragaLokacija();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,38 +108,40 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
     }
 
     private void inputData(){
-        int priceIntTo = Integer.parseInt(priceTo.getSelectedItem().toString().trim());
+
 
         int yearOfRoommateFrom = Integer.parseInt(yearFrom.getText().toString().trim());
         int yearOfRoommateTo = Integer.parseInt(yearTo.getText().toString().trim());
 
-        /*Angel ne znam kako ti se upisuje lokacija u bazu po id-u ili imenu ja cu ti staviti u boolean
-        kad korisnik oznaci da postane true pa ti vidi
-         */
+        // !!! FALI: trazim zasebnu sobu ili sobu koju cemo dijeliti
+
+        boolean[] location = new boolean[4];
+        Arrays.fill(location, false);
+
         if(west1.isChecked()){
-            boolean west = true;
-        }
-        if(east1.isChecked()){
-            boolean east = true;
+            location[0] = true;
         }
         if(center1.isChecked()){
-           boolean center = true;
+            location[1] = true;
+        }
+        if(east1.isChecked()){
+            location[2] = true;
         }
         if(suburbs1.isChecked()){
-            boolean suburbs = true;
+            location[3] = true;
         }
         if(other1.isChecked()){
-            boolean other = true;
+            Arrays.fill(location, true); // ako mu je svejedno, postavi sve na true
         }
 
-        char gender = 'M';
+        char gender = 0;
+        if(maleGender.isChecked()){
+            gender = 'M';
+        }
         if(femaleGender.isChecked()){
             gender = 'Z';
         }
-        if(maleFemale.isChecked()){
-            gender = 'S';
-            // kao svejedno
-        }
+
 
         boolean smoker = false;
         if(roommateSmoker.isChecked()){
@@ -136,9 +153,10 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
             pet = true;
         }
 
-        // Preuzmi objekt
-        Intent i  = getIntent();
-        activeUser userActive = (activeUser)i.getSerializableExtra("InhUser3");
+        // Preuzmi objekt i polje booleana
+        Intent intent  = getIntent();
+        Korisnik userActive = (Korisnik) intent.getSerializableExtra("InhUser");
+        boolean[] pets = intent.getBooleanArrayExtra("Pets");
 
         // Zapis u objekt
         userActive.setCimer_pusac(smoker);
@@ -147,13 +165,60 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
         userActive.setCimer_godine_do(yearOfRoommateTo);
         userActive.setCimer_ljubimac(pet);
 
-        userActive.setId_fakultet(1); // ISPRAVITI
         databaseHelper.insertKorisnika(userActive);
 
+        // dohvacanje unesenog korisnika skupa sa automatski postavljenim id-om
+        List<Korisnik> userList = new ArrayList<Korisnik>();
+        String whereClause = "username = ?";
+        String[] whereArgs = new String[1];
+        whereArgs[0] = userActive.getUsername();
+        userList.addAll(databaseHelper.queryKorisnik(whereClause, whereArgs, null, null, null));
+
+        if(!userList.isEmpty()){
+            // unos podataka u tablicu TrazimStan
+            userActive = userList.get(0);
+            needApt.setId_korisnik(userActive.getId_korisnik());
+            needApt.setZasebna_soba(true); // ISPRAVITI kad se doda ta mogucnost
+
+            int priceIntTo;
+            if(priceTo.getSelectedItem().toString().trim() != "Cijena mi nije bitna"){
+                priceIntTo = Integer.parseInt(priceTo.getSelectedItem().toString().trim());
+                needApt.setCijena_do(priceIntTo);
+            }
+
+            databaseHelper.insertTrazimStan(needApt);
+
+            // unos podataka u tablicu KorisnikLjubimac
+            for(int i = 0; i < pets.length; i++){
+                if(pets[i]){
+                    havePet.setId_ljubimac(i+1);
+                    havePet.setId_korisnik(userActive.getId_korisnik());
+                    databaseHelper.insertKorisnikLjubimac(havePet);
+                }
+            }
+
+            List<TrazimStan> needAptList = new ArrayList<TrazimStan>();
+            whereClause = "id_korisnik = ?";
+            whereArgs[0] = String.valueOf(needApt.getId_korisnik());
+            needAptList.addAll(databaseHelper.queryTrazimStan(whereClause, whereArgs, null, null, null));
+            needApt = needAptList.get(0);
+
+            // unos podataka u tablicu PotragaLokacija
+            for(int i = 0; i < location.length; i++){
+                if(location[i]){
+                    area.setId_lokacija(i+1);
+                    area.setId_potraga(needApt.getId_potraga());
+                    databaseHelper.insertPotragaLokacija(area);
+                }
+            }
+
+        } else{
+            // Dodati alert: Doslo je do greske
+        }
 
         //2. prosljedi dalje
         Intent i2 = new Intent(this, HomePage.class);
-        i2.putExtra("InhUser4", userActive);
+        i2.putExtra("InhUser", userActive);
         startActivity(i2);
 
         /* ANGEL ----> mozes ovdje sve upisati u bazu jer je ovo zadnja stranica

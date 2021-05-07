@@ -1,11 +1,22 @@
 package com.example.cn.model;
 
-public class TrazimStan {
+import java.io.Serializable;
+
+public class TrazimStan implements Serializable {
     private int id_potraga;
     private int id_korisnik;
-    private double cijena_od;
     private double cijena_do;
     private boolean zasebna_soba;
+
+    @Override
+    public String toString() {
+        return "TrazimStan{" +
+                "id_potraga=" + id_potraga +
+                ", id_korisnik=" + id_korisnik +
+                ", cijena_do=" + cijena_do +
+                ", zasebna_soba=" + zasebna_soba +
+                '}';
+    }
 
     public int getId_potraga() {
         return id_potraga;
@@ -21,14 +32,6 @@ public class TrazimStan {
 
     public void setId_korisnik(int id_korisnik) {
         this.id_korisnik = id_korisnik;
-    }
-
-    public double getCijena_od() {
-        return cijena_od;
-    }
-
-    public void setCijena_od(double cijena_od) {
-        this.cijena_od = cijena_od;
     }
 
     public double getCijena_do() {

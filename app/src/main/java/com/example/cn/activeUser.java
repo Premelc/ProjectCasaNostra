@@ -5,11 +5,9 @@ import com.example.cn.model.Korisnik;
 import java.io.Serializable;
 
 public class activeUser extends Korisnik implements Serializable {
-    private String username;
+/*    private String username;
     private String email;
     private String password;
-
-
 
     public activeUser(){
         super();
@@ -97,5 +95,5 @@ public class activeUser extends Korisnik implements Serializable {
     @Override
     public int compareTo(Object o) {
         return 0;
-    }
+    }*/
 }

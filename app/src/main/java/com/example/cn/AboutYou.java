@@ -15,10 +15,12 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.example.cn.model.Fakultet;
+import com.example.cn.model.Korisnik;
 import com.example.cn.sql.DatabaseHelper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AboutYou extends AppCompatActivity implements View.OnClickListener {
@@ -36,7 +38,7 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener 
     private CheckBox dog, cat, parrot, hamster, rabbit, other;
     private Spinner dropdown;
     private AppCompatButton appCompatButtonAboutYou;
-    activeUser userActive = new activeUser();
+    Korisnik userActive = new Korisnik();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -85,6 +87,7 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener 
 
         dog = findViewById(R.id.dog);
         cat = findViewById(R.id.cat);
+        parrot = findViewById(R.id.parrot);
         rabbit = findViewById(R.id.rabbit);
         hamster = findViewById(R.id.hamster);
         other = findViewById(R.id.other);
@@ -134,29 +137,35 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener 
             userHasPet = false;
         }
 
-        /*String userPet = new String();
+        // postavljanje svih ljubimaca na false
+        boolean[] pets = new boolean[6];
+        Arrays.fill(pets, false);
+
         if(userHasPet){
             if(dog.isChecked()){
-                userPet = "Pas";
+                pets[0] = true;
             }
             if(cat.isChecked()){
-                userPet = "Mačka";
+                pets[1] = true;
             }
             if(parrot.isChecked()){
-                userPet = "Papiga";
+                pets[2] = true;
             }
             if(hamster.isChecked()){
-                userPet = "Hrčak";
+                pets[3] = true;
             }
-            if(other.isChecked()){
-                userPet = "Ostalo";
+            if(rabbit.isChecked()){
+                pets[4] = true;
             }
-        }*/
+
+            // !!! FALI: zmija
+
+        }
 
         Intent i  = getIntent();
-        userActive = (activeUser)i.getSerializableExtra("InhUser");
+        userActive = (Korisnik) i.getSerializableExtra("InhUser");
 
-        //userActive.setId_fakultet(idFaculty);
+        userActive.setId_fakultet(idFaculty);
         userActive.setSpol(userGender);
         userActive.setMiran_zivot(noPartyLifestyle);
         userActive.setPusac(userSmoker);
@@ -165,7 +174,8 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener 
 
         // Prosljedi dalje
         Intent i2 = new Intent(this, FindApartmentRoommate.class);
-        i2.putExtra("InhUser2", userActive);
+        i2.putExtra("InhUser", userActive);
+        i2.putExtra("Pets", pets);
         startActivity(i2);
 
         return;

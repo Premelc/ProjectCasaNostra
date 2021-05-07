@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.example.cn.model.Admin;
 import com.example.cn.model.Korisnik;
-import com.example.cn.activeUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,8 @@ public class AdminPage extends AppCompatActivity {
     private AppCompatActivity activity = AdminPage.this;
     private DatabaseHelper databaseHelper;
 
-    activeUser user;
+    Korisnik user;
+    List<Korisnik> userList = new ArrayList<Korisnik>();
     String username;
     Admin admin = new Admin();//DODANO
     EditText nameinput;
@@ -50,8 +50,10 @@ public class AdminPage extends AppCompatActivity {
                 String whereClause = "username = ?"; // where upit
                 String[] whereArgs = new String[1];
                 whereArgs[0] = username; // zamjenjuje ?
-                user = databaseHelper.queryActiveUser(whereClause, whereArgs, null, null, null); // dohvacanje korisnika po username-u
-                if(user.getId_korisnik() > 0){
+                userList.addAll(databaseHelper.queryKorisnik(whereClause, whereArgs, null, null, null)); // dohvacanje korisnika po username-u
+
+                if(!userList.isEmpty()){
+                    user = userList.get(0);
                     databaseHelper.deleteKorisnik(user); // brisanje korisnika
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(AdminPage.this);
@@ -85,8 +87,7 @@ public class AdminPage extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int id) {
 
                                 }
-                            })
-                    ;
+                            });
 
                     AlertDialog alert = builder.create();
 
@@ -95,8 +96,6 @@ public class AdminPage extends AppCompatActivity {
 
                 }
 
-
-
             }
         });
 
@@ -104,8 +103,6 @@ public class AdminPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 username = nameinput.getText().toString();
-
-
 
                 //prvo izbrise iz tablice korisnik i dodaje u tablicu admin
                 //pozvat ono insertadmina ?
@@ -116,14 +113,16 @@ public class AdminPage extends AppCompatActivity {
                 String whereClause = "username = ?"; // where upit
                 String[] whereArgs = new String[1];
                 whereArgs[0] = username; // zamjenjuje ?
-                user = databaseHelper.queryActiveUser(whereClause, whereArgs, null, null, null); // dohvacanje korisnika po username-u
-                if(user.getId_korisnik() > 0){
+                userList.addAll(databaseHelper.queryKorisnik(whereClause, whereArgs, null, null, null)); // dohvacanje korisnika po username-u
+
+                if(!userList.isEmpty()){
+                    user = userList.get(0);
+
                     String str1 = user.getUsername();
                     String pas1 = user.getPassword();
                     String email1 = user.getEmail();
 
                     databaseHelper.deleteKorisnik(user); // brisanje korisnika iz table korisnik
-
 
                     //dodavanje njegovo u tablu admin
 
@@ -143,8 +142,7 @@ public class AdminPage extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int id) {
 
                                 }
-                            })
-                    ;
+                            });
 
                     AlertDialog alert = builder.create();
 
@@ -164,8 +162,7 @@ public class AdminPage extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int id) {
 
                                 }
-                            })
-                    ;
+                            });
 
                     AlertDialog alert = builder.create();
 

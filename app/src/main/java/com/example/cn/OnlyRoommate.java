@@ -15,7 +15,11 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
+import com.example.cn.model.Korisnik;
+import com.example.cn.model.KorisnikLjubimac;
 import com.example.cn.model.Kvart;
+import com.example.cn.model.Lokacija;
+import com.example.cn.model.NudimStan;
 import com.example.cn.sql.DatabaseHelper;
 
 import java.io.Serializable;
@@ -27,9 +31,12 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
     private DatabaseHelper databaseHelper;
     private List<Kvart> listKvart;
 
-    activeUser userActive = new activeUser();
+    Korisnik userActive = new Korisnik();
+    NudimStan haveApt = new NudimStan();
+    KorisnikLjubimac havePet = new KorisnikLjubimac();
 
     private Spinner priceTo;
+    private Spinner locationDropdown;
     private RadioButton room, shRoom;
     private RadioButton femaleGender, maleGender, maleFemale;
     private EditText yearFrom, yearTo;
@@ -60,7 +67,7 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
 
         /*Za cijenu do*/
         Spinner dropdown3 = findViewById(R.id.to);
-        String[] items3 = new String[]{"1000", "1500", "2000", "2500", "3000", "Cijena mi nije bitna"};
+        String[] items3 = new String[]{"1000", "1500", "2000", "2500", "3000"};
         ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items3);
         dropdown3.setAdapter(adapter3);
 
@@ -77,6 +84,7 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
 
     private void initViews(){
         priceTo = findViewById(R.id.to);
+        locationDropdown = findViewById(R.id.location);
 
         room = findViewById(R.id.soloRoom);
         shRoom = findViewById(R.id.sharedRoom);
@@ -116,18 +124,26 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
     }
 
     public void inputOnlyRoommateData(){
+        /*Zapis u objekt*/
+        // 1. uzmi objekt
+        Intent intent  = getIntent();
+        userActive = (Korisnik)intent.getSerializableExtra("InhUser");
+        boolean[] pets = intent.getBooleanArrayExtra("Pets");
+
+        String location = locationDropdown.getSelectedItem().toString().trim();
+
         int priceIntTo = Integer.parseInt(priceTo.getSelectedItem().toString().trim());
 
         int yearOfRoommateFrom = Integer.parseInt(yearFrom.getText().toString().trim());
         int yearOfRoommateTo = Integer.parseInt(yearTo.getText().toString().trim());
 
-        char gender = 'M';
+        char gender = 0;
+
+        if(maleGender.isChecked()){
+            gender = 'M';
+        }
         if(femaleGender.isChecked()){
             gender = 'Z';
-        }
-        if(maleFemale.isChecked()){
-           gender = 'S';
-           // kao svejedno
         }
 
         boolean roomSolo = true;
@@ -145,23 +161,54 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
             pet = true;
         }
 
-        /*Zapis u objekt*/
-        // 1. uzmi objekt
-        Intent i  = getIntent();
-        userActive = (activeUser)i.getSerializableExtra("InhUser3");
-
         userActive.setCimer_godine_od(yearOfRoommateFrom);
         userActive.setCimer_godine_do(yearOfRoommateTo);
         userActive.setCimer_ljubimac(pet);
-        userActive.setCimer_spol(gender);
         userActive.setCimer_pusac(smoker);
+        userActive.setCimer_spol(gender);
 
-        userActive.setId_fakultet(1); // ISPRAVITI
         databaseHelper.insertKorisnika(userActive);
+
+        // dohvacanje unesenog korisnika skupa sa automatski postavljenim id-om
+        List<Korisnik> userList = new ArrayList<Korisnik>();
+        String whereClause = "username = ?";
+        String[] whereArgs = new String[1];
+        whereArgs[0] = userActive.getUsername();
+        userList.addAll(databaseHelper.queryKorisnik(whereClause, whereArgs, null, null, null));
+
+        List<Kvart> locationList = new ArrayList<Kvart>();
+        whereArgs[0] = location;
+        locationList.clear();
+        locationList.addAll(databaseHelper.queryKvart("naziv = ?", whereArgs, null, null, null));
+        int idLocation = locationList.get(0).getId_kvart();
+
+        if(!userList.isEmpty()){
+            // unos podataka u tablicu NudimStan
+            userActive = userList.get(0);
+            haveApt.setId_korisnik(userActive.getId_korisnik());
+            haveApt.setId_kvart(idLocation);
+            haveApt.setZasebna_soba(roomSolo);
+            haveApt.setCijena(priceIntTo);
+
+            databaseHelper.insertNudimStan(haveApt);
+
+            // unos podataka u tablicu KorisnikLjubimac
+            for(int i = 0; i < pets.length; i++){
+                if(pets[i]){
+                    havePet.setId_ljubimac(i+1);
+                    havePet.setId_korisnik(userActive.getId_korisnik());
+                    databaseHelper.insertKorisnikLjubimac(havePet);
+                }
+            }
+
+        } else{
+            // Dodati alert: Doslo je do greske
+        }
+
 
         //2. prosljedi dalje
         Intent i2 = new Intent(this, HomePage.class);
-        i2.putExtra("InhUser4", userActive);
+        i2.putExtra("InhUser", userActive);
         startActivity(i2);
 
         /* ANGEL ----> mozes ovdje sve upisati u bazu jer je ovo zadnja stranica

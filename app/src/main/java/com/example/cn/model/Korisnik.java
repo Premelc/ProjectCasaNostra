@@ -1,10 +1,12 @@
 package com.example.cn.model;
 
-public abstract class Korisnik implements Comparable {
+import java.io.Serializable;
+
+public /*abstract*/ class Korisnik /*implements Comparable*/ implements Serializable {
     private int id_korisnik;
-    // private String username;
-    // private String email;
-    // private String password;
+    private String username;
+    private String email;
+    private String password;
     private String ime;
     private int godina_rodenja;
     private String opis;
@@ -22,6 +24,29 @@ public abstract class Korisnik implements Comparable {
     private boolean cimer_pusac;
     private boolean cimer_ljubimac;
 
+    @Override
+    public String toString() {
+        return "Korisnik{" +
+                "id_korisnik=" + id_korisnik +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", ime='" + ime + '\'' +
+                ", godina_rodenja=" + godina_rodenja +
+                ", opis='" + opis + '\'' +
+                ", spol=" + spol +
+                ", id_fakultet=" + id_fakultet +
+                ", pusac=" + pusac +
+                ", ljubimac=" + ljubimac +
+                ", miran_zivot=" + miran_zivot +
+                ", trazimStan=" + trazimStan +
+                ", cimer_spol=" + cimer_spol +
+                ", cimer_godine_od=" + cimer_godine_od +
+                ", cimer_godine_do=" + cimer_godine_do +
+                ", cimer_pusac=" + cimer_pusac +
+                ", cimer_ljubimac=" + cimer_ljubimac +
+                '}';
+    }
 
     public int getId_korisnik() {
         return id_korisnik;
@@ -29,7 +54,7 @@ public abstract class Korisnik implements Comparable {
     public void setId_korisnik(int id) {
         this.id_korisnik = id;
     }
-    /*
+
     public String getUsername() {
         return username;
     }
@@ -48,7 +73,7 @@ public abstract class Korisnik implements Comparable {
      public void setPassword(String password) {
          this.password = password;
      }
- */
+
 
     public boolean isTrazimStan() {
         return trazimStan;
@@ -162,7 +187,7 @@ public abstract class Korisnik implements Comparable {
         this.miran_zivot = miran_zivot;
     }
 
-    public abstract void setCijenaMin(int cijena);
+    /*public abstract void setCijenaMin(int cijena);
 
     public abstract void setCijenaMax(int cijena_do);
 
@@ -180,6 +205,6 @@ public abstract class Korisnik implements Comparable {
     public abstract int getId_kvart();
 
     public abstract void setId_lokacija(int b);
-    public abstract int getId_lokacija();
+    public abstract int getId_lokacija();*/
 
 }

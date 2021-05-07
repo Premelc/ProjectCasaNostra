@@ -24,7 +24,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database Version
-    private static final int DATABASE_VERSION = 45;
+    private static final int DATABASE_VERSION = 58;
     // Database Name
     private static final String DATABASE_NAME = "CasaNostra.db";
 
@@ -77,11 +77,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             KORISNIK_USERNAME + " varchar(255) NOT NULL, " +
             KORISNIK_PASSWORD + " varchar(255) NOT NULL, " +
             KORISNIK_EMAIL + " varchar(255) NOT NULL, " +
-            KORISNIK_IME + " varchar(255) DEFAULT NULL, " +
+            KORISNIK_IME + " varchar(255) NOT NULL, " +
             KORISNIK_GODINA + " int(11) NOT NULL, " +
-            KORISNIK_OPIS + " varchar(255) NOT NULL, " +
+            KORISNIK_OPIS + " varchar(255) DEFAULT NULL, " +
             KORISNIK_SPOL + " char(8) NOT NULL, " +
-            KORISNIK_ID_FAKULTET + " int(11) DEFAULT NULL," +
+            KORISNIK_ID_FAKULTET + " int(11) NOT NULL," +
             KORISNIK_PUSAC + " tinyint(1) NOT NULL, " +
             KORISNIK_LJUBIMAC + " tinyint(1) NOT NULL, " +
             KORISNIK_CIMER_SPOL + " char(8) DEFAULT NULL, " +
@@ -113,7 +113,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private String CREATE_KORISNIK_LJUBIMAC_RELATION = "CREATE TABLE " + RELATION_KORISNIK_LJUBIMAC + "(" +
             RELATION_KORISNIK_ID + " INTEGER NOT NULL, " +
             RELATION_LJUBIMAC_ID + " INTEGER NOT NULL, " +
-            "FOREIGN KEY (" + RELATION_KORISNIK_ID + ") REFERENCES " + TABLE_KORISNIK + "(" + KORISNIK_ID + "), " +
+            "FOREIGN KEY (" + RELATION_KORISNIK_ID + ") REFERENCES " + TABLE_KORISNIK + "(" + KORISNIK_ID + ") ON DELETE CASCADE, " +
             "FOREIGN KEY (" + RELATION_LJUBIMAC_ID + ") REFERENCES " + TABLE_LJUBIMAC + "(" + LJUBIMAC_ID + "), " +
             "PRIMARY KEY (" + RELATION_KORISNIK_ID + ", " + RELATION_LJUBIMAC_ID + ")" +
             ")";
@@ -148,17 +148,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TRAZIM_STAN_ID_POTRAGA = "id_potraga";
     private static final String TRAZIM_STAN_ID_KORISNIK = "id_korisnik";
-    private static final String TRAZIM_STAN_CIJENA_OD = "cijena_od";
     private static final String TRAZIM_STAN_CIJENA_DO = "cijena_do";
     private static final String TRAZIM_STAN_ZASEBNA_SOBA = "zasebna_soba";
 
     private String CREATE_TRAZIM_STAN_TABLE = "CREATE TABLE " + TABLE_TRAZIM_STAN + "(" +
             TRAZIM_STAN_ID_POTRAGA + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             TRAZIM_STAN_ID_KORISNIK + " INTEGER NOT NULL, " +
-            TRAZIM_STAN_CIJENA_OD + " double DEFAULT NULL, " +
             TRAZIM_STAN_CIJENA_DO + " double DEFAULT NULL, " +
             TRAZIM_STAN_ZASEBNA_SOBA + " tinyint(1) NOT NULL, " +
-            "FOREIGN KEY (" + TRAZIM_STAN_ID_KORISNIK + ") REFERENCES " + TABLE_KORISNIK + "(" + KORISNIK_ID + ")" +
+            "FOREIGN KEY (" + TRAZIM_STAN_ID_KORISNIK + ") REFERENCES " + TABLE_KORISNIK + "(" + KORISNIK_ID + ") ON DELETE CASCADE" +
             ")";
 
     // Tablica nudim_stan
@@ -176,8 +174,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             NUDIM_STAN_CIJENA + " double DEFAULT NULL, " +
             NUDIM_STAN_ID_KVART + " INTEGER NOT NULL, " +
             NUDIM_STAN_ZASEBNA_SOBA + " tinyint(1) NOT NULL, " +
-            "FOREIGN KEY (" + NUDIM_STAN_ID_KORISNIK + ") REFERENCES " + TABLE_KORISNIK + "(" + KORISNIK_ID + "), " +
-            "FOREIGN KEY (" + NUDIM_STAN_ID_KVART + ") REFERENCES " + TABLE_KVART + "(" + KVART_ID + ")" +
+            "FOREIGN KEY (" + NUDIM_STAN_ID_KORISNIK + ") REFERENCES " + TABLE_KORISNIK + "(" + KORISNIK_ID + ") ON DELETE CASCADE, " +
+            "FOREIGN KEY (" + NUDIM_STAN_ID_KVART + ") REFERENCES " + TABLE_KVART + "(" + KVART_ID + ") " +
             ")";
 
     // Veza potraga_lokacija
@@ -189,7 +187,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private String CREATE_POTRAGA_LOKACIJA_RELATION = "CREATE TABLE " + RELATION_POTRAGA_LOKACIJA + "(" +
             RELATION_POTRAGA_ID + " INTEGER NOT NULL, " +
             RELATION_LOKACIJA_ID + " INTEGER NOT NULL, " +
-            "FOREIGN KEY (" + RELATION_POTRAGA_ID + ") REFERENCES " + TABLE_TRAZIM_STAN + "(" + TRAZIM_STAN_ID_POTRAGA + "), " +
+            "FOREIGN KEY (" + RELATION_POTRAGA_ID + ") REFERENCES " + TABLE_TRAZIM_STAN + "(" + TRAZIM_STAN_ID_POTRAGA + ")  ON DELETE CASCADE, " +
             "FOREIGN KEY (" + RELATION_LOKACIJA_ID + ") REFERENCES " + TABLE_LOKACIJA + "(" + LOKACIJA_ID + "), " +
             "PRIMARY KEY (" + RELATION_POTRAGA_ID + ", " + RELATION_LOKACIJA_ID + ")" +
             ")";
@@ -207,8 +205,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             SWIPE_ID2 + " INTEGER NOT NULL, " +
             SWIPE_SWIPE1 + " tinyint(1) DEFAULT NULL, " +
             SWIPE_SWIPE2 + " tinyint(1) DEFAULT NULL, " +
-            "FOREIGN KEY (" + SWIPE_ID1 + ") REFERENCES " + TABLE_KORISNIK + "(" + KORISNIK_ID + "), " +
-            "FOREIGN KEY (" + SWIPE_ID2 + ") REFERENCES " + TABLE_KORISNIK + "(" + KORISNIK_ID + "), " +
+            "FOREIGN KEY (" + SWIPE_ID1 + ") REFERENCES " + TABLE_KORISNIK + "(" + KORISNIK_ID + ") ON DELETE CASCADE, " +
+            "FOREIGN KEY (" + SWIPE_ID2 + ") REFERENCES " + TABLE_KORISNIK + "(" + KORISNIK_ID + ") ON DELETE CASCADE, " +
             "PRIMARY KEY (" + SWIPE_ID1 + ", " + SWIPE_ID2 + ")" +
             ")";
 
@@ -423,7 +421,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertKorisnika(activeUser korisnik) {
+    public void insertKorisnika(Korisnik korisnik) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KORISNIK_USERNAME, korisnik.getUsername());
@@ -452,7 +450,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TRAZIM_STAN_ID_KORISNIK, trazimStan.getId_korisnik());
-        values.put(TRAZIM_STAN_CIJENA_OD, trazimStan.getCijena_od());
         values.put(TRAZIM_STAN_CIJENA_DO, trazimStan.getCijena_do());
         values.put(TRAZIM_STAN_ZASEBNA_SOBA, trazimStan.isZasebna_soba());
 
@@ -475,11 +472,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void insertPotragaLokacija(PotragaLokacija potragaLokacija) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(RELATION_LOKACIJA_ID, potragaLokacija.getId_lokacija());
         values.put(RELATION_POTRAGA_ID, potragaLokacija.getId_potraga());
-        values.put(RELATION_POTRAGA_ID, potragaLokacija.getId_lokacija());
 
         // Inserting Row
-        db.insert(TABLE_TRAZIM_STAN, null, values);
+        db.insert(RELATION_POTRAGA_LOKACIJA, null, values);
         db.close();
     }
 
@@ -503,7 +500,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(RELATION_LJUBIMAC_ID, korisnikLjubimac.getId_ljubimac());
 
         // Inserting Row
-        db.insert(TABLE_TRAZIM_STAN, null, values);
+        db.insert(RELATION_KORISNIK_LJUBIMAC, null, values);
         db.close();
     }
 
@@ -516,7 +513,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(SWIPE_SWIPE2, swipe.isSwipe_2());
 
         // Inserting Row
-        db.insert(TABLE_TRAZIM_STAN, null, values);
+        db.insert(TABLE_SWIPE, null, values);
         db.close();
     }
 
@@ -535,12 +532,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Traversing through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Korisnik korisnik = new otherUser();
+                Korisnik korisnik = new Korisnik();
                 korisnik.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_ID))));
-               /* korisnik.setUsername(cursor.getString(cursor.getColumnIndex(KORISNIK_USERNAME)));
+                korisnik.setUsername(cursor.getString(cursor.getColumnIndex(KORISNIK_USERNAME)));
                 korisnik.setEmail(cursor.getString(cursor.getColumnIndex(KORISNIK_EMAIL)));
                 korisnik.setPassword(cursor.getString(cursor.getColumnIndex(KORISNIK_PASSWORD)));
-                */
                 korisnik.setIme(cursor.getString(cursor.getColumnIndex(KORISNIK_IME)));
                 korisnik.setGodina_rodenja(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_GODINA))));
                 korisnik.setOpis(cursor.getString(cursor.getColumnIndex(KORISNIK_OPIS)));
@@ -594,7 +590,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //NOVO dodao Premo
     //Query koji vraca samo jednog korisnika (Koristi za dohvacanje aktivnog korisnika)
-    public activeUser queryActiveUser(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
+    /*public activeUser queryActiveUser(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
 
         SQLiteDatabase db = this.getReadableDatabase();
         activeUser activeUser = new activeUser();
@@ -661,14 +657,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         // return active user
         return activeUser;
-    }
+    }*/
 
 
     //NOVO dodao Premo
     //Query koji vraca sve korisnike koji zadovoljavaju zahtjeve
     //Nova funkcija jer mislim da ih je bolje zapisivati bez username,password,email itd
     //Aktivnom korisniku ti podaci nisu bitni pa bi samo predstavljali neki security risk
-    public List<otherUser> queryOtherUser(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
+    /*public List<otherUser> queryOtherUser(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
 
         List<otherUser> userList = new ArrayList<otherUser>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -737,8 +733,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         // return user list
         return userList;
-    }
-
+    }*/
 
     public List<Fakultet> queryFakultet(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
 
@@ -872,7 +867,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 TrazimStan trazimStan = new TrazimStan();
                 trazimStan.setId_potraga(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ID_POTRAGA))));
                 trazimStan.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ID_KORISNIK))));
-                trazimStan.setCijena_od(Double.parseDouble(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_CIJENA_OD))));
                 trazimStan.setCijena_do(Double.parseDouble(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_CIJENA_DO))));
                 if(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA) == 1){
                     trazimStan.setZasebna_soba(true);
@@ -907,7 +901,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 trazimStan.setId_potraga(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ID_POTRAGA))));
                 trazimStan.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ID_KORISNIK))));
-                trazimStan.setCijena_od(Double.parseDouble(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_CIJENA_OD))));
                 trazimStan.setCijena_do(Double.parseDouble(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_CIJENA_DO))));
                 if(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA) == 1){
                     trazimStan.setZasebna_soba(true);
@@ -1153,7 +1146,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      *
      * @param korisnik
      */
-    public void updateKorisnik(activeUser korisnik) {
+    public void updateKorisnik(Korisnik korisnik) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KORISNIK_USERNAME, korisnik.getUsername());

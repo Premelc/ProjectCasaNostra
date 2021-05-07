@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.cn.helpers.InputValidation;
+import com.example.cn.model.Korisnik;
 import com.example.cn.sql.DatabaseHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -37,7 +38,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private DatabaseHelper databaseHelper;
 
     private ConstraintLayout constraint;
-    activeUser userActive = new activeUser();
+    Korisnik userActive = new Korisnik();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
