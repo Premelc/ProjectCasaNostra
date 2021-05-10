@@ -3,16 +3,20 @@ package com.example.cn;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.cn.model.Korisnik;
 import com.example.cn.model.KorisnikLjubimac;
@@ -30,13 +34,15 @@ import java.util.List;
 public class ApartmentAndRoommate extends AppCompatActivity implements View.OnClickListener{
     private AppCompatActivity activity = ApartmentAndRoommate.this;
 
-    private Spinner priceTo;
+    private TextView seekBarValue;
+    private SeekBar seekBar;
+    private int priceTo = 5000;
     private CheckBox west1, east1, center1, suburbs1, other1;
     private RadioButton femaleGender, maleGender, maleFemale;
     private EditText yearFrom, yearTo;
     private RadioButton roommateSmoker, roommateNonSmoker;
     private RadioButton roommatePet, roommateNoPet;
-    private AppCompatButton button;
+    private Button button;
     private DatabaseHelper databaseHelper = new DatabaseHelper(activity);
 
     TrazimStan needApt = new TrazimStan();
@@ -51,10 +57,6 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
         initViews();
         initListeners();
 
-        Spinner dropdown = findViewById(R.id.to2);
-        String[] items = new String[]{"1000", "1500", "2000", "2500", "3000", "Cijena mi nije bitna"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        dropdown.setAdapter(adapter);
 
     }
 
@@ -69,13 +71,37 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
 
     private void initListeners() {
         button.setOnClickListener(this);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int value = (progress * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
+                seekBarValue.setText(""+progress+ " kn");
+                seekBarValue.setX(seekBar.getX() + value - 60);
+                priceTo = progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+              //seekBarValue.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+              //seekBarValue.setVisibility(View.INVISIBLE);
+            }
+        });
+
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
 
+    @SuppressLint("WrongViewCast")
     private void initViews(){
-        priceTo = findViewById(R.id.to2);
+        seekBarValue = findViewById(R.id.seekBarValue);
+        seekBar = findViewById(R.id.seekBar);
 
         west1 = findViewById(R.id.west);
         east1 = findViewById(R.id.east);
@@ -178,13 +204,9 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
             // unos podataka u tablicu TrazimStan
             userActive = userList.get(0);
             needApt.setId_korisnik(userActive.getId_korisnik());
+            needApt.setCijena_do(priceTo);
             needApt.setZasebna_soba(true); // ISPRAVITI kad se doda ta mogucnost
 
-            int priceIntTo;
-            if(priceTo.getSelectedItem().toString().trim() != "Cijena mi nije bitna"){
-                priceIntTo = Integer.parseInt(priceTo.getSelectedItem().toString().trim());
-                needApt.setCijena_do(priceIntTo);
-            }
 
             databaseHelper.insertTrazimStan(needApt);
 
