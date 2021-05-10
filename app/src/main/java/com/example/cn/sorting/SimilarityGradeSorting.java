@@ -25,7 +25,7 @@ public class SimilarityGradeSorting {
     //klasa u kojoj odredjujemo ocjenu slicnosti aktivnog korisnika sa svim ostalim korisnicima u bazi
     //Instancira se jednom prilikom ulaska u aplikaciju te vraca popis svih korisnika sortiran po slicnosti
 
-    public List<Korisnik> Grade(activeUser actUsr , DatabaseHelper dbh){
+    /*public List<Korisnik> Grade(activeUser actUsr , DatabaseHelper dbh){
 
         List<Korisnik> othrUsr = pullData(dbh , actUsr);
 
@@ -146,5 +146,5 @@ public class SimilarityGradeSorting {
     public List<Korisnik> sort(List<Korisnik>list){
         Collections.sort(list);
         return list;
-    }
+    }*/
 }

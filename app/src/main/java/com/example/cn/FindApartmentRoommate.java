@@ -9,13 +9,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 
+import com.example.cn.model.Korisnik;
+
 import java.io.Serializable;
 
 public class FindApartmentRoommate extends AboutYou {
     private AppCompatActivity activity = FindApartmentRoommate.this;
     private RadioButton roommateAndApartment, onlyRoommate;
 
-    activeUser userActive = new activeUser();
+    Korisnik userActive = new Korisnik();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -27,7 +29,7 @@ public class FindApartmentRoommate extends AboutYou {
         initObjects();
 
         /*Intent i  = getIntent();
-        korisnik = (activeUser)i.getSerializableExtra("InhUser2");*/
+        korisnik = (Korisnik)i.getSerializableExtra("InhUser2");*/
 
     }
 
@@ -41,7 +43,7 @@ public class FindApartmentRoommate extends AboutYou {
         /*Na ovaj nacin se nasljeduje objekt instanciran od prethodnog activityja
          * Valjda https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android */
         /*Intent i  = getIntent();
-        korisnik = (activeUser)i.getSerializableExtra("InhUser");*/
+        korisnik = (Korisnik)i.getSerializableExtra("InhUser");*/
     }
 
     public void onlyRoommate(View v){
@@ -50,12 +52,14 @@ public class FindApartmentRoommate extends AboutYou {
         if(roommate.isChecked()){
             // Zapis odgovora u klasu
             Intent i  = getIntent();
-            activeUser userActive = (activeUser)i.getSerializableExtra("InhUser2");
+            Korisnik userActive = (Korisnik) i.getSerializableExtra("InhUser");
+            boolean[] pets = i.getBooleanArrayExtra("Pets");
 
             userActive.setTrazimStan(false);
 
             Intent i2 = new Intent(this, OnlyRoommate.class);
-            i2.putExtra("InhUser3", userActive);
+            i2.putExtra("InhUser", userActive);
+            i2.putExtra("Pets", pets);
             startActivity(i2);
         }
     }
@@ -65,11 +69,15 @@ public class FindApartmentRoommate extends AboutYou {
         if(roommateApartment.isChecked()){
 
             Intent i  = getIntent();
-            activeUser userActive = (activeUser)i.getSerializableExtra("InhUser2");
+            Korisnik userActive = (Korisnik) i.getSerializableExtra("InhUser");
+            boolean[] pets = i.getBooleanArrayExtra("Pets");
+
+
             userActive.setTrazimStan(true);
 
             Intent i2 = new Intent(this, ApartmentAndRoommate.class);
-            i2.putExtra("InhUser3", userActive);
+            i2.putExtra("InhUser", userActive);
+            i2.putExtra("Pets", pets);
             startActivity(i2);
 
         }

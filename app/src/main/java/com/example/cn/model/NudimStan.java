@@ -1,11 +1,24 @@
 package com.example.cn.model;
 
-public class NudimStan {
+import java.io.Serializable;
+
+public class NudimStan implements Serializable {
     private int id_stan;
     private int id_korisnik;
     private double cijena;
     private int id_kvart;
     private boolean zasebna_soba;
+
+    @Override
+    public String toString() {
+        return "NudimStan{" +
+                "id_stan=" + id_stan +
+                ", id_korisnik=" + id_korisnik +
+                ", cijena=" + cijena +
+                ", id_kvart=" + id_kvart +
+                ", zasebna_soba=" + zasebna_soba +
+                '}';
+    }
 
     public int getId_stan() {
         return id_stan;
