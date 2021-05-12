@@ -11,8 +11,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import com.example.cn.model.Fakultet;
 import com.example.cn.model.Korisnik;
@@ -27,17 +29,18 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener 
     private AppCompatActivity activity = AboutYou.this;
     private DatabaseHelper databaseHelper;
     private List<Fakultet> listFakultet;
+    private int userYear;
 
     /*Varijable iz kojih je potrebno citati odgovore*/
-    private EditText year;
     private RadioButton genderF, genderM;
-    private RadioButton smoker,nonSmoker;
+    private androidx.appcompat.widget.SwitchCompat smoker;
     private Spinner faculty;
     private RadioButton party, noParty;
-    private RadioButton pet, noPet;
-    private CheckBox dog, cat, parrot, hamster, rabbit, other;
+    private androidx.appcompat.widget.SwitchCompat pet;
+    private CheckBox dog, cat, parrot, hamster, rabbit, snake, other;
     private Spinner dropdown;
     private AppCompatButton appCompatButtonAboutYou;
+    private NumberPicker year;
     Korisnik userActive = new Korisnik();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -70,12 +73,15 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener 
         * u klase metodom aboutYouDetails()*/
 
         year = findViewById(R.id.yearOfBirth);
+        year.setMaxValue(2021);
+        year.setMinValue(1900);
+        year.setValue(2000);
+        year.setWrapSelectorWheel(false);
 
         genderF = findViewById(R.id.female);
         genderM = findViewById(R.id.male);
 
         smoker = findViewById(R.id.smoker);
-        nonSmoker = findViewById(R.id.nonSmoker);
 
         dropdown = findViewById(R.id.faculty);
 
@@ -83,13 +89,13 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener 
         noParty = findViewById(R.id.noParty);
 
         pet = findViewById(R.id.pet);
-        noPet = findViewById(R.id.petNo);
 
         dog = findViewById(R.id.dog);
         cat = findViewById(R.id.cat);
         parrot = findViewById(R.id.parrot);
         rabbit = findViewById(R.id.rabbit);
         hamster = findViewById(R.id.hamster);
+        snake = findViewById(R.id.snake);
         other = findViewById(R.id.other);
 
         appCompatButtonAboutYou = findViewById(R.id.appCompatButtonAboutYou);
@@ -107,7 +113,8 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener 
     public void aboutYouDetails () {
         /* Provjera godine --> ili staviti u dropdown */
         /* TODO: Trebat ce dolaziti obavijesti ako user ne unese ispravnu godinu, kasnije cijenu stana itd*/
-        int userYear = Integer.parseInt(year.getText().toString().trim());
+
+        userYear = year.getValue();
 
         String faculty = dropdown.getSelectedItem().toString().trim();
 
@@ -122,9 +129,9 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener 
             userGender = 'Z';
         }
 
-        boolean userSmoker = true;
-        if(nonSmoker.isChecked()){
-            userSmoker = false;
+        boolean userSmoker = false;
+        if(smoker.isChecked()){
+            userSmoker = true;
         }
 
         boolean noPartyLifestyle = true;
@@ -132,9 +139,9 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener 
             noPartyLifestyle = false;
         }
 
-        boolean userHasPet = true;
-        if(noPet.isChecked()){
-            userHasPet = false;
+        boolean userHasPet = false;
+        if(pet.isChecked()){
+            userHasPet = true;
         }
 
         // postavljanje svih ljubimaca na false
@@ -157,8 +164,9 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener 
             if(rabbit.isChecked()){
                 pets[4] = true;
             }
-
-            // !!! FALI: zmija
+            if(snake.isChecked()){
+                pets[5] = true;
+            }
 
         }
 
@@ -184,25 +192,22 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener 
 
     /*Hide/show checkboxes*/
     public void chooseAnimal (View view){
-        RadioButton animal = (RadioButton) view;
+        androidx.appcompat.widget.SwitchCompat animal = (androidx.appcompat.widget.SwitchCompat) view;
         if (animal.isChecked()) {
             findViewById(R.id.dog).setVisibility(View.VISIBLE);
             findViewById(R.id.cat).setVisibility(View.VISIBLE);
             findViewById(R.id.rabbit).setVisibility(View.VISIBLE);
             findViewById(R.id.hamster).setVisibility(View.VISIBLE);
             findViewById(R.id.parrot).setVisibility(View.VISIBLE);
+            findViewById(R.id.snake).setVisibility(View.VISIBLE);
             findViewById(R.id.other).setVisibility(View.VISIBLE);
-
-        }
-    }
-    public void noAnimal (View v){
-        RadioButton animal = (RadioButton) v;
-        if (animal.isChecked()) {
+        } else{
             findViewById(R.id.dog).setVisibility(View.GONE);
             findViewById(R.id.cat).setVisibility(View.GONE);
             findViewById(R.id.rabbit).setVisibility(View.GONE);
             findViewById(R.id.hamster).setVisibility(View.GONE);
             findViewById(R.id.parrot).setVisibility(View.GONE);
+            findViewById(R.id.snake).setVisibility(View.GONE);
             findViewById(R.id.other).setVisibility(View.GONE);
         }
     }

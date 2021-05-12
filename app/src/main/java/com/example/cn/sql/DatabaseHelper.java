@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.example.cn.activeUser;
-import com.example.cn.model.Admin;
 import com.example.cn.model.Fakultet;
 import com.example.cn.model.Korisnik;
 import com.example.cn.model.KorisnikLjubimac;
@@ -24,7 +23,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database Version
-    private static final int DATABASE_VERSION = 58;
+    private static final int DATABASE_VERSION = 59;
     // Database Name
     private static final String DATABASE_NAME = "CasaNostra.db";
 
@@ -39,16 +38,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             FAKULTET_NAZIV + " varchar(255) NOT NULL" +
             ")";
 
-    //Tablica admin
-    private static final String TABLE_ADMIN = "Admin";
-    private static final String ADMIN_ID = "id_admin";
-    private static final String ADMIN_USERNAME = "username_admin";
-    private static final String ADMIN_PASSWORD = "password_admin";
-
-    private String CREATE_ADMIN_TABLE = "CREATE TABLE " + TABLE_ADMIN + " (" +
-            ADMIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            ADMIN_USERNAME + " varchar(255) NOT NULL, " + ADMIN_PASSWORD + " varchar(255) NOT NULL" +
-            ")";
 
 
     // Tablica korisnik
@@ -221,7 +210,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private String DROP_NUDIM_STAN_TABLE = "DROP TABLE IF EXISTS " + TABLE_NUDIM_STAN;
     private String DROP_POTRAGA_LOKACIJA_RELATION = "DROP TABLE IF EXISTS " + RELATION_POTRAGA_LOKACIJA;
     private String DROP_SWIPE_TABLE = "DROP TABLE IF EXISTS " + TABLE_SWIPE;
-    private String DROP_ADMIN_TABLE = "DROP TABLE IF EXISTS " + TABLE_ADMIN;
 
 
 
@@ -241,7 +229,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
-        db.execSQL(CREATE_ADMIN_TABLE);
         db.execSQL(CREATE_FAKULTET_TABLE);
         values.put(FAKULTET_NAZIV, "Filozofski fakultet u Rijeci");
         db.insert(TABLE_FAKULTET, null, values);
@@ -406,7 +393,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //Drop User Table if exist
-        db.execSQL(DROP_ADMIN_TABLE);
         db.execSQL(DROP_SWIPE_TABLE);
         db.execSQL(DROP_POTRAGA_LOKACIJA_RELATION);
         db.execSQL(DROP_NUDIM_STAN_TABLE);
@@ -432,14 +418,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KORISNIK_OPIS, korisnik.getOpis());
         values.put(KORISNIK_SPOL, (int) korisnik.getSpol());
         values.put(KORISNIK_ID_FAKULTET, korisnik.getId_fakultet());
-        values.put(KORISNIK_PUSAC, korisnik.isPusac());
-        values.put(KORISNIK_LJUBIMAC, korisnik.isLjubimac());
+
+        int pusac = (korisnik.isPusac()) ? 1 : 0;
+        values.put(KORISNIK_PUSAC, pusac);
+
+        int ljubimac = (korisnik.isLjubimac()) ? 1 : 0;
+        values.put(KORISNIK_LJUBIMAC, ljubimac);
+
         values.put(KORISNIK_CIMER_SPOL, (int) korisnik.getCimer_spol());
         values.put(KORISNIK_CIMER_GODINE_OD, korisnik.getCimer_godine_od());
         values.put(KORISNIK_CIMER_GODINE_DO, korisnik.getCimer_godine_do());
-        values.put(KORISNIK_CIMER_PUSAC, korisnik.isCimer_pusac());
-        values.put(KORISNIK_CIMER_LJUBIMAC, korisnik.isCimer_ljubimac());
-        values.put(KORISNIK_MIRAN_ZIVOT, korisnik.isMiran_zivot());
+
+        int cimerPusac = (korisnik.isCimer_pusac()) ? 1 : 0;
+        values.put(KORISNIK_CIMER_PUSAC, cimerPusac);
+
+        int cimerLjubimac = (korisnik.isCimer_ljubimac()) ? 1 : 0;
+        values.put(KORISNIK_CIMER_LJUBIMAC, cimerLjubimac);
+
+        int miranZivot = (korisnik.isMiran_zivot()) ? 1 : 0;
+        values.put(KORISNIK_MIRAN_ZIVOT, miranZivot);
 
         // Inserting Row
         db.insert(TABLE_KORISNIK, null, values);
@@ -451,20 +448,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(TRAZIM_STAN_ID_KORISNIK, trazimStan.getId_korisnik());
         values.put(TRAZIM_STAN_CIJENA_DO, trazimStan.getCijena_do());
-        values.put(TRAZIM_STAN_ZASEBNA_SOBA, trazimStan.isZasebna_soba());
+
+        int zasebnaSoba = (trazimStan.isZasebna_soba()) ? 1 : 0;
+        values.put(TRAZIM_STAN_ZASEBNA_SOBA, zasebnaSoba);
 
         // Inserting Row
         db.insert(TABLE_TRAZIM_STAN, null, values);
-        db.close();
-    }
-
-    public void insertAdmin(Admin admin) {
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(ADMIN_USERNAME, admin.getUsername());
-        values.put(ADMIN_PASSWORD, admin.getPassword());
-        db.insert(TABLE_ADMIN, null, values);
         db.close();
     }
 
@@ -486,7 +475,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(NUDIM_STAN_ID_KORISNIK, nudimStan.getId_korisnik());
         values.put(NUDIM_STAN_CIJENA, nudimStan.getCijena());
         values.put(NUDIM_STAN_ID_KVART, nudimStan.getId_kvart());
-        values.put(NUDIM_STAN_ZASEBNA_SOBA, nudimStan.isZasebna_soba());
+
+        int zasebnaSoba = (nudimStan.isZasebna_soba()) ? 1 : 0;
+        values.put(NUDIM_STAN_ZASEBNA_SOBA, zasebnaSoba);
 
         // Inserting Row
         db.insert(TABLE_NUDIM_STAN, null, values);
@@ -509,8 +500,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(SWIPE_ID1, swipe.getId_1());
         values.put(SWIPE_ID2, swipe.getId_2());
-        values.put(SWIPE_SWIPE1, swipe.isSwipe_1());
-        values.put(SWIPE_SWIPE2, swipe.isSwipe_2());
+
+        int swipe1 = (swipe.isSwipe_1()) ? 1 : 0;
+        values.put(SWIPE_SWIPE1, swipe1);
+
+        int swipe2 = (swipe.isSwipe_2()) ? 1 : 0;
+        values.put(SWIPE_SWIPE2, swipe2);
 
         // Inserting Row
         db.insert(TABLE_SWIPE, null, values);
@@ -540,42 +535,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 korisnik.setIme(cursor.getString(cursor.getColumnIndex(KORISNIK_IME)));
                 korisnik.setGodina_rodenja(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_GODINA))));
                 korisnik.setOpis(cursor.getString(cursor.getColumnIndex(KORISNIK_OPIS)));
-                if(cursor.getString(cursor.getColumnIndex(KORISNIK_SPOL)) == "M"){
-                    korisnik.setSpol('M');
-                } else if(cursor.getString(cursor.getColumnIndex(KORISNIK_SPOL)) == "Z"){
-                    korisnik.setSpol('Z');
-                }
+
+                int korisnikSpol = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_SPOL)));
+                korisnik.setSpol((char) korisnikSpol);
+
                 korisnik.setId_fakultet(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_ID_FAKULTET))));
-                if(cursor.getColumnIndex(KORISNIK_PUSAC) == 1){
+
+                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_PUSAC))) == 1){
                     korisnik.setPusac(true);
-                } else if(cursor.getColumnIndex(KORISNIK_PUSAC) == 0){
+                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_PUSAC))) == 0){
                     korisnik.setPusac(false);
                 }
-                if(cursor.getColumnIndex(KORISNIK_LJUBIMAC) == 1){
+
+                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_LJUBIMAC))) == 1){
                     korisnik.setLjubimac(true);
-                } else if(cursor.getColumnIndex(KORISNIK_LJUBIMAC) == 0){
+                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_LJUBIMAC))) == 0){
                     korisnik.setLjubimac(false);
                 }
-                if(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_SPOL)) == "M"){
-                    korisnik.setCimer_spol('M');
-                } else if(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_SPOL)) == "Z"){
-                    korisnik.setCimer_spol('Z');
-                }
+
+                int cimerSpol = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_SPOL)));
+                korisnik.setCimer_spol((char) cimerSpol);
+
                 korisnik.setCimer_godine_od(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_GODINE_OD))));
                 korisnik.setCimer_godine_do(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_GODINE_DO))));
-                if(cursor.getColumnIndex(KORISNIK_CIMER_PUSAC) == 1){
+                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_PUSAC))) == 1){
                     korisnik.setCimer_pusac(true);
-                } else if(cursor.getColumnIndex(KORISNIK_CIMER_PUSAC) == 0){
+                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_PUSAC))) == 0){
                     korisnik.setCimer_pusac(false);
                 }
-                if(cursor.getColumnIndex(KORISNIK_CIMER_LJUBIMAC) == 1){
+                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_LJUBIMAC))) == 1){
                     korisnik.setCimer_ljubimac(true);
-                } else if(cursor.getColumnIndex(KORISNIK_CIMER_LJUBIMAC) == 0){
+                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_LJUBIMAC))) == 0){
                     korisnik.setCimer_ljubimac(false);
                 }
-                if(cursor.getColumnIndex(KORISNIK_MIRAN_ZIVOT) == 1){
+                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_MIRAN_ZIVOT))) == 1){
                     korisnik.setMiran_zivot(true);
-                } else if(cursor.getColumnIndex(KORISNIK_MIRAN_ZIVOT) == 0){
+                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_MIRAN_ZIVOT))) == 0){
                     korisnik.setMiran_zivot(false);
                 }
                 // Adding user record to list
@@ -868,9 +863,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 trazimStan.setId_potraga(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ID_POTRAGA))));
                 trazimStan.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ID_KORISNIK))));
                 trazimStan.setCijena_do(Double.parseDouble(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_CIJENA_DO))));
-                if(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA) == 1){
+                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA))) == 1){
                     trazimStan.setZasebna_soba(true);
-                } else if(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA) == 0){
+                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA))) == 0){
                     trazimStan.setZasebna_soba(false);
                 }
 
@@ -902,9 +897,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 trazimStan.setId_potraga(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ID_POTRAGA))));
                 trazimStan.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ID_KORISNIK))));
                 trazimStan.setCijena_do(Double.parseDouble(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_CIJENA_DO))));
-                if(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA) == 1){
+                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA))) == 1){
                     trazimStan.setZasebna_soba(true);
-                } else if(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA) == 0) {
+                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA))) == 0) {
                     trazimStan.setZasebna_soba(false);
                 }
             } while (cursor.moveToNext());
@@ -936,9 +931,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 nudimStan.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ID_KORISNIK))));
                 nudimStan.setCijena(Double.parseDouble(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_CIJENA))));
                 nudimStan.setId_kvart(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ID_KVART))));
-                if(cursor.getColumnIndex(NUDIM_STAN_ZASEBNA_SOBA) == 1){
+                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ZASEBNA_SOBA))) == 1){
                     nudimStan.setZasebna_soba(true);
-                } else if(cursor.getColumnIndex(NUDIM_STAN_ZASEBNA_SOBA) == 0){
+                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ZASEBNA_SOBA))) == 0){
                     nudimStan.setZasebna_soba(false);
                 }
 
@@ -972,9 +967,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 nudimStan.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ID_KORISNIK))));
                 nudimStan.setCijena(Double.parseDouble(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_CIJENA))));
                 nudimStan.setId_kvart(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ID_KVART))));
-                if(cursor.getColumnIndex(NUDIM_STAN_ZASEBNA_SOBA) == 1){
+                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ZASEBNA_SOBA))) == 1){
                     nudimStan.setZasebna_soba(true);
-                } else if(cursor.getColumnIndex(NUDIM_STAN_ZASEBNA_SOBA) == 0){
+                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ZASEBNA_SOBA))) == 0){
                     nudimStan.setZasebna_soba(false);
                 }
             } while (cursor.moveToNext());
@@ -1117,14 +1112,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Swipe swipe = new Swipe();
                 swipe.setId_1(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_ID1))));
                 swipe.setId_2(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_ID2))));
-                if(cursor.getColumnIndex(SWIPE_SWIPE1) == 1){
+                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE1))) == 1){
                     swipe.setSwipe_1(true);
-                } else if(cursor.getColumnIndex(SWIPE_SWIPE1) == 0){
+                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE1))) == 0){
                     swipe.setSwipe_1(false);
                 }
-                if(cursor.getColumnIndex(SWIPE_SWIPE2) == 1){
+                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE2))) == 1){
                     swipe.setSwipe_2(true);
-                } else if(cursor.getColumnIndex(SWIPE_SWIPE2) == 0){
+                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE2))) == 0){
                     swipe.setSwipe_2(false);
                 }
 
@@ -1188,7 +1183,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param email
      * @return true/false
      */
-    public boolean checkUser(String email) {
+    public boolean checkUserEmail(String email) {
         // array of columns to fetch
         String[] columns = {
                 KORISNIK_ID
@@ -1219,23 +1214,54 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return false;
     }
-    /**
-     * This method to check user exist or not
-     *
-     * @param email
-     * @param password
-     * @return true/false
-     */
-    public boolean checkUser(String email, String password) {
+    public boolean checkUserUsername(String username) {
         // array of columns to fetch
         String[] columns = {
                 KORISNIK_ID
         };
         SQLiteDatabase db = this.getReadableDatabase();
         // selection criteria
-        String selection = KORISNIK_EMAIL + " = ?" + " AND " + KORISNIK_PASSWORD + " = ?";
+        String selection = KORISNIK_USERNAME + " = ?";
+        // selection argument
+        String[] selectionArgs = {username};
+        // query user table with condition
+        /**
+         * Here query function is used to fetch records from user table this function works like we use sql query.
+         * SQL query equivalent to this query function is
+         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com';
+         */
+        Cursor cursor = db.query(TABLE_KORISNIK, //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                      //filter by row groups
+                null);                      //The sort order
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
+        if (cursorCount > 0) {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * This method to check user exist or not
+     *
+     * @param username
+     * @param password
+     * @return true/false
+     */
+    public boolean checkUser(String username, String password) {
+        // array of columns to fetch
+        String[] columns = {
+                KORISNIK_ID
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+        // selection criteria
+        String selection = KORISNIK_USERNAME + " = ?" + " AND " + KORISNIK_PASSWORD + " = ?";
         // selection arguments
-        String[] selectionArgs = {email, password};
+        String[] selectionArgs = {username, password};
         // query user table with conditions
         /**
          * Here query function is used to fetch records from user table this function works like we use sql query.

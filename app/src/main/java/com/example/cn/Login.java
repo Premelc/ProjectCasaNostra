@@ -26,14 +26,16 @@ import com.google.android.material.textfield.TextInputLayout;
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private final AppCompatActivity activity = Login.this;
-    private TextInputLayout textInputLayoutEmail;
+    private TextInputLayout textInputLayoutUsername;
     private TextInputLayout textInputLayoutPassword;
-    private TextInputEditText textInputEditTextEmail;
+    private TextInputEditText textInputEditTextUsername;
     private TextInputEditText textInputEditTextPassword;
     private AppCompatButton appCompatButtonLogin;
     private AppCompatTextView textViewLinkRegister;
+    private AppCompatTextView adminLink;
     private InputValidation inputValidation;
     private DatabaseHelper databaseHelper;
+
     //private ConstraintLayout constraint;
 
     public static final int LENGTH_LONG = 2;
@@ -59,10 +61,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         startActivity(hPage);
     }
 
-    public void adminPage(View v){
-        Intent aPage = new Intent(this, AdminPage.class);
-        startActivity(aPage);
-    }
 
 
     /**
@@ -70,12 +68,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
      */
 
     private void initViews() {
-        textInputLayoutEmail = (TextInputLayout) findViewById(R.id.textInputLayoutEmail);
+        textInputLayoutUsername = (TextInputLayout) findViewById(R.id.textInputLayoutUsername);
         textInputLayoutPassword = (TextInputLayout) findViewById(R.id.textInputLayoutPassword);
-        textInputEditTextEmail = findViewById(R.id.textInputEditTextEmail);
+        textInputEditTextUsername = (TextInputEditText) findViewById(R.id.textInputEditTextUsername);
         textInputEditTextPassword = (TextInputEditText) findViewById(R.id.textInputEditTextPassword);
         appCompatButtonLogin = (AppCompatButton) findViewById(R.id.appCompatButtonLogin);
         textViewLinkRegister = (AppCompatTextView) findViewById(R.id.textViewLinkRegister);
+        adminLink = (AppCompatTextView) findViewById(R.id.adminLink);
     }
     /**
      * This method is to initialize listeners
@@ -83,6 +82,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private void initListeners() {
         appCompatButtonLogin.setOnClickListener(this);
         textViewLinkRegister.setOnClickListener(this);
+        adminLink.setOnClickListener(this);
     }
     /**
      * This method is to initialize objects to be used
@@ -100,29 +100,37 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.adminLink:
+                if(verifyAdmin()){
+                    Intent aPage = new Intent(this, AdminPage.class);
+                    startActivity(aPage);
+                }
+                break;
             case R.id.appCompatButtonLogin:
-                verifyFromSQLite();
+                verifyFromSQLite(); // dodati preusmjeravanje na home page
                 break;
             case R.id.textViewLinkRegister:
                 // Navigate to RegisterActivity
-                if(verifyFromSQLite()) {
-                    Intent intentRegister = new Intent(getApplicationContext(), Register.class);
-                    startActivity(intentRegister);
-                    break;
-                }
+                Intent intentRegister = new Intent(getApplicationContext(), Register.class);
+                startActivity(intentRegister);
+                break;
         }
     }
     /**
      * This method is to validate the input text fields and verify login credentials from SQLite
      */
     private boolean verifyFromSQLite() {
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
+        boolean check = true;
+        if (!inputValidation.isInputEditTextFilled(textInputEditTextUsername, textInputLayoutUsername, "Unesite korisničko ime")) {
+            check = false;
+        }
+        if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, "Unesite zaporku")) {
+            check = false;
+        }
+        if(!check){
             return false;
         }
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, getString(R.string.error_message_email))) {
-            return false;
-        }
-        if (databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim()
+        if (databaseHelper.checkUser(textInputEditTextUsername.getText().toString().trim()
                 , textInputEditTextPassword.getText().toString().trim())) {
             /*Intent accountsIntent = new Intent(activity, UsersListActivity.class);
             accountsIntent.putExtra("EMAIL", textInputEditTextEmail.getText().toString().trim());
@@ -134,17 +142,48 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             View view = findViewById(R.id.main_layout_id);
 
             /*Snackbar je poruka koja se prikazuje na dnu ekrana i pokaze se nabrzinu kao uspjesna prijava! ili privi email!*/
-            Snackbar.make(view, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
+            Snackbar.make(view, "Pogrešno korisničko ime ili lozinka", Snackbar.LENGTH_LONG).show();
             return false;
         }
     }
+
+    public boolean verifyAdmin(){
+        boolean check = true;
+        if (!inputValidation.isInputEditTextFilled(textInputEditTextUsername, textInputLayoutUsername, "Unesite korisničko ime")) {
+            check = false;
+        }
+        if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, "Unesite zaporku")) {
+            check = false;
+        }
+        if(!check){
+            return false;
+        }
+
+        String username = textInputEditTextUsername.getText().toString().trim();
+        String password = textInputEditTextPassword.getText().toString().trim();
+
+        if((username.equals("admin")) && (password.equals("1234"))){
+            return true;
+        } else{
+            // Snack Bar to show success message that record is wrong
+            View view = findViewById(R.id.main_layout_id);
+
+            /*Snackbar je poruka koja se prikazuje na dnu ekrana i pokaze se nabrzinu kao uspjesna prijava! ili privi email!*/
+            Snackbar.make(view, "Pogrešno korisničko ime ili lozinka", Snackbar.LENGTH_LONG).show();
+
+            return false;
+        }
+    }
+
     /**
      * This method is to empty all input edit text
      */
     private void emptyInputEditText() {
-        textInputEditTextEmail.setText(null);
+        textInputEditTextUsername.setText(null);
         textInputEditTextPassword.setText(null);
     }
+
+
 
 
 }

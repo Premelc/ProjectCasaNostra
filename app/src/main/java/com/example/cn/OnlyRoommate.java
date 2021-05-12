@@ -11,9 +11,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.cn.model.Korisnik;
 import com.example.cn.model.KorisnikLjubimac;
@@ -35,14 +39,16 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
     NudimStan haveApt = new NudimStan();
     KorisnikLjubimac havePet = new KorisnikLjubimac();
 
-    private Spinner priceTo;
+    private EditText price;
     private Spinner locationDropdown;
     private RadioButton room, shRoom;
     private RadioButton femaleGender, maleGender, maleFemale;
-    private EditText yearFrom, yearTo;
+    private NumberPicker yearFrom, yearTo;
     private RadioButton roommateSmoker, roommateNonSmoker;
     private RadioButton roommatePet, roommateNoPet;
-    private AppCompatButton button;
+    private Button button;
+    private TextView error;
+    private ScrollView scrollView;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -65,11 +71,6 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
 
-        /*Za cijenu do*/
-        Spinner dropdown3 = findViewById(R.id.to);
-        String[] items3 = new String[]{"1000", "1500", "2000", "2500", "3000"};
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items3);
-        dropdown3.setAdapter(adapter3);
 
     }
 
@@ -83,7 +84,7 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initViews(){
-        priceTo = findViewById(R.id.to);
+        price = findViewById(R.id.price);
         locationDropdown = findViewById(R.id.location);
 
         room = findViewById(R.id.soloRoom);
@@ -93,8 +94,17 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
         maleGender = findViewById(R.id.male);
         maleFemale = findViewById(R.id.femaleMale);
 
-        yearFrom = findViewById(R.id.year1);
-        yearTo = findViewById(R.id.year2);
+        yearFrom = findViewById(R.id.yearFrom);
+        yearFrom.setMaxValue(2021);
+        yearFrom.setMinValue(1900);
+        yearFrom.setValue(2000);
+        yearFrom.setWrapSelectorWheel(false);
+
+        yearTo = findViewById(R.id.yearTo);
+        yearTo.setMaxValue(2021);
+        yearTo.setMinValue(1900);
+        yearTo.setValue(2000);
+        yearTo.setWrapSelectorWheel(false);
 
         roommateSmoker = findViewById(R.id.smoke);
         roommateNonSmoker = findViewById(R.id.noSmoke);
@@ -103,6 +113,10 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
         roommateNoPet = findViewById(R.id.noPet);
 
         button = findViewById(R.id.onlyRoommateButton);
+
+        error = findViewById(R.id.error);
+
+        scrollView = findViewById(R.id.scrollView);
     }
 
     private void initListeners() {
@@ -118,9 +132,13 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
     * 2. pokrece se nova aktivnost*/
 
     public void onClick(View v) {
-        inputOnlyRoommateData();
-        /*Intent main = new Intent(this, HomePage.class);
-        startActivity(main);*/
+        if(price.getText().toString().trim().length() == 0){
+            error.setVisibility(View.VISIBLE);
+            scrollView.fullScroll(ScrollView.FOCUS_UP);
+        } else{
+            error.setVisibility(View.GONE);
+            inputOnlyRoommateData();
+        }
     }
 
     public void inputOnlyRoommateData(){
@@ -132,37 +150,55 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
 
         String location = locationDropdown.getSelectedItem().toString().trim();
 
-        int priceIntTo = Integer.parseInt(priceTo.getSelectedItem().toString().trim());
+        int priceIntTo = Integer.parseInt(price.getText().toString().trim());
 
-        int yearOfRoommateFrom = Integer.parseInt(yearFrom.getText().toString().trim());
-        int yearOfRoommateTo = Integer.parseInt(yearTo.getText().toString().trim());
+        int yearOfRoommateFrom = yearFrom.getValue();
+        int yearOfRoommateTo = yearTo.getValue();
 
         char gender = 0;
-
         if(maleGender.isChecked()){
             gender = 'M';
         }
-        if(femaleGender.isChecked()){
+        else if(femaleGender.isChecked()){
             gender = 'Z';
+        }
+        else if(maleFemale.isChecked()){
+            gender = 'S';
         }
 
         boolean roomSolo = true;
         if(shRoom.isChecked()){
-            roomSolo = false;
+            roomSolo = false; // dijeliti sobu
+        }
+        else if (room.isChecked()){
+            roomSolo = true; // zasebna soba
         }
 
-        boolean smoker = false;
+        boolean smoker = true;
         if(roommateSmoker.isChecked()){
-            smoker = true;
+            smoker = false; // ne zeli cimera pusaca
+        }
+        else if (roommateNonSmoker.isChecked()){
+            smoker = true; // svejedno
         }
 
-        boolean pet = false;
+        boolean pet = true;
         if(roommatePet.isChecked()){
-            pet = true;
+            pet = false; // ne zeli cimera s ljubimcem
+        }
+        else if(roommateNoPet.isChecked()){
+            pet = true; // svejedno
         }
 
-        userActive.setCimer_godine_od(yearOfRoommateFrom);
-        userActive.setCimer_godine_do(yearOfRoommateTo);
+        // manji broj se zapisuje u varijablu cimer_godine_od
+        if(yearOfRoommateFrom < yearOfRoommateTo){
+            userActive.setCimer_godine_od(yearOfRoommateFrom);
+            userActive.setCimer_godine_do(yearOfRoommateTo);
+        } else{
+            userActive.setCimer_godine_od(yearOfRoommateTo);
+            userActive.setCimer_godine_do(yearOfRoommateFrom);
+        }
+
         userActive.setCimer_ljubimac(pet);
         userActive.setCimer_pusac(smoker);
         userActive.setCimer_spol(gender);

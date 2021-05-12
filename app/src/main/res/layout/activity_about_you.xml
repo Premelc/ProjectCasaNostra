@@ -49,23 +49,25 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
-                    android:layout_height="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="@string/godina_ro_enja"
+                    android:text="Godina rođenja:   "
+                    android:textAllCaps="true"
                     android:textSize="18sp" />
 
-                <EditText
+                <NumberPicker
                     android:id="@+id/yearOfBirth"
-                    android:layout_width="82dp"
-                    android:layout_height="match_parent"
-                    android:ems="10"
-                    android:inputType="number" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:scaleX="1.25"
+                    android:scaleY="1.25" />
 
             </LinearLayout>
 
@@ -79,18 +81,21 @@
                     android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
+                    android:textAllCaps="true"
                     android:text="@string/spol"
+                    android:layout_gravity="center"
                     android:textSize="18sp" />
 
                 <RadioGroup
                     android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/male"
-                        android:layout_width="108dp"
+                        android:layout_width="98dp"
                         android:layout_height="wrap_content"
                         android:checked="true"
                         android:onClick="onRadioButtonClicked"
@@ -99,7 +104,7 @@
 
                     <RadioButton
                         android:id="@+id/female"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="onRadioButtonClicked"
                         android:text="@string/ensko" />
@@ -108,71 +113,111 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="98dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/fakultet"
+                android:textAllCaps="true"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/faculty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/smoker"
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/ja_sam_pu_a"
+                android:textAllCaps="true"
+                android:textColor="#545454"
+                android:textSize="18sp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/pet"
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Imam ljubimca:  "
+                android:onClick="chooseAnimal"
+                android:textAllCaps="true"
+                android:textColor="#545454"
+                android:textSize="18sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="69dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="133dp"
-                    android:layout_height="34dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@string/ja_sam_pu_a"
-                    android:textSize="18sp" />
-
-                <RadioGroup
-                    android:id="@+id/radioGroup4"
-                    android:layout_width="match_parent"
+                <CheckBox
+                    android:id="@+id/cat"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="@string/ma_ka"
+                    android:visibility="gone" />
 
-                    <RadioButton
-                        android:id="@+id/smoker"
-                        android:layout_width="83dp"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:onClick="onRadioButtonClicked"
-                        android:text="@string/da" />
+                <CheckBox
+                    android:id="@+id/hamster"
+                    android:layout_width="114dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hr_ak"
+                    android:visibility="gone" />
 
-                    <RadioButton
-                        android:id="@+id/nonSmoker"
-                        android:layout_width="85dp"
-                        android:layout_height="wrap_content"
-                        android:onClick="onRadioButtonClicked"
-                        android:text="@string/ne" />
+                <CheckBox
+                    android:id="@+id/parrot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/papiga"
+                    android:visibility="gone" />
 
-                </RadioGroup>
+                <CheckBox
+                    android:id="@+id/dog"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:text="@string/pas"
+                    android:visibility="gone" />
+
+                <CheckBox
+                    android:id="@+id/rabbit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:text="@string/zec"
+                    android:visibility="gone" />
+
+                <CheckBox
+                    android:id="@+id/snake"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:text="Zmija"
+                    android:visibility="gone" />
+
+                <CheckBox
+                    android:id="@+id/other"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/drugo"
+                    android:visibility="gone" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="69dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="98dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@string/fakultet"
-                    android:textSize="18sp" />
-
-                <Spinner
-                    android:id="@+id/faculty"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown" />
-
-            </LinearLayout>
 
             <RadioGroup
                 android:id="@+id/radioGroup5"
                 android:layout_width="match_parent"
-                android:layout_height="69dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_layout"
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/noParty"
@@ -192,101 +237,11 @@
 
             </RadioGroup>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="34dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@string/imam_ljubimca"
-                    android:textSize="18sp" />
-
-                <RadioGroup
-                    android:id="@+id/radioGroup3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/petYes"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:layout_marginLeft="4dp"
-                        android:onClick="chooseAnimal"
-                        android:text="@string/da" />
-
-                    <RadioButton
-                        android:id="@+id/petNo"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:onClick="noAnimal"
-                        android:text="@string/ne" />
-
-                </RadioGroup>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <CheckBox
-                    android:id="@+id/cat"
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ma_ka"
-                    android:visibility="visible" />
-
-                <CheckBox
-                    android:id="@+id/hamster"
-                    android:layout_width="114dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/hr_ak"
-                    android:visibility="visible" />
-
-                <CheckBox
-                    android:id="@+id/parrot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/papiga"
-                    android:visibility="visible" />
-
-                <CheckBox
-                    android:id="@+id/dog"
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:text="@string/pas"
-                    android:visibility="visible" />
-
-                <CheckBox
-                    android:id="@+id/rabbit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:text="@string/zec"
-                    android:visibility="visible" />
-
-                <CheckBox
-                    android:id="@+id/other"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/drugo"
-                    android:visibility="visible" />
-            </LinearLayout>
-
-            
-
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/appCompatButtonAboutYou"
                 style="@style/MyButtonStyle"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:onClick="findApartmentRoommate"
                 android:text="@string/dalje" />

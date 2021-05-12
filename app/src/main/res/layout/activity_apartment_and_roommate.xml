@@ -16,7 +16,7 @@
         <Button
             android:id="@+id/apartmentAndRoommateButton"
             style="@style/MyButtonStyle"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/round_button"
@@ -105,12 +105,47 @@
                 android:text="@string/prigrad"
                 android:textSize="18sp" />
 
-            <CheckBox
-                android:id="@+id/other"
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout4">
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Zasebna soba: "
+                android:textAllCaps="true"
+                android:textSize="18dp"/>
+
+            <RadioGroup
+                android:id="@+id/tt3"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="@string/svejedno"
-                android:textSize="18sp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/soloRoom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Želim zasebnu sobu. " />
+
+                <RadioButton
+                    android:id="@+id/sharedRoom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mogu dijeliti sobu s cimerom. " />
+
+            </RadioGroup>
 
         </LinearLayout>
 
@@ -219,7 +254,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
 
         <LinearLayout
             android:id="@+id/linearLayout5"
@@ -246,28 +281,28 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <EditText
+                <NumberPicker
                     android:id="@+id/year1"
-                    android:layout_width="54dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:ems="10"
-                    android:inputType="number" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:scaleX="1.25"
+                    android:scaleY="1.25" />
 
                 <TextView
                     android:id="@+id/textView13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="9dp"
-                    android:text="@string/i"
+                    android:text="  i  "
+                    android:layout_gravity="center"
                     android:textSize="18sp" />
 
-                <EditText
+                <NumberPicker
                     android:id="@+id/year2"
-                    android:layout_width="54dp"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="number" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:scaleX="1.25"
+                    android:scaleY="1.25" />
 
             </LinearLayout>
 

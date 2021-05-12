@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -37,11 +38,12 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
     private TextView seekBarValue;
     private SeekBar seekBar;
     private int priceTo = 5000;
-    private CheckBox west1, east1, center1, suburbs1, other1;
+    private CheckBox west1, east1, center1, suburbs1;
     private RadioButton femaleGender, maleGender, maleFemale;
-    private EditText yearFrom, yearTo;
+    private NumberPicker yearFrom, yearTo;
     private RadioButton roommateSmoker, roommateNonSmoker;
     private RadioButton roommatePet, roommateNoPet;
+    private RadioButton soloRoom, sharedRoom;
     private Button button;
     private DatabaseHelper databaseHelper = new DatabaseHelper(activity);
 
@@ -107,20 +109,31 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
         east1 = findViewById(R.id.east);
         center1 = findViewById(R.id.center);
         suburbs1 = findViewById(R.id.suburbs);
-        other1 = findViewById(R.id.other);
 
         femaleGender = findViewById(R.id.female);
         maleGender = findViewById(R.id.male);
         maleFemale = findViewById(R.id.femaleMale);
 
         yearFrom = findViewById(R.id.year1);
+        yearFrom.setMaxValue(2021);
+        yearFrom.setMinValue(1900);
+        yearFrom.setValue(2000);
+        yearFrom.setWrapSelectorWheel(false);
+
         yearTo = findViewById(R.id.year2);
+        yearTo.setMaxValue(2021);
+        yearTo.setMinValue(1900);
+        yearTo.setValue(2000);
+        yearTo.setWrapSelectorWheel(false);
 
         roommateSmoker = findViewById(R.id.smoke);
         roommateNonSmoker = findViewById(R.id.noSmoke);
 
         roommatePet = findViewById(R.id.pet);
         roommateNoPet = findViewById(R.id.noPet);
+
+        soloRoom = findViewById(R.id.soloRoom);
+        sharedRoom = findViewById(R.id.sharedRoom);
 
         button = findViewById(R.id.apartmentAndRoommateButton);
     }
@@ -135,11 +148,16 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
 
     private void inputData(){
 
+        int yearOfRoommateFrom = yearFrom.getValue();
+        int yearOfRoommateTo = yearTo.getValue();
 
-        int yearOfRoommateFrom = Integer.parseInt(yearFrom.getText().toString().trim());
-        int yearOfRoommateTo = Integer.parseInt(yearTo.getText().toString().trim());
-
-        // !!! FALI: trazim zasebnu sobu ili sobu koju cemo dijeliti
+        boolean separateRoom = false;
+        if(soloRoom.isChecked()){
+            separateRoom = true;
+        }
+        else if(sharedRoom.isChecked()){
+            separateRoom = false;
+        }
 
         boolean[] location = new boolean[4];
         Arrays.fill(location, false);
@@ -156,16 +174,17 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
         if(suburbs1.isChecked()){
             location[3] = true;
         }
-        if(other1.isChecked()){
-            Arrays.fill(location, true); // ako mu je svejedno, postavi sve na true
-        }
+
 
         char gender = 0;
-        if(maleGender.isChecked()){
+        if (maleGender.isChecked()){
             gender = 'M';
         }
-        if(femaleGender.isChecked()){
+        else if (femaleGender.isChecked()){
             gender = 'Z';
+        }
+        else if (maleFemale.isChecked()){
+            gender = 'S';
         }
 
 
@@ -173,10 +192,16 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
         if(roommateSmoker.isChecked()){
             smoker = true;
         }
+        else if (roommateNonSmoker.isChecked()){
+            smoker = false;
+        }
 
         boolean pet = false;
         if(roommatePet.isChecked()){
             pet = true;
+        }
+        else if(roommateNoPet.isChecked()){
+            pet = false;
         }
 
         // Preuzmi objekt i polje booleana
@@ -185,10 +210,18 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
         boolean[] pets = intent.getBooleanArrayExtra("Pets");
 
         // Zapis u objekt
+
+        // manji broj se zapisuje u varijablu cimer_godine_od
+        if(yearOfRoommateFrom < yearOfRoommateTo){
+            userActive.setCimer_godine_od(yearOfRoommateFrom);
+            userActive.setCimer_godine_do(yearOfRoommateTo);
+        } else{
+            userActive.setCimer_godine_od(yearOfRoommateTo);
+            userActive.setCimer_godine_do(yearOfRoommateFrom);
+        }
+
         userActive.setCimer_pusac(smoker);
         userActive.setCimer_spol(gender);
-        userActive.setCimer_godine_od(yearOfRoommateFrom);
-        userActive.setCimer_godine_do(yearOfRoommateTo);
         userActive.setCimer_ljubimac(pet);
 
         databaseHelper.insertKorisnika(userActive);
@@ -205,7 +238,7 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
             userActive = userList.get(0);
             needApt.setId_korisnik(userActive.getId_korisnik());
             needApt.setCijena_do(priceTo);
-            needApt.setZasebna_soba(true); // ISPRAVITI kad se doda ta mogucnost
+            needApt.setZasebna_soba(separateRoom);
 
 
             databaseHelper.insertTrazimStan(needApt);
@@ -235,7 +268,7 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
             }
 
         } else{
-            // Dodati alert: Doslo je do greske
+            // Mozda dodati alert: Doslo je do greske
         }
 
         //2. prosljedi dalje

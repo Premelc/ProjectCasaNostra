@@ -25,10 +25,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private final AppCompatActivity activity = Register.this;
     private ConstraintLayout nestedScrollView;
     private TextInputLayout textInputLayoutName;
+    private TextInputLayout textInputLayoutUsername;
     private TextInputLayout textInputLayoutEmail;
     private TextInputLayout textInputLayoutPassword;
     private TextInputLayout textInputLayoutConfirmPassword;
     private TextInputEditText textInputEditTextName;
+    private TextInputEditText textInputEditTextUsername;
     private TextInputEditText textInputEditTextEmail;
     private TextInputEditText textInputEditTextPassword;
     private TextInputEditText textInputEditTextConfirmPassword;
@@ -56,10 +58,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private void initViews() {
         //constraint = (ConstraintLayout) findViewById(R.id.nestedScrollView);
         textInputLayoutName = (TextInputLayout) findViewById(R.id.textInputLayoutName);
+        textInputLayoutUsername = (TextInputLayout) findViewById(R.id.textInputLayoutUsername);
         textInputLayoutEmail = (TextInputLayout) findViewById(R.id.textInputLayoutEmail);
         textInputLayoutPassword = (TextInputLayout) findViewById(R.id.textInputLayoutPassword);
         textInputLayoutConfirmPassword = (TextInputLayout) findViewById(R.id.textInputLayoutConfirmPassword);
         textInputEditTextName = (TextInputEditText) findViewById(R.id.textInputEditTextName);
+        textInputEditTextUsername = (TextInputEditText) findViewById(R.id.textInputEditTextUsername);
         textInputEditTextEmail = (TextInputEditText) findViewById(R.id.textInputEditTextEmail);
         textInputEditTextPassword = (TextInputEditText) findViewById(R.id.textInputEditTextPassword);
         textInputEditTextConfirmPassword = (TextInputEditText) findViewById(R.id.textInputEditTextConfirmPassword);
@@ -115,6 +119,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         if (!inputValidation.isInputEditTextFilled(textInputEditTextName, textInputLayoutName, getString(R.string.error_message_name))) {
             check = false;
         }
+        if (!inputValidation.isInputEditTextFilled(textInputEditTextUsername, textInputLayoutUsername, "Unesite korisničko ime")) {
+            check = false;
+        }
         if (!inputValidation.isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
             check = false;
         }
@@ -124,7 +131,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, getString(R.string.error_message_password))) {
             check = false;
         }
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutConfirmPassword, getString(R.string.error_message_password))) {
+        if (!inputValidation.isInputEditTextFilled(textInputEditTextConfirmPassword, textInputLayoutConfirmPassword, getString(R.string.error_message_password))) {
             check = false;
         }
         if (!inputValidation.isInputEditTextMatches(textInputEditTextPassword, textInputEditTextConfirmPassword,
@@ -134,15 +141,22 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         if(!check){
             return false;
         }
-        if (!databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim())) {
+        if (!databaseHelper.checkUserEmail(textInputEditTextEmail.getText().toString().trim())) {
 
+            if(databaseHelper.checkUserUsername(textInputEditTextUsername.getText().toString().trim())){
+                View view = findViewById(R.id.main_layout_id);
+                Snackbar.make(view, "Korisničko ime već postoji", Snackbar.LENGTH_LONG).show();
+                return false;
+            }
+
+            String username = textInputEditTextUsername.getText().toString().trim();
             String name = textInputEditTextName.getText().toString().trim();
             String email = textInputEditTextEmail.getText().toString().trim();
             String password = textInputEditTextPassword.getText().toString().trim();
 
             /*Tmp varijable zapisuju se u klasu active user*/
 
-            userActive.setUsername(name);
+            userActive.setUsername(username);
             userActive.setIme(name);
             userActive.setEmail(email);
             userActive.setPassword(password);
@@ -176,6 +190,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
      */
     private void emptyInputEditText() {
         textInputEditTextName.setText(null);
+        textInputEditTextUsername.setText(null);
         textInputEditTextEmail.setText(null);
         textInputEditTextPassword.setText(null);
         textInputEditTextConfirmPassword.setText(null);
