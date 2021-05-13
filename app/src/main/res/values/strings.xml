@@ -94,13 +94,13 @@
     <string name="mu_ko">Muško</string>
     <string name="ensko">Žensko</string>
     <string name="spol">Spol:</string>
-    <string name="godina_ro_enja">Godina rođenja:</string>
+    <string name="godina_ro_enja">Godina rođenja:   </string>
     <string name="reci_nam_ne_to_o_sebi">Reci nam nešto o sebi...</string>
     <string name="fakultet">Fakultet:</string>
-    <string name="ja_sam_pu_a">Ja sam pušač:</string>
+    <string name="ja_sam_pu_a">Ja sam pušač</string>
     <string name="da">Da</string>
     <string name="ne">Ne</string>
-    <string name="imam_ljubimca">Imam ljubimca:</string>
+    <string name="imam_ljubimca">Imam ljubimca</string>
     <string name="volim_miran_ivot">Volim miran život</string>
     <string name="volim_partijati">Volim partijati</string>
     <string name="pas">Pas</string>
@@ -123,7 +123,7 @@
     <string name="prijavi_se">Prijavi se</string>
     <string name="prijava">Prijava</string>
     <string name="registracija">Registracija</string>
-    <string name="cijena_stana">Cijena stana:</string>
+    <string name="cijena_stana">Cijena stana po osobi do:</string>
     <string name="lokacija">Lokacija:</string>
     <string name="nudim">Nudim:</string>
     <string name="spol_cimera">Spol cimera:</string>
