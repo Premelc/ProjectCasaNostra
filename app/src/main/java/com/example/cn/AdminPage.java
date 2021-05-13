@@ -89,10 +89,10 @@ public class AdminPage extends AppCompatActivity {
                     alert.show();
 
                 }
-
             }
         });
 
+        nameinput.setText(null);
 
     }
 }

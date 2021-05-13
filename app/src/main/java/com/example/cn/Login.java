@@ -18,10 +18,14 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.cn.helpers.InputValidation;
+import com.example.cn.model.Korisnik;
 import com.example.cn.sql.DatabaseHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
@@ -35,6 +39,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private AppCompatTextView adminLink;
     private InputValidation inputValidation;
     private DatabaseHelper databaseHelper;
+    private Korisnik userActive;
 
     //private ConstraintLayout constraint;
 
@@ -107,7 +112,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 }
                 break;
             case R.id.appCompatButtonLogin:
-                verifyFromSQLite(); // dodati preusmjeravanje na home page
+                if(verifyFromSQLite()){
+                    Intent i2 = new Intent(this, HomePage.class);
+                    i2.putExtra("InhUser", userActive);
+                    startActivity(i2);
+                }
                 break;
             case R.id.textViewLinkRegister:
                 // Navigate to RegisterActivity
@@ -136,6 +145,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             accountsIntent.putExtra("EMAIL", textInputEditTextEmail.getText().toString().trim());
             emptyInputEditText();
             startActivity(accountsIntent);*/
+
+            // dohvacanje korisnika da bi se proslijedio na home page
+            List<Korisnik> userList = new ArrayList<Korisnik>();
+            String whereClause = "username = ?"; // where upit
+            String[] whereArgs = new String[1];
+            whereArgs[0] = textInputEditTextUsername.getText().toString().trim(); // zamjenjuje ?
+            userList.addAll(databaseHelper.queryKorisnik(whereClause, whereArgs, null, null, null));
+            userActive = userList.get(0);
+
             return true;
         } else {
             // Snack Bar to show success message that record is wrong
