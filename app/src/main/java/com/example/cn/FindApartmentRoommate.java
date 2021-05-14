@@ -23,6 +23,7 @@ public class FindApartmentRoommate extends AboutYou {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_find_apartment_roommate);
 
         initViews();

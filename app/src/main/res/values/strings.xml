@@ -160,7 +160,7 @@
     <string name="error_message_age">Unesite godine</string>
     <string name="error_message_password">Unesite zaporku</string>
     <string name="success_message">Uspješna registracija!</string>
-    <string name="text_not_member">Nemate račun? Napravite ga!</string>
+    <string name="text_not_member">Nemate račun? <u>Napravite ga!</u></string>
     <string name="text_already_member">Već ste član? Ulogirajte se!</string>
     <string name="error_email_exists">E-mail već postoji</string>
     <string name="error_password_match">Zaporke se ne podudaraju</string>
@@ -173,6 +173,10 @@
     <string name="ponovni_unos_zaporke">Ponovni unos zaporke</string>
     <string name="register">Register</string>
     <string name="cijena_stana_do">Cijena stana do:</string>
+    <string name="izbrisi_racun"><u>Izbriši račun</u></string>
+    <string name="prijavise">Već imate račun? <u>Prijavite se!</u></string>
+    <string name="admin"><u>Prijavite se</u> kao administrator</string>
+
 
 
 </resources>
