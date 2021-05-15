@@ -30,6 +30,7 @@ public class AdminPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_page);
+
         nameinput = (EditText) findViewById(R.id.user);
         but1 = (Button) findViewById(R.id.delete);
 
@@ -38,42 +39,40 @@ public class AdminPage extends AppCompatActivity {
             public void onClick(View v) {
                 username = nameinput.getText().toString();
 
-
                 databaseHelper = new DatabaseHelper(activity);
 
                 String whereClause = "username = ?"; // where upit
                 String[] whereArgs = new String[1];
                 whereArgs[0] = username; // zamjenjuje ?
+                userList.clear();
                 userList.addAll(databaseHelper.queryKorisnik(whereClause, whereArgs, null, null, null)); // dohvacanje korisnika po username-u
 
                 if(!userList.isEmpty()){
-                    user = userList.get(0);
-                    databaseHelper.deleteKorisnik(user); // brisanje korisnika
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    deleteUser();
+                                    nameinput.setText(null);
+                                    break;
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    //No button clicked
+                                    break;
+                            }
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(AdminPage.this);
-                    builder.setMessage("Korisnik uspjesno izbrisan") .setTitle("");
+                        }
+                    };
 
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    builder.setMessage("Jeste li sigurni da želite izbrisati korisnika?").setPositiveButton("Da", dialogClickListener)
+                            .setNegativeButton("Ne", dialogClickListener).show();
 
-                    builder.setMessage("Korisnik uspjesno izbrisan")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-
-                                }
-                            })
-                    ;
-
-                    AlertDialog alert = builder.create();
-
-                    alert.setTitle("USPJEH");
-                    alert.show();
                 } else{
                     // dio koda koji ce se izvrsiti ukoliko ne postoji taj username
                     //DODANO
                     //Dodavanje alerta
                     AlertDialog.Builder builder = new AlertDialog.Builder(AdminPage.this);
-                    builder.setMessage("Navedeni korisnik ne postoji") .setTitle("Greška");
-
 
                     builder.setMessage("Navedeni korisnik ne postoji")
                             .setCancelable(false)
@@ -92,7 +91,26 @@ public class AdminPage extends AppCompatActivity {
             }
         });
 
-        nameinput.setText(null);
+    }
 
+    public void deleteUser(){
+        user = userList.get(0);
+        databaseHelper.deleteKorisnik(user); // brisanje korisnika
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(AdminPage.this);
+
+        builder.setMessage("Korisnik uspjesno izbrisan")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                })
+        ;
+
+        AlertDialog alert = builder.create();
+
+        alert.setTitle("USPJEH");
+        alert.show();
     }
 }
