@@ -19,6 +19,7 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_home_page);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
@@ -30,8 +31,6 @@ public class HomePage extends AppCompatActivity {
         Intent intent  = getIntent();
         Korisnik userActive = (Korisnik) intent.getSerializableExtra("InhUser");
 
-        textView = findViewById(R.id.textView2);
-        textView.setText(userActive.toString());
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

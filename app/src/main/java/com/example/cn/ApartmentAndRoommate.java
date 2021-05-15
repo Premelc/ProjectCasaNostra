@@ -54,6 +54,7 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_apartment_and_roommate);
 
         initViews();

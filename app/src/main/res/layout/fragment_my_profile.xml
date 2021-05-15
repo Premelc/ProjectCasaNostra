@@ -10,7 +10,7 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation"
+
         android:fillViewport="true">
 
 
@@ -53,108 +53,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/button"
-                android:layout_width="52dp"
-                android:layout_height="47dp"
+                android:layout_width="47dp"
+                android:layout_height="46dp"
                 android:layout_marginTop="70dp"
+                android:src="@drawable/ic_edit"
                 android:background="@drawable/edit_button"
-                android:drawableLeft="@drawable/ic_edit"
                 app:layout_constraintStart_toEndOf="@+id/imageView7"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/linearLayout3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout17">
-
-                <TextView
-                    android:id="@+id/textView26"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@string/fakultet"
-                    android:textAllCaps="true"
-                    android:textSize="18sp" />
-
-                <Spinner
-                    android:id="@+id/faculty"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown" />
-
-            </LinearLayout>
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/smoker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/poppins_medium"
-                android:text="@string/ja_sam_pu_a"
-                android:textAllCaps="true"
-                android:textColor="#545454"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
-
-            <LinearLayout
-                android:id="@+id/linearLayout10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/smoker">
-
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="@string/godi_te_cimera_izme_u"
-                    android:textAllCaps="true"
-                    android:textSize="18sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <NumberPicker
-                        android:id="@+id/year1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="60dp"
-                        android:scaleX="1.25"
-                        android:scaleY="1.25" />
-
-                    <TextView
-                        android:id="@+id/textView13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="9dp"
-                        android:text="  i  "
-                        android:textSize="18sp" />
-
-                    <NumberPicker
-                        android:id="@+id/year2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="60dp"
-                        android:scaleX="1.25"
-                        android:scaleY="1.25" />
-                </LinearLayout>
-            </LinearLayout>
 
             <Button
                 android:id="@+id/button2"
@@ -164,18 +71,7 @@
                 android:text="logout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout10" />
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="184dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/primary_light"
-                android:text="izbriši račun"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button2" />
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout17" />
 
             <LinearLayout
                 android:id="@+id/linearLayout17"
@@ -199,25 +95,26 @@
                 <EditText
                     android:id="@+id/editTextTextPersonName3"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="73dp"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:text="Name" />
             </LinearLayout>
 
-
-
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/izbrisi_racun"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button2" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_navigation" />
 
 
 </RelativeLayout>
