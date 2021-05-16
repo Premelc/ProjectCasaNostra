@@ -33,7 +33,8 @@ public class HomePage extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
-        if(SaveSharedPreference.getSessionUser(HomePage.this).getId_korisnik() > 0){
+        if(SaveSharedPreference.getSessionUser(HomePage.this) != null &&
+                SaveSharedPreference.getSessionUser(HomePage.this).getId_korisnik() > 0){
             sessionUser = SaveSharedPreference.getSessionUser(HomePage.this);
 
         } else{
