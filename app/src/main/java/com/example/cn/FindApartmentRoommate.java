@@ -62,6 +62,7 @@ public class FindApartmentRoommate extends AboutYou {
             i2.putExtra("InhUser", userActive);
             i2.putExtra("Pets", pets);
             startActivity(i2);
+            finish();
         }
     }
 
@@ -80,7 +81,7 @@ public class FindApartmentRoommate extends AboutYou {
             i2.putExtra("InhUser", userActive);
             i2.putExtra("Pets", pets);
             startActivity(i2);
-
+            finish();
         }
     }
 

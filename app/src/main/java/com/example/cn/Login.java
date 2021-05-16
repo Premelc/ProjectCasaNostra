@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.cn.helpers.InputValidation;
+import com.example.cn.helpers.SaveSharedPreference;
 import com.example.cn.model.Korisnik;
 import com.example.cn.sql.DatabaseHelper;
 import com.google.android.material.snackbar.Snackbar;
@@ -113,15 +114,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.appCompatButtonLogin:
                 if(verifyFromSQLite()){
+                    SaveSharedPreference.setSessionUser(this, userActive);
                     Intent i2 = new Intent(this, HomePage.class);
-                    i2.putExtra("InhUser", userActive);
                     startActivity(i2);
+                    finish();
                 }
                 break;
             case R.id.textViewLinkRegister:
                 // Navigate to RegisterActivity
                 Intent intentRegister = new Intent(getApplicationContext(), Register.class);
                 startActivity(intentRegister);
+                finish();
                 break;
         }
     }

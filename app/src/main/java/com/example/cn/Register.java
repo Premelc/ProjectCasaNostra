@@ -100,6 +100,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     Intent i = new Intent(this, AboutYou.class);
                     i.putExtra("InhUser", userActive);
                     startActivity(i);
+                    finish();
                 }
 
                 break;

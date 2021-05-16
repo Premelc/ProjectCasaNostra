@@ -185,7 +185,7 @@ public class AboutYou extends AppCompatActivity implements View.OnClickListener 
         i2.putExtra("InhUser", userActive);
         i2.putExtra("Pets", pets);
         startActivity(i2);
-
+        finish();
         return;
     }
 
