@@ -21,7 +21,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database Version
-    private static final int DATABASE_VERSION = 59;
+    private static final int DATABASE_VERSION = 62;
     // Database Name
     private static final String DATABASE_NAME = "CasaNostra.db";
 
@@ -119,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Tablica kvart
     private static final String TABLE_KVART = "Kvart";
 
-    private static final String KVART_ID = "id_lkvart";
+    private static final String KVART_ID = "id_kvart";
     private static final String KVART_NAZIV = "naziv";
     private static final String KVART_ID_LOKACIJA = "id_lokacija";
 
@@ -637,6 +637,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         // return user list
         return lokacijaList;
+    }
+
+    public Lokacija singleQueryLokacija(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
+
+        Lokacija lokacija = new Lokacija();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_LOKACIJA, //Table to query
+                null,    //columns to return
+                whereClause,        //columns for the WHERE clause
+                whereArgs,        //The values for the WHERE clause
+                groupBy,       //group the rows
+                having,       //filter by row groups
+                orderBy); //The sort order
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                lokacija.setId_lokacija(Integer.parseInt(cursor.getString(cursor.getColumnIndex(LOKACIJA_ID))));
+                lokacija.setNaziv(cursor.getString(cursor.getColumnIndex(LOKACIJA_NAZIV)));
+                // Adding user record to list
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return lokacija;
     }
 
     public List<Kvart> queryKvart(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {

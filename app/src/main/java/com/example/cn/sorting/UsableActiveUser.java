@@ -1,12 +1,20 @@
 package com.example.cn.sorting;
 import java.io.Serializable;
 
-public class UsableActiveUser extends UsableUser implements Serializable {
+public class UsableActiveUser extends UsableUser {
     private String username;
     private String email;
     private String password;
+    private boolean zasebna_soba;
+    private int cijena_max;
+    private int id_kvart;
+    private int id_lokacija;
+    private int hasApt;
 
-    public UsableActiveUser(int id_korisnik,String username,String email,String password, String ime, int godina_rodenja, String opis, char spol, int id_fakultet, boolean pusac, boolean ljubimac, boolean miran_zivot , char cimer_spol , int cimer_godine_od , int cimer_godine_do,boolean cimer_pusac,boolean cimer_ljubimac) {
+    public UsableActiveUser() {
+    }
+
+    public UsableActiveUser(int id_korisnik, String username, String email, String password, String ime, int godina_rodenja, String opis, char spol, int id_fakultet, boolean pusac, boolean ljubimac, boolean miran_zivot , char cimer_spol , int cimer_godine_od , int cimer_godine_do, boolean cimer_pusac, boolean cimer_ljubimac) {
         this.setId_korisnik(id_korisnik);
         this.setUsername(username);
         this.setEmail(email);
@@ -24,6 +32,14 @@ public class UsableActiveUser extends UsableUser implements Serializable {
         this.setCimer_godine_do(cimer_godine_do);
         this.setCimer_ljubimac(cimer_ljubimac);
         this.setCimer_pusac(cimer_pusac);
+    }
+
+    public boolean isZasebna_soba() {
+        return zasebna_soba;
+    }
+
+    public void setZasebna_soba(boolean zasebna_soba) {
+        this.zasebna_soba = zasebna_soba;
     }
 
     public String getUsername() {
@@ -46,21 +62,17 @@ public class UsableActiveUser extends UsableUser implements Serializable {
     }
 
     @Override
-    public void setCijenaMin(int cijena) {
-
-    }@Override
     public void setCijenaMax(int cijena_do) {
-
+        this.cijena_max = cijena_do;
     }
 
-    @Override
-    public int getCijenaMin() {
-        return 0;
+    public int getCijena_max(){
+        return this.cijena_max;
     }
 
     @Override
     public void setZasebnaSoba(boolean b) {
-
+        this.zasebna_soba = b;
     }
 
     @Override
@@ -85,22 +97,21 @@ public class UsableActiveUser extends UsableUser implements Serializable {
 
     @Override
     public void setId_kvart(int b) {
-
+    this.id_kvart = b;
     }
 
     @Override
     public int getId_kvart() {
-        return 0;
+        return this.id_kvart;
     }
 
     @Override
     public void setId_lokacija(int b) {
-
+    this.id_lokacija = b;
     }
-
     @Override
     public int getId_lokacija() {
-        return 0;
+        return this.id_lokacija;
     }
 
     @Override
