@@ -19,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.cn.helpers.SaveSharedPreference;
 import com.example.cn.model.Korisnik;
 import com.example.cn.model.KorisnikLjubimac;
 import com.example.cn.model.Kvart;
@@ -244,9 +245,10 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
 
 
         //2. prosljedi dalje
+        SaveSharedPreference.setSessionUser(this, userActive);
         Intent i2 = new Intent(this, HomePage.class);
-        i2.putExtra("InhUser", userActive);
         startActivity(i2);
+        finish();
 
         /* ANGEL ----> mozes ovdje sve upisati u bazu jer je ovo zadnja stranica
          * prije homepagea ili mozes u homepageu kako god ti je lakse

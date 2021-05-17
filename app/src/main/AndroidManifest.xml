@@ -13,18 +13,18 @@
         <activity android:name=".OnlyRoommate" />
         <activity android:name=".ApartmentAndRoommate" />
         <activity android:name=".FindApartmentRoommate" />
-        <activity android:name=".HomePage" />
-        <activity android:name=".Register" />
-        <activity android:name=".AboutYou" />
-        <activity android:name=".MainPage" />
-        <activity android:name=".Login" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Register" />
+        <activity android:name=".AboutYou" />
+        <activity android:name=".MainPage" />
+        <activity android:name=".Login" />
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
