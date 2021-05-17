@@ -21,11 +21,12 @@
             android:layout_above="@+id/bottom_navigation">
 
             <ImageView
-                android:id="@+id/imageView7"
+                android:id="@+id/imgView"
                 android:layout_width="114dp"
                 android:layout_height="98dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.134"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_person_24" />
@@ -53,14 +54,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
-            <ImageButton
-                android:id="@+id/button"
-                android:layout_width="47dp"
-                android:layout_height="46dp"
-                android:layout_marginTop="70dp"
-                android:src="@drawable/ic_edit"
-                android:background="@drawable/edit_button"
-                app:layout_constraintStart_toEndOf="@+id/imageView7"
+            <Button
+                android:id="@+id/btnChoose"
+                android:layout_width="142dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="76dp"
+                android:layout_weight="1"
+                android:text="Choose"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.97"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btnUpload"
+                android:layout_width="145dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="120dp"
+                android:layout_weight="1"
+                android:text="Upload"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.974"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
@@ -77,28 +92,13 @@
                 android:id="@+id/linearLayout17"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="164dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.8"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView20">
 
-                <TextView
-                    android:id="@+id/textView29"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="opis:"
-                    android:textAllCaps="true"
-                    android:textSize="18sp" />
-
-                <EditText
-                    android:id="@+id/editTextTextPersonName3"
-                    android:layout_width="match_parent"
-                    android:layout_height="73dp"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="Name" />
             </LinearLayout>
 
             <TextView
@@ -110,6 +110,27 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName3"
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name"
+                tools:layout_editor_absoluteX="50dp"
+                tools:layout_editor_absoluteY="292dp" />
+
+            <TextView
+                android:id="@+id/textView29"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="opis:"
+                android:textAllCaps="true"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="40dp"
+                tools:layout_editor_absoluteY="252dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
