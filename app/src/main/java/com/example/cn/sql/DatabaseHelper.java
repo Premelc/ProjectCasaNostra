@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.example.cn.activeUser;
 import com.example.cn.model.Fakultet;
 import com.example.cn.model.Korisnik;
 import com.example.cn.model.KorisnikLjubimac;
@@ -16,7 +15,6 @@ import com.example.cn.model.NudimStan;
 import com.example.cn.model.PotragaLokacija;
 import com.example.cn.model.Swipe;
 import com.example.cn.model.TrazimStan;
-import com.example.cn.otherUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -583,153 +581,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return userList;
     }
 
-    //NOVO dodao Premo
-    //Query koji vraca samo jednog korisnika (Koristi za dohvacanje aktivnog korisnika)
-    /*public activeUser queryActiveUser(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        activeUser activeUser = new activeUser();
-
-        Cursor cursor = db.query(TABLE_KORISNIK, //Table to query
-                null,    //columns to return
-                whereClause,        //columns for the WHERE clause
-                whereArgs,        //The values for the WHERE clause
-                groupBy,       //group the rows
-                having,       //filter by row groups
-                orderBy); //The sort order
-        // Traversing through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-
-                activeUser.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_ID))));
-                activeUser.setUsername(cursor.getString(cursor.getColumnIndex(KORISNIK_USERNAME)));
-                activeUser.setEmail(cursor.getString(cursor.getColumnIndex(KORISNIK_EMAIL)));
-                activeUser.setPassword(cursor.getString(cursor.getColumnIndex(KORISNIK_PASSWORD)));
-                activeUser.setIme(cursor.getString(cursor.getColumnIndex(KORISNIK_IME)));
-                activeUser.setGodina_rodenja(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_GODINA))));
-                activeUser.setOpis(cursor.getString(cursor.getColumnIndex(KORISNIK_OPIS)));
-                if(cursor.getString(cursor.getColumnIndex(KORISNIK_SPOL)) == "M"){
-                    activeUser.setSpol('M');
-                } else if(cursor.getString(cursor.getColumnIndex(KORISNIK_SPOL)) == "Z"){
-                    activeUser.setSpol('Z');
-                }
-                activeUser.setId_fakultet(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_ID_FAKULTET))));
-                if(cursor.getColumnIndex(KORISNIK_PUSAC) == 1){
-                    activeUser.setPusac(true);
-                } else if(cursor.getColumnIndex(KORISNIK_PUSAC) == 0){
-                    activeUser.setPusac(false);
-                }
-                if(cursor.getColumnIndex(KORISNIK_LJUBIMAC) == 1){
-                    activeUser.setLjubimac(true);
-                } else if(cursor.getColumnIndex(KORISNIK_LJUBIMAC) == 0){
-                    activeUser.setLjubimac(false);
-                }
-                if(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_SPOL)) == "M"){
-                    activeUser.setCimer_spol('M');
-                } else if(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_SPOL)) == "Z"){
-                    activeUser.setCimer_spol('Z');
-                }
-                activeUser.setCimer_godine_od(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_GODINE_OD))));
-                activeUser.setCimer_godine_do(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_GODINE_DO))));
-                if(cursor.getColumnIndex(KORISNIK_CIMER_PUSAC) == 1){
-                    activeUser.setCimer_pusac(true);
-                } else if(cursor.getColumnIndex(KORISNIK_CIMER_PUSAC) == 0){
-                    activeUser.setCimer_pusac(false);
-                }
-                if(cursor.getColumnIndex(KORISNIK_CIMER_LJUBIMAC) == 1){
-                    activeUser.setCimer_ljubimac(true);
-                } else if(cursor.getColumnIndex(KORISNIK_CIMER_LJUBIMAC) == 0){
-                    activeUser.setCimer_ljubimac(false);
-                }
-                if(cursor.getColumnIndex(KORISNIK_MIRAN_ZIVOT) == 1){
-                    activeUser.setMiran_zivot(true);
-                } else if(cursor.getColumnIndex(KORISNIK_MIRAN_ZIVOT) == 0){
-                    activeUser.setMiran_zivot(false);
-                }
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        // return active user
-        return activeUser;
-    }*/
-
-
-    //NOVO dodao Premo
-    //Query koji vraca sve korisnike koji zadovoljavaju zahtjeve
-    //Nova funkcija jer mislim da ih je bolje zapisivati bez username,password,email itd
-    //Aktivnom korisniku ti podaci nisu bitni pa bi samo predstavljali neki security risk
-    /*public List<otherUser> queryOtherUser(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
-
-        List<otherUser> userList = new ArrayList<otherUser>();
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(TABLE_KORISNIK, //Table to query
-                null,    //columns to return
-                whereClause,        //columns for the WHERE clause
-                whereArgs,        //The values for the WHERE clause
-                groupBy,       //group the rows
-                having,       //filter by row groups
-                orderBy); //The sort order
-        // Traversing through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                otherUser korisnik = new otherUser();
-                korisnik.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_ID))));
-
-                korisnik.setIme(cursor.getString(cursor.getColumnIndex(KORISNIK_IME)));
-                korisnik.setGodina_rodenja(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_GODINA))));
-                korisnik.setOpis(cursor.getString(cursor.getColumnIndex(KORISNIK_OPIS)));
-                if(cursor.getString(cursor.getColumnIndex(KORISNIK_SPOL)) == "M"){
-                    korisnik.setSpol('M');
-                } else if(cursor.getString(cursor.getColumnIndex(KORISNIK_SPOL)) == "Z"){
-                    korisnik.setSpol('Z');
-                }
-                korisnik.setId_fakultet(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_ID_FAKULTET))));
-                if(cursor.getColumnIndex(KORISNIK_PUSAC) == 1){
-                    korisnik.setPusac(true);
-                } else if(cursor.getColumnIndex(KORISNIK_PUSAC) == 0){
-                    korisnik.setPusac(false);
-                }
-                if(cursor.getColumnIndex(KORISNIK_LJUBIMAC) == 1){
-                    korisnik.setLjubimac(true);
-                } else if(cursor.getColumnIndex(KORISNIK_LJUBIMAC) == 0){
-                    korisnik.setLjubimac(false);
-                }
-                if(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_SPOL)) == "M"){
-                    korisnik.setCimer_spol('M');
-                } else if(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_SPOL)) == "Z"){
-                    korisnik.setCimer_spol('Z');
-                }
-                korisnik.setCimer_godine_od(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_GODINE_OD))));
-                korisnik.setCimer_godine_do(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KORISNIK_CIMER_GODINE_DO))));
-
-                if(cursor.getColumnIndex(KORISNIK_CIMER_PUSAC) == 1){
-                    korisnik.setCimer_pusac(true);
-                } else if(cursor.getColumnIndex(KORISNIK_CIMER_PUSAC) == 0){
-                    korisnik.setCimer_pusac(false);
-                }
-
-                if(cursor.getColumnIndex(KORISNIK_CIMER_LJUBIMAC) == 1){
-                    korisnik.setCimer_ljubimac(true);
-                } else if(cursor.getColumnIndex(KORISNIK_CIMER_LJUBIMAC) == 0){
-                    korisnik.setCimer_ljubimac(false);
-                }
-                if(cursor.getColumnIndex(KORISNIK_MIRAN_ZIVOT) == 1){
-                    korisnik.setMiran_zivot(true);
-                } else if(cursor.getColumnIndex(KORISNIK_MIRAN_ZIVOT) == 0){
-                    korisnik.setMiran_zivot(false);
-                }
-                // Adding user record to list
-                userList.add(korisnik);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        // return user list
-        return userList;
-    }*/
-
     public List<Fakultet> queryFakultet(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
 
         List<Fakultet> fakultetList = new ArrayList<Fakultet>();
@@ -879,38 +730,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return trazimStanList;
     }
 
-    //Query koji vraca klasu trazimstan za jednog korisnika
-    public TrazimStan singleQueryTrazimStan(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(TABLE_TRAZIM_STAN, //Table to query
-                null,    //columns to return
-                whereClause,        //columns for the WHERE clause
-                whereArgs,        //The values for the WHERE clause
-                groupBy,       //group the rows
-                having,       //filter by row groups
-                orderBy); //The sort order
-        // Traversing through all rows and adding to list
-        TrazimStan trazimStan = new TrazimStan();
-        if (cursor.moveToFirst()) {
-            do {
-                trazimStan.setId_potraga(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ID_POTRAGA))));
-                trazimStan.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ID_KORISNIK))));
-                trazimStan.setCijena_do(Double.parseDouble(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_CIJENA_DO))));
-                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA))) == 1){
-                    trazimStan.setZasebna_soba(true);
-                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TRAZIM_STAN_ZASEBNA_SOBA))) == 0) {
-                    trazimStan.setZasebna_soba(false);
-                }
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        // return user list
-        return trazimStan;
-    }
-
-
     public List<NudimStan> queryNudimStan(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
 
         List<NudimStan> nudimStanList = new ArrayList<NudimStan>();
@@ -946,39 +765,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // return user list
         return nudimStanList;
     }
-
-    //Query koji vraca klasu nudimStan za jednog korisnika
-    public NudimStan singleQueryNudimStan(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
-
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        NudimStan nudimStan = new NudimStan();
-        Cursor cursor = db.query(TABLE_NUDIM_STAN, //Table to query
-                null,    //columns to return
-                whereClause,        //columns for the WHERE clause
-                whereArgs,        //The values for the WHERE clause
-                groupBy,       //group the rows
-                having,       //filter by row groups
-                orderBy); //The sort order
-        if (cursor.moveToFirst()) {
-            do {
-
-                nudimStan.setId_stan(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ID_STAN))));
-                nudimStan.setId_korisnik(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ID_KORISNIK))));
-                nudimStan.setCijena(Double.parseDouble(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_CIJENA))));
-                nudimStan.setId_kvart(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ID_KVART))));
-                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ZASEBNA_SOBA))) == 1){
-                    nudimStan.setZasebna_soba(true);
-                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(NUDIM_STAN_ZASEBNA_SOBA))) == 0){
-                    nudimStan.setZasebna_soba(false);
-                }
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return nudimStan;
-    }
-
 
     public List<PotragaLokacija> queryPotragaLokacija(String whereClause, String[] whereArgs, String groupBy, String having, String orderBy) {
 

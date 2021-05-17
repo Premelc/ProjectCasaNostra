@@ -1,16 +1,29 @@
-package com.example.cn;
-
-import com.example.cn.model.Korisnik;
-
+package com.example.cn.sorting;
 import java.io.Serializable;
 
-public class activeUser extends Korisnik implements Serializable {
-/*    private String username;
+public class UsableActiveUser extends UsableUser implements Serializable {
+    private String username;
     private String email;
     private String password;
 
-    public activeUser(){
-        super();
+    public UsableActiveUser(int id_korisnik,String username,String email,String password, String ime, int godina_rodenja, String opis, char spol, int id_fakultet, boolean pusac, boolean ljubimac, boolean miran_zivot , char cimer_spol , int cimer_godine_od , int cimer_godine_do,boolean cimer_pusac,boolean cimer_ljubimac) {
+        this.setId_korisnik(id_korisnik);
+        this.setUsername(username);
+        this.setEmail(email);
+        this.setPassword(password);
+        this.setIme(ime);
+        this.setGodina_rodenja(godina_rodenja);
+        this.setOpis(opis);
+        this.setSpol(spol);
+        this.setId_fakultet(id_fakultet);
+        this.setPusac(pusac);
+        this.setLjubimac(ljubimac);
+        this.setMiran_zivot(miran_zivot);
+        this.setCimer_spol(cimer_spol);
+        this.setCimer_godine_od(cimer_godine_od);
+        this.setCimer_godine_do(cimer_godine_do);
+        this.setCimer_ljubimac(cimer_ljubimac);
+        this.setCimer_pusac(cimer_pusac);
     }
 
     public String getUsername() {
@@ -35,9 +48,7 @@ public class activeUser extends Korisnik implements Serializable {
     @Override
     public void setCijenaMin(int cijena) {
 
-    }
-
-    @Override
+    }@Override
     public void setCijenaMax(int cijena_do) {
 
     }
@@ -95,5 +106,5 @@ public class activeUser extends Korisnik implements Serializable {
     @Override
     public int compareTo(Object o) {
         return 0;
-    }*/
+    }
 }

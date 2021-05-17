@@ -1,9 +1,7 @@
-package com.example.cn;
+package com.example.cn.sorting;
 
-import com.example.cn.model.Korisnik;
 
-public class otherUser extends Korisnik implements Comparable {
-
+public class UsableOtherUser extends UsableUser implements Comparable{
     private  int cijenaMax = 0;
     private int cijenaMin = 0;
     private boolean zasebnaSoba;
@@ -11,6 +9,18 @@ public class otherUser extends Korisnik implements Comparable {
     private int grade = 0;
     private int id_kvart;
     private int id_lokacija;
+
+    public UsableOtherUser(int id_korisnik, String ime, int godina_rodenja, String opis, char spol, int id_fakultet, boolean pusac, boolean ljubimac, boolean miran_zivot) {
+            this.setId_korisnik(id_korisnik);
+            this.setIme(ime);
+            this.setGodina_rodenja(godina_rodenja);
+            this.setOpis(opis);
+            this.setSpol(spol);
+            this.setId_fakultet(id_fakultet);
+            this.setPusac(pusac);
+            this.setLjubimac(ljubimac);
+            this.setMiran_zivot(miran_zivot);
+        }
 
     public int getId_lokacija() {
         return id_lokacija;
@@ -67,13 +77,13 @@ public class otherUser extends Korisnik implements Comparable {
         this.grade = grade;
     }
 
-    public otherUser(){
+    public UsableOtherUser(){
         super();
     }
 
     @Override
     public int compareTo(Object comparesTo) {
-        int comparage=((otherUser)comparesTo).getGrade();
+        int comparage=((UsableOtherUser)comparesTo).getGrade();
         /* For Descending order*/
         return comparage - this.getGrade();
 
