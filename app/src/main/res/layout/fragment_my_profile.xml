@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".HomePage">
 
-
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="match_parent"

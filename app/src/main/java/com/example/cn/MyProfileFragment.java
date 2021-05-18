@@ -131,7 +131,7 @@ public class MyProfileFragment extends Fragment {
                     ((ProgressBar) getView().findViewById(R.id.progressBar)).setVisibility(View.INVISIBLE);
                     ((ImageView) getView().findViewById(R.id.imgView)).setVisibility(View.INVISIBLE);
 
-                    Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (IOException e) {
@@ -239,6 +239,7 @@ public class MyProfileFragment extends Fragment {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
+                imageView.setVisibility(View.VISIBLE);
             }
             catch (IOException e)
             {
