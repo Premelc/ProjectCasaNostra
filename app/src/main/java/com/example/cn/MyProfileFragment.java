@@ -7,12 +7,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -99,7 +103,7 @@ public class MyProfileFragment extends Fragment {
         int idOfUser = sessionUser.getId_korisnik();
         String number = Integer.toString(idOfUser);
         String nameOfPic = "usr" + number;
-        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/usr"+ idOfUser);
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jakovic/usr"+ idOfUser);
 
         try {
             final File localFile = File.createTempFile(nameOfPic, "jpg");
@@ -111,15 +115,27 @@ public class MyProfileFragment extends Fragment {
                             Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
 
                             //  !!!!!!
+                            ((ProgressBar) getView().findViewById(R.id.progressBar)).setVisibility(View.INVISIBLE);
+                            ((ImageView) getView().findViewById(R.id.imgView)).setVisibility(View.VISIBLE);
+
                             ((ImageView) getView().findViewById(R.id.imgView)).setImageBitmap(bitmap);
 
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
+                    }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
+                public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
+                    ((ImageView) getView().findViewById(R.id.imgView)).setVisibility(View.INVISIBLE);
+                    ((ProgressBar) getView().findViewById(R.id.progressBar)).setVisibility(View.VISIBLE);
                 }
-            });
+            }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        ((ProgressBar) getView().findViewById(R.id.progressBar)).setVisibility(View.INVISIBLE);
+                        ((ImageView) getView().findViewById(R.id.imgView)).setVisibility(View.INVISIBLE);
+
+                        Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
+                    }
+                });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -249,7 +265,7 @@ public class MyProfileFragment extends Fragment {
             int i = 1;
             StorageReference ref = storageReference.child("images/usr/"+ idOfUser + "_" + i);*/
 
-            StorageReference ref = storageReference.child("images/usr"+ idOfUser);
+            StorageReference ref = storageReference.child("images/jakovic/usr"+ idOfUser);
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
