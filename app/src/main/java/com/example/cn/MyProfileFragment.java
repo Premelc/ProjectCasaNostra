@@ -40,8 +40,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 
-
-
 public class MyProfileFragment extends Fragment {
 
     private static final int RESULT_OK = -1;
@@ -103,7 +101,7 @@ public class MyProfileFragment extends Fragment {
         int idOfUser = sessionUser.getId_korisnik();
         String number = Integer.toString(idOfUser);
         String nameOfPic = "usr" + number;
-        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jakovic/usr"+ idOfUser);
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/volarevic/usr"+ idOfUser);
 
         try {
             final File localFile = File.createTempFile(nameOfPic, "jpg");
@@ -128,14 +126,14 @@ public class MyProfileFragment extends Fragment {
                     ((ProgressBar) getView().findViewById(R.id.progressBar)).setVisibility(View.VISIBLE);
                 }
             }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        ((ProgressBar) getView().findViewById(R.id.progressBar)).setVisibility(View.INVISIBLE);
-                        ((ImageView) getView().findViewById(R.id.imgView)).setVisibility(View.INVISIBLE);
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    ((ProgressBar) getView().findViewById(R.id.progressBar)).setVisibility(View.INVISIBLE);
+                    ((ImageView) getView().findViewById(R.id.imgView)).setVisibility(View.INVISIBLE);
 
-                        Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -265,7 +263,7 @@ public class MyProfileFragment extends Fragment {
             int i = 1;
             StorageReference ref = storageReference.child("images/usr/"+ idOfUser + "_" + i);*/
 
-            StorageReference ref = storageReference.child("images/jakovic/usr"+ idOfUser);
+            StorageReference ref = storageReference.child("images/volarevic/usr"+ idOfUser);
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -289,10 +287,6 @@ public class MyProfileFragment extends Fragment {
                             progressDialog.setMessage("Uploaded "+(int)progress+"%");
                         }
                     });
-
-            // Ovdje bi trebalo postaviti da se ta odabrana slika savea u imageViewu
         }
     };
 }
-
-
