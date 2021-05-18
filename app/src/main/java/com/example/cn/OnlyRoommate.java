@@ -2,7 +2,6 @@ package com.example.cn;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Build;
@@ -23,11 +22,9 @@ import com.example.cn.helpers.SaveSharedPreference;
 import com.example.cn.model.Korisnik;
 import com.example.cn.model.KorisnikLjubimac;
 import com.example.cn.model.Kvart;
-import com.example.cn.model.Lokacija;
 import com.example.cn.model.NudimStan;
 import com.example.cn.sql.DatabaseHelper;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,7 +115,7 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
 
         error = findViewById(R.id.error);
 
-        scrollView = findViewById(R.id.scrollView);
+        scrollView = findViewById(R.id.imageView1);
     }
 
     private void initListeners() {
