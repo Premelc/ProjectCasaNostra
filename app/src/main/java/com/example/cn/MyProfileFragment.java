@@ -8,12 +8,15 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextWatcher;
+import android.text.Editable;
 import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -41,6 +44,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyProfileFragment extends Fragment {
 
@@ -88,7 +93,10 @@ public class MyProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         sessionUser = (Korisnik) getArguments().getSerializable("Session");
         return inflater.inflate(R.layout.fragment_my_profile, container, false);
+
+
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -102,18 +110,55 @@ public class MyProfileFragment extends Fragment {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-
-
-
     }
 
     private void initViews(){
         logout = (Button) getView().findViewById(R.id.logout);
         deleteAccount = (TextView) getView().findViewById(R.id.deleteAccount);
         editButton = (ImageButton) getView().findViewById(R.id.editButton);
+
+        final TextView name = (TextView) getView().findViewById(R.id.textView19);
+        name.setText(sessionUser.getIme());
+
+        final EditText description = (EditText) getView().findViewById(R.id.editTextTextPersonName3);
+        description.setText(sessionUser.getOpis());
+
+        final TextView faculty = (TextView) getView().findViewById(R.id.textView20);
+        String idFaculty = String.valueOf(databaseHelper
+                .queryKorisnik("id_korisnik = ?", new String[]{String.valueOf(sessionUser.getId_korisnik())}, null, null, null)
+                .get(0).getId_fakultet());
+        faculty.setText(databaseHelper
+                .queryFakultet("id_fakultet = ?", new String[]{idFaculty}, null, null, null)
+                .get(0).getNaziv());
+
+        fetchProfilePicture();
     }
 
-    private void initListeners() {
+
+
+
+
+        private void initListeners() {
+
+            EditText description = (EditText) getView().findViewById(R.id.editTextTextPersonName3);
+            description.addTextChangedListener(new TextWatcher() {
+
+                @Override
+                public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable arg0) {
+                    sessionUser.setOpis(arg0.toString());
+                    databaseHelper.updateKorisnik(sessionUser);
+                }
+            });
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +188,15 @@ public class MyProfileFragment extends Fragment {
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
                                 deleteUser();
+                                int idOfUser = sessionUser.getId_korisnik();
+                                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic1");
+                                mStorageReference.delete();
+                                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic2");
+                                mStorageReference.delete();
+                                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic3");
+                                mStorageReference.delete();
+                                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic4");
+                                mStorageReference.delete();
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 //No button clicked
@@ -209,10 +263,10 @@ public class MyProfileFragment extends Fragment {
         dialog = dialogBuilder.create();
         dialog.show();
 
-        deleteButton1.setVisibility(View.INVISIBLE);
-        deleteButton2.setVisibility(View.INVISIBLE);
-        deleteButton3.setVisibility(View.INVISIBLE);
-        deleteButton4.setVisibility(View.INVISIBLE);
+        deleteButton1.setVisibility(View.GONE);
+        deleteButton2.setVisibility(View.GONE);
+        deleteButton3.setVisibility(View.GONE);
+        deleteButton4.setVisibility(View.GONE);
         pic1.setVisibility(View.INVISIBLE);
         pic2.setVisibility(View.INVISIBLE);
         pic3.setVisibility(View.INVISIBLE);
@@ -259,6 +313,7 @@ public class MyProfileFragment extends Fragment {
                 uploadImage(filePath3, 3);
                 uploadImage(filePath4, 4);
 
+                fetchProfilePicture();
                 dialog.dismiss();
             }
         });
@@ -266,13 +321,11 @@ public class MyProfileFragment extends Fragment {
         deleteButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ANDREA ovdje ide dio koda za brisanje slike
-                // ako je dugacak kod mozda bolje napraviti novu metodu pa ju samo pozivati na svakom onClick-u
-
-                // ......
-
-                // ovo mozes ukomponirati u svoj kod ili pustiti ovdje na kraju
-                deleteButton1.setVisibility(View.INVISIBLE);
+                int idOfUser = sessionUser.getId_korisnik();
+                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic1");
+                mStorageReference.delete();
+                filePath1 = null;
+                deleteButton1.setVisibility(View.GONE);
                 pic1.setImageResource(R.drawable.ic_baseline_image_search_24);
             }
         });
@@ -280,29 +333,23 @@ public class MyProfileFragment extends Fragment {
         deleteButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ANDREA ovdje ide dio koda za brisanje slike
-                // ako je dugacak kod mozda bolje napraviti novu metodu pa ju samo pozivati na svakom onClick-u
-
-                // ......
-
-                // ovo mozes ukomponirati u svoj kod ili pustiti ovdje na kraju
-                deleteButton2.setVisibility(View.INVISIBLE);
+                int idOfUser = sessionUser.getId_korisnik();
+                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic2");
+                mStorageReference.delete();
+                filePath2 = null;
+                deleteButton2.setVisibility(View.GONE);
                 pic2.setImageResource(R.drawable.ic_baseline_image_search_24);
-
-                // !!! mozda bolje postavljati deleteButton na GONE umjesto INVISIBLE, da nebi korisnik slucajno kliknuo
             }
         });
 
         deleteButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ANDREA ovdje ide dio koda za brisanje slike
-                // ako je dugacak kod mozda bolje napraviti novu metodu pa ju samo pozivati na svakom onClick-u
-
-                // ......
-
-                // ovo mozes ukomponirati u svoj kod ili pustiti ovdje na kraju
-                deleteButton3.setVisibility(View.INVISIBLE);
+                int idOfUser = sessionUser.getId_korisnik();
+                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic3");
+                mStorageReference.delete();
+                filePath3 = null;
+                deleteButton3.setVisibility(View.GONE);
                 pic3.setImageResource(R.drawable.ic_baseline_image_search_24);
             }
         });
@@ -310,13 +357,11 @@ public class MyProfileFragment extends Fragment {
         deleteButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // ANDREA ovdje ide dio koda za brisanje slike
-                // ako je dugacak kod mozda bolje napraviti novu metodu pa ju samo pozivati na svakom onClick-u
-
-                // ......
-
-                // ovo mozes ukomponirati u svoj kod ili pustiti ovdje na kraju
-                deleteButton4.setVisibility(View.INVISIBLE);
+                int idOfUser = sessionUser.getId_korisnik();
+                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic4");
+                mStorageReference.delete();
+                filePath4 = null;
+                deleteButton4.setVisibility(View.GONE);
                 pic4.setImageResource(R.drawable.ic_baseline_image_search_24);
             }
         });
@@ -416,7 +461,7 @@ public class MyProfileFragment extends Fragment {
             int i = 1;
             StorageReference ref = storageReference.child("images/usr/"+ idOfUser + "_" + i);*/
 
-            StorageReference ref = storageReference.child("images/jakovic/usr"+ idOfUser + "/pic" + num);
+            StorageReference ref = storageReference.child("images/jan/usr"+ idOfUser + "/pic" + num);
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -448,7 +493,7 @@ public class MyProfileFragment extends Fragment {
         int idOfUser = sessionUser.getId_korisnik();
         String number = Integer.toString(idOfUser);
         String nameOfPic = "usr" + number;
-        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jakovic/usr" + idOfUser + "/pic" + num);
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic" + num);
 
         try {
             final File localFile = File.createTempFile(nameOfPic, "jpg");
@@ -484,6 +529,46 @@ public class MyProfileFragment extends Fragment {
                     imageView.setImageResource(R.drawable.ic_baseline_image_search_24);
 
                     //Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void fetchProfilePicture(){
+        int idOfUser = sessionUser.getId_korisnik();
+        String number = Integer.toString(idOfUser);
+        String nameOfPic = "pic1";
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic1");
+
+        CircleImageView imageView = (CircleImageView) getView().findViewById(R.id.imageView7);
+        try {
+            final File localFile = File.createTempFile(nameOfPic, "jpg");
+            mStorageReference.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+
+                            (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
+                            (getView().findViewById(R.id.imageView7)).setVisibility(View.VISIBLE);
+
+                            ((CircleImageView) getView().findViewById(R.id.imageView7)).setImageBitmap(bitmap);
+
+                        }
+                    }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
+                    (getView().findViewById(R.id.imageView7)).setVisibility(View.INVISIBLE);
+                    (getView().findViewById(R.id.progressBar2)).setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
+                    (getView().findViewById(R.id.imageView7)).setVisibility(View.INVISIBLE);
                 }
             });
         } catch (IOException e) {
