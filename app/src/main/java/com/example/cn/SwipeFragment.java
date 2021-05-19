@@ -172,7 +172,6 @@ public class SwipeFragment extends Fragment {
                         databaseHelper.insertSwipe(swipe);
                     }
                 }
-                description.setText(swipe.toString());
 
                 usableOtherUser.remove(usableOtherUser.get(0));
                 display(usableOtherUser);
@@ -250,7 +249,7 @@ public class SwipeFragment extends Fragment {
 
 
             name.setText(usableOtherUser.get(0).getIme());
-            //description.setText(usableOtherUser.get(0).getOpis());
+            description.setText(usableOtherUser.get(0).getOpis());
             age.setText(Integer.toString(2021 - usableOtherUser.get(0).getGodina_rodenja()));
 
             // dohvacanje naziva fakulteta
