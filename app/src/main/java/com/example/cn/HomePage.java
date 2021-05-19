@@ -46,12 +46,14 @@ public class HomePage extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        /*bottomNav.setSelectedItemId(R.id.nav_swipe);
-        getSupportFragmentManager().beginTransaction()
+        bottomNav.setSelectedItemId(R.id.nav_swipe);
+
+        /*getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new SwipeFragment().newInstance(sessionUser))
                 .commit();*/
 
     }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {

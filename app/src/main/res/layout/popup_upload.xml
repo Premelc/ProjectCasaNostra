@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/pic1"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:padding="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_image_search_24" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/pic1"
+        app:layout_constraintEnd_toEndOf="@+id/pic1"
+        app:layout_constraintStart_toStartOf="@id/pic1"
+        app:layout_constraintTop_toTopOf="@+id/pic1" />
+
+    <ImageView
+        android:id="@+id/pic2"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_image_search_24" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/pic2"
+        app:layout_constraintEnd_toEndOf="@+id/pic2"
+        app:layout_constraintStart_toStartOf="@id/pic2"
+        app:layout_constraintTop_toTopOf="@+id/pic2" />
+
+    <ImageView
+        android:id="@+id/pic3"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pic1"
+        app:srcCompat="@drawable/ic_baseline_image_search_24" />
+
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/pic3"
+        app:layout_constraintEnd_toEndOf="@+id/pic3"
+        app:layout_constraintStart_toStartOf="@id/pic3"
+        app:layout_constraintTop_toTopOf="@+id/pic3" />
+
+    <ImageView
+        android:id="@+id/pic4"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/pic2"
+        app:srcCompat="@drawable/ic_baseline_image_search_24" />
+
+    <ProgressBar
+        android:id="@+id/progressBar4"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/pic4"
+        app:layout_constraintEnd_toEndOf="@+id/pic4"
+        app:layout_constraintStart_toStartOf="@id/pic4"
+        app:layout_constraintTop_toTopOf="@+id/pic4" />
+
+    <Button
+        android:id="@+id/upload"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Upload"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pic4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <ImageButton
+        android:id="@+id/deleteButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/pic1"
+        app:layout_constraintTop_toTopOf="@+id/pic1"
+        app:srcCompat="@drawable/ic_baseline_clear_24_red" />
+
+    <ImageButton
+        android:id="@+id/deleteButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/pic2"
+        app:layout_constraintTop_toTopOf="@+id/pic2"
+        app:srcCompat="@drawable/ic_baseline_clear_24_red" />
+
+    <ImageButton
+        android:id="@+id/deleteButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/pic3"
+        app:layout_constraintTop_toTopOf="@+id/pic3"
+        app:srcCompat="@drawable/ic_baseline_clear_24_red" />
+
+    <ImageButton
+        android:id="@+id/deleteButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/pic4"
+        app:layout_constraintTop_toTopOf="@+id/pic4"
+        app:srcCompat="@drawable/ic_baseline_clear_24_red" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

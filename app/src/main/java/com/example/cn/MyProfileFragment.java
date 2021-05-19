@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.FileUtils;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -50,12 +52,11 @@ public class MyProfileFragment extends Fragment {
     // Widgeti
     private Button logout;
     private TextView deleteAccount;
+    private ImageButton editButton;
 
     // Buttoni itd. za Firebase
-    private Button btnChoose, btnUpload;
-    private ImageView imageView;
-    private Uri filePath;
-    private final int PICK_IMAGE_REQUEST = 71;
+    private Uri filePath1, filePath2, filePath3, filePath4;
+    private int PICK_IMAGE_REQUEST = 1;
 
     //Firebase - za choose i upload
     FirebaseStorage storage;
@@ -63,6 +64,14 @@ public class MyProfileFragment extends Fragment {
 
     // Za dohvacanje
     private StorageReference mStorageReference;
+
+    // Za popup
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
+    private ImageView pic1, pic2, pic3, pic4;
+    private ProgressBar progressBar1, progressBar2, progressBar3, progressBar4;
+    private ImageButton deleteButton1, deleteButton2, deleteButton3, deleteButton4;
+    private Button uploadButton;
 
     private boolean flag = false;
 
@@ -92,74 +101,27 @@ public class MyProfileFragment extends Fragment {
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        btnChoose = (Button) getView().findViewById(R.id.btnChoose);
-        btnUpload = (Button) getView().findViewById(R.id.btnUpload);
 
-        imageView = (ImageView) getView().findViewById(R.id.imgView);
 
-        // Ime slike sam stavila usr + broj jer za ime filea mora biti najmanje duzine 3
-        int idOfUser = sessionUser.getId_korisnik();
-        String number = Integer.toString(idOfUser);
-        String nameOfPic = "usr" + number;
-        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/volarevic/usr"+ idOfUser);
 
-        try {
-            final File localFile = File.createTempFile(nameOfPic, "jpg");
-            mStorageReference.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            //Toast.makeText(getActivity(), "Slika je dohvacena", Toast.LENGTH_SHORT).show();
-                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
 
-                            //  !!!!!!
-                            ((ProgressBar) getView().findViewById(R.id.progressBar)).setVisibility(View.INVISIBLE);
-                            ((ImageView) getView().findViewById(R.id.imgView)).setVisibility(View.VISIBLE);
-
-                            ((ImageView) getView().findViewById(R.id.imgView)).setImageBitmap(bitmap);
-
-                        }
-                    }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
-                    ((ImageView) getView().findViewById(R.id.imgView)).setVisibility(View.INVISIBLE);
-                    ((ProgressBar) getView().findViewById(R.id.progressBar)).setVisibility(View.VISIBLE);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    ((ProgressBar) getView().findViewById(R.id.progressBar)).setVisibility(View.INVISIBLE);
-                    ((ImageView) getView().findViewById(R.id.imgView)).setVisibility(View.INVISIBLE);
-
-                    //Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        btnChoose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseImage();
-            }
-        });
-
-        btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadImage();
-                flag = true;
-            }
-        });
     }
 
     private void initViews(){
         logout = (Button) getView().findViewById(R.id.logout);
         deleteAccount = (TextView) getView().findViewById(R.id.deleteAccount);
+        editButton = (ImageButton) getView().findViewById(R.id.editButton);
     }
 
     private void initListeners() {
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow();
+            }
+        });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,8 +183,150 @@ public class MyProfileFragment extends Fragment {
         alert.show();
     }
 
+
+    public void popupWindow(){
+        dialogBuilder = new AlertDialog.Builder(getActivity());
+        final View popup = getLayoutInflater().inflate(R.layout.popup_upload, null);
+
+        pic1 = (ImageView) popup.findViewById(R.id.pic1);
+        pic2 = (ImageView) popup.findViewById(R.id.pic2);
+        pic3 = (ImageView) popup.findViewById(R.id.pic3);
+        pic4 = (ImageView) popup.findViewById(R.id.pic4);
+
+        progressBar1 = (ProgressBar) popup.findViewById(R.id.progressBar1);
+        progressBar2 = (ProgressBar) popup.findViewById(R.id.progressBar2);
+        progressBar3 = (ProgressBar) popup.findViewById(R.id.progressBar3);
+        progressBar4 = (ProgressBar) popup.findViewById(R.id.progressBar4);
+
+        deleteButton1 = (ImageButton) popup.findViewById(R.id.deleteButton1);
+        deleteButton2 = (ImageButton) popup.findViewById(R.id.deleteButton2);
+        deleteButton3 = (ImageButton) popup.findViewById(R.id.deleteButton3);
+        deleteButton4 = (ImageButton) popup.findViewById(R.id.deleteButton4);
+
+        uploadButton = (Button) popup.findViewById(R.id.upload);
+
+        dialogBuilder.setView(popup);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
+        deleteButton1.setVisibility(View.INVISIBLE);
+        deleteButton2.setVisibility(View.INVISIBLE);
+        deleteButton3.setVisibility(View.INVISIBLE);
+        deleteButton4.setVisibility(View.INVISIBLE);
+        pic1.setVisibility(View.INVISIBLE);
+        pic2.setVisibility(View.INVISIBLE);
+        pic3.setVisibility(View.INVISIBLE);
+        pic4.setVisibility(View.INVISIBLE);
+        // dohvacanje slika koje su vec uploadane na firebase
+        fetchImage(pic1, progressBar1, deleteButton1, 1);
+        fetchImage(pic2, progressBar2, deleteButton2,2);
+        fetchImage(pic3, progressBar3, deleteButton3,3);
+        fetchImage(pic4, progressBar4, deleteButton4,4);
+
+        pic1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseImage(1);
+            }
+        });
+
+        pic2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseImage(2);
+            }
+        });
+
+        pic3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseImage(3);
+            }
+        });
+
+        pic4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseImage(4);
+            }
+        });
+
+        uploadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadImage(filePath1, 1);
+                uploadImage(filePath2, 2);
+                uploadImage(filePath3, 3);
+                uploadImage(filePath4, 4);
+
+                dialog.dismiss();
+            }
+        });
+
+        deleteButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // ANDREA ovdje ide dio koda za brisanje slike
+                // ako je dugacak kod mozda bolje napraviti novu metodu pa ju samo pozivati na svakom onClick-u
+
+                // ......
+
+                // ovo mozes ukomponirati u svoj kod ili pustiti ovdje na kraju
+                deleteButton1.setVisibility(View.INVISIBLE);
+                pic1.setImageResource(R.drawable.ic_baseline_image_search_24);
+            }
+        });
+
+        deleteButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // ANDREA ovdje ide dio koda za brisanje slike
+                // ako je dugacak kod mozda bolje napraviti novu metodu pa ju samo pozivati na svakom onClick-u
+
+                // ......
+
+                // ovo mozes ukomponirati u svoj kod ili pustiti ovdje na kraju
+                deleteButton2.setVisibility(View.INVISIBLE);
+                pic2.setImageResource(R.drawable.ic_baseline_image_search_24);
+
+                // !!! mozda bolje postavljati deleteButton na GONE umjesto INVISIBLE, da nebi korisnik slucajno kliknuo
+            }
+        });
+
+        deleteButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // ANDREA ovdje ide dio koda za brisanje slike
+                // ako je dugacak kod mozda bolje napraviti novu metodu pa ju samo pozivati na svakom onClick-u
+
+                // ......
+
+                // ovo mozes ukomponirati u svoj kod ili pustiti ovdje na kraju
+                deleteButton3.setVisibility(View.INVISIBLE);
+                pic3.setImageResource(R.drawable.ic_baseline_image_search_24);
+            }
+        });
+
+        deleteButton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // ANDREA ovdje ide dio koda za brisanje slike
+                // ako je dugacak kod mozda bolje napraviti novu metodu pa ju samo pozivati na svakom onClick-u
+
+                // ......
+
+                // ovo mozes ukomponirati u svoj kod ili pustiti ovdje na kraju
+                deleteButton4.setVisibility(View.INVISIBLE);
+                pic4.setImageResource(R.drawable.ic_baseline_image_search_24);
+            }
+        });
+
+    }
+
+
     // Za sliku
-    private void chooseImage() {
+    private void chooseImage(int num) {
+        PICK_IMAGE_REQUEST = num;
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -232,14 +336,63 @@ public class MyProfileFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+        if(requestCode == 1 && resultCode == RESULT_OK
                 && data != null && data.getData() != null )
         {
-            filePath = data.getData();
+            filePath1 = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
-                imageView.setVisibility(View.VISIBLE);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath1);
+                pic1.setImageBitmap(bitmap);
+                pic1.setVisibility(View.VISIBLE);
+                deleteButton1.setVisibility(View.VISIBLE);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        else if(requestCode == 2 && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            filePath2 = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath2);
+                pic2.setImageBitmap(bitmap);
+                pic2.setVisibility(View.VISIBLE);
+                deleteButton2.setVisibility(View.VISIBLE);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        else if(requestCode == 3 && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            filePath3 = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath3);
+                pic3.setImageBitmap(bitmap);
+                pic3.setVisibility(View.VISIBLE);
+                deleteButton3.setVisibility(View.VISIBLE);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        if(requestCode == 4 && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            filePath4 = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath4);
+                pic4.setImageBitmap(bitmap);
+                pic4.setVisibility(View.VISIBLE);
+                deleteButton4.setVisibility(View.VISIBLE);
             }
             catch (IOException e)
             {
@@ -249,8 +402,7 @@ public class MyProfileFragment extends Fragment {
     }
 
 
-
-    private void uploadImage() {
+    private void uploadImage(Uri filePath, int num) {
         if(filePath != null)
         {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -264,7 +416,7 @@ public class MyProfileFragment extends Fragment {
             int i = 1;
             StorageReference ref = storageReference.child("images/usr/"+ idOfUser + "_" + i);*/
 
-            StorageReference ref = storageReference.child("images/volarevic/usr"+ idOfUser);
+            StorageReference ref = storageReference.child("images/jakovic/usr"+ idOfUser + "/pic" + num);
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -290,4 +442,52 @@ public class MyProfileFragment extends Fragment {
                     });
         }
     };
+
+    private void fetchImage(ImageView imageView, ProgressBar progressBar, ImageButton imageButton, int num){
+        // Ime slike sam stavila usr + broj jer za ime filea mora biti najmanje duzine 3
+        int idOfUser = sessionUser.getId_korisnik();
+        String number = Integer.toString(idOfUser);
+        String nameOfPic = "usr" + number;
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jakovic/usr" + idOfUser + "/pic" + num);
+
+        try {
+            final File localFile = File.createTempFile(nameOfPic, "jpg");
+            mStorageReference.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            //Toast.makeText(getActivity(), "Slika je dohvacena", Toast.LENGTH_SHORT).show();
+                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+
+                            //  !!!!!!
+                            progressBar.setVisibility(View.INVISIBLE);
+                            imageView.setVisibility(View.VISIBLE);
+                            imageButton.setVisibility(View.VISIBLE);
+
+                            imageView.setImageBitmap(bitmap);
+
+                        }
+                    }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
+                    imageView.setVisibility(View.INVISIBLE);
+                    imageButton.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    imageView.setVisibility(View.VISIBLE);
+                    imageButton.setVisibility(View.INVISIBLE);
+
+                    imageView.setImageResource(R.drawable.ic_baseline_image_search_24);
+
+                    //Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
