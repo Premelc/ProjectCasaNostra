@@ -45,6 +45,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MyProfileFragment extends Fragment {
 
     private static final int RESULT_OK = -1;
@@ -121,48 +123,15 @@ public class MyProfileFragment extends Fragment {
         final EditText description = (EditText) getView().findViewById(R.id.editTextTextPersonName3);
         description.setText(sessionUser.getOpis());
 
+        final TextView faculty = (TextView) getView().findViewById(R.id.textView20);
+        String idFaculty = String.valueOf(databaseHelper
+                .queryKorisnik("id_korisnik = ?", new String[]{String.valueOf(sessionUser.getId_korisnik())}, null, null, null)
+                .get(0).getId_fakultet());
+        faculty.setText(databaseHelper
+                .queryFakultet("id_fakultet = ?", new String[]{idFaculty}, null, null, null)
+                .get(0).getNaziv());
 
-        //NE RADI VJEROJATNO ZBOG IMAGEVIEW-A
-        /*int idOfUser = sessionUser.getId_korisnik();
-        String number = Integer.toString(idOfUser);
-        String nameOfPic = "pic1";
-        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic1");
-
-        ImageView imageView = (ImageView) getView().findViewById(R.id.imageView7);
-        try {
-            final File localFile = File.createTempFile(nameOfPic, "jpg");
-            mStorageReference.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-
-                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-
-                            (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
-                            (getView().findViewById(R.id.imageView7)).setVisibility(View.VISIBLE);
-
-                            ((ImageView) getView().findViewById(R.id.imageView7)).setImageBitmap(bitmap);
-
-                        }
-                    }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
-                    (getView().findViewById(R.id.imageView7)).setVisibility(View.INVISIBLE);
-                    (getView().findViewById(R.id.progressBar2)).setVisibility(View.VISIBLE);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
-                    (getView().findViewById(R.id.imageView7)).setVisibility(View.INVISIBLE);
-                    Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-*/
-
+        fetchProfilePicture();
     }
 
 
@@ -294,10 +263,10 @@ public class MyProfileFragment extends Fragment {
         dialog = dialogBuilder.create();
         dialog.show();
 
-        deleteButton1.setVisibility(View.INVISIBLE);
-        deleteButton2.setVisibility(View.INVISIBLE);
-        deleteButton3.setVisibility(View.INVISIBLE);
-        deleteButton4.setVisibility(View.INVISIBLE);
+        deleteButton1.setVisibility(View.GONE);
+        deleteButton2.setVisibility(View.GONE);
+        deleteButton3.setVisibility(View.GONE);
+        deleteButton4.setVisibility(View.GONE);
         pic1.setVisibility(View.INVISIBLE);
         pic2.setVisibility(View.INVISIBLE);
         pic3.setVisibility(View.INVISIBLE);
@@ -344,6 +313,7 @@ public class MyProfileFragment extends Fragment {
                 uploadImage(filePath3, 3);
                 uploadImage(filePath4, 4);
 
+                fetchProfilePicture();
                 dialog.dismiss();
             }
         });
@@ -354,7 +324,8 @@ public class MyProfileFragment extends Fragment {
                 int idOfUser = sessionUser.getId_korisnik();
                 mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic1");
                 mStorageReference.delete();
-                deleteButton1.setVisibility(View.INVISIBLE);
+                filePath1 = null;
+                deleteButton1.setVisibility(View.GONE);
                 pic1.setImageResource(R.drawable.ic_baseline_image_search_24);
             }
         });
@@ -365,10 +336,9 @@ public class MyProfileFragment extends Fragment {
                 int idOfUser = sessionUser.getId_korisnik();
                 mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic2");
                 mStorageReference.delete();
-                deleteButton2.setVisibility(View.INVISIBLE);
+                filePath2 = null;
+                deleteButton2.setVisibility(View.GONE);
                 pic2.setImageResource(R.drawable.ic_baseline_image_search_24);
-
-                // !!! mozda bolje postavljati deleteButton na GONE umjesto INVISIBLE, da nebi korisnik slucajno kliknuo
             }
         });
 
@@ -378,7 +348,8 @@ public class MyProfileFragment extends Fragment {
                 int idOfUser = sessionUser.getId_korisnik();
                 mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic3");
                 mStorageReference.delete();
-                deleteButton3.setVisibility(View.INVISIBLE);
+                filePath3 = null;
+                deleteButton3.setVisibility(View.GONE);
                 pic3.setImageResource(R.drawable.ic_baseline_image_search_24);
             }
         });
@@ -389,7 +360,8 @@ public class MyProfileFragment extends Fragment {
                 int idOfUser = sessionUser.getId_korisnik();
                 mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic4");
                 mStorageReference.delete();
-                deleteButton4.setVisibility(View.INVISIBLE);
+                filePath4 = null;
+                deleteButton4.setVisibility(View.GONE);
                 pic4.setImageResource(R.drawable.ic_baseline_image_search_24);
             }
         });
@@ -557,6 +529,46 @@ public class MyProfileFragment extends Fragment {
                     imageView.setImageResource(R.drawable.ic_baseline_image_search_24);
 
                     //Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void fetchProfilePicture(){
+        int idOfUser = sessionUser.getId_korisnik();
+        String number = Integer.toString(idOfUser);
+        String nameOfPic = "pic1";
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic1");
+
+        CircleImageView imageView = (CircleImageView) getView().findViewById(R.id.imageView7);
+        try {
+            final File localFile = File.createTempFile(nameOfPic, "jpg");
+            mStorageReference.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+
+                            (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
+                            (getView().findViewById(R.id.imageView7)).setVisibility(View.VISIBLE);
+
+                            ((CircleImageView) getView().findViewById(R.id.imageView7)).setImageBitmap(bitmap);
+
+                        }
+                    }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
+                    (getView().findViewById(R.id.imageView7)).setVisibility(View.INVISIBLE);
+                    (getView().findViewById(R.id.progressBar2)).setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
+                    (getView().findViewById(R.id.imageView7)).setVisibility(View.INVISIBLE);
                 }
             });
         } catch (IOException e) {
