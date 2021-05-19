@@ -39,7 +39,7 @@
         app:layout_constraintTop_toTopOf="@+id/pictureOfUser" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -47,12 +47,12 @@
         android:textColor="@color/white"
         android:textSize="30dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toTopOf="@+id/textView7" />
+        app:layout_constraintBottom_toTopOf="@+id/faculty"
+        app:layout_constraintStart_toEndOf="@+id/name"
+        app:layout_constraintTop_toTopOf="@+id/name" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ime, "
@@ -60,11 +60,11 @@
         android:textColor="@color/white"
         android:textSize="30dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView" />
+        app:layout_constraintBottom_toTopOf="@+id/faculty"
+        app:layout_constraintStart_toStartOf="@+id/faculty" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/faculty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="4dp"
@@ -72,8 +72,8 @@
         android:textColor="@color/white"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/pictureOfUser"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton2"
-        app:layout_constraintStart_toEndOf="@+id/imageButton" />
+        app:layout_constraintEnd_toStartOf="@+id/swipeRight"
+        app:layout_constraintStart_toEndOf="@+id/swipeLeft" />
 
     <LinearLayout
         android:id="@+id/linearLayout6"
@@ -85,7 +85,7 @@
 
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -94,6 +94,8 @@
             android:textStyle="bold" />
 
         <LinearLayout
+            android:id="@+id/hasApartment"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -108,7 +110,7 @@
             <TextView
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
-                android:id="@+id/textView18"
+                android:id="@+id/apartment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -119,13 +121,15 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/separateRoom"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <ImageView
                 android:padding="10dp"
-                android:id="@+id/imageView8"
+                android:id="@+id/check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
@@ -133,7 +137,7 @@
 
             <ImageView
                 android:padding="10dp"
-                android:id="@+id/imageView9"
+                android:id="@+id/clear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
@@ -143,7 +147,7 @@
             <TextView
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
-                android:id="@+id/textView20"
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -160,6 +164,7 @@
             app:srcCompat="@drawable/ic_baseline_person_24" />
 
         <LinearLayout
+            android:id="@+id/hasPets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -175,7 +180,7 @@
             <TextView
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
-                android:id="@+id/textView19"
+                android:id="@+id/pets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -187,7 +192,7 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/swipeLeft"
         android:layout_width="80dp"
         android:layout_height="65dp"
         android:background="@null"
@@ -196,7 +201,7 @@
         app:srcCompat="@drawable/ic_baseline_thumb_down_24" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/swipeRight"
         android:layout_width="80dp"
         android:layout_height="65dp"
         android:background="@null"

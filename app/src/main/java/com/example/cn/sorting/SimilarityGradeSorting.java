@@ -41,14 +41,19 @@ public class SimilarityGradeSorting {
                 if (Boolean.compare(explicitReq[2], usr.isMiran_zivot()) < 0 ||Boolean.compare(explicitReq[2], usr.isMiran_zivot()) > 0 ) {
                     usr.setModifier(usr.getModifier() * 2);
                 }
-                if(Boolean.compare(usr.isZasebnaSoba(),actUsr.isZasebna_soba()) != 0  ){
+
+                // ima utjecaja samo ako usr NUDI stan sa sobom koja ce se dijeliti, a actUsr zahtjeva zasebnu sobu
+                // ako OBA korisnika TRAZE stan, onda nema veze ako jedan "Moze dijeliti sobu sa cimerom", a drugi "Zeli zasebnu sobu"
+                if(usr.isApt() && Boolean.compare(usr.isZasebnaSoba(),actUsr.isZasebna_soba()) < 0){
                     usr.setModifier(usr.getModifier() * 2);
                 }
 
-                if (actUsr.getCimer_spol() != usr.getSpol()) {
+                // Cimer_spol je 'S' ako je korisniku svejedno
+                if (actUsr.getCimer_spol() != 'S' && actUsr.getCimer_spol() != usr.getSpol()) {
                         //toRemove.add(usr);
                     usr.setModifier(usr.getModifier() * 50);
                     }
+
                 //provjera sličnosti
                 if (actUsr.getId_fakultet() == usr.getId_fakultet()) {
                     usr.setGrade(usr.getGrade() + 50);
