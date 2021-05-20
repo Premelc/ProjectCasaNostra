@@ -212,7 +212,7 @@ public class SwipeFragment extends Fragment {
         /*int idOfUser = usableOtherUser.get(0).getId_korisnik();
         String number = Integer.toString(idOfUser);
         String nameOfPic = "usr" + number;
-        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/volarevic/usr" + idOfUser);
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser);
 
         imageView = (ImageView) getView().findViewById(R.id.pictureOfUser);
         try {
