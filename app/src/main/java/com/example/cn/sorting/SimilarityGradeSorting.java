@@ -231,7 +231,13 @@ public class SimilarityGradeSorting {
 
     public boolean getIfUserSwiped(int usr_id , int actUsr_id , List<Swipe> swipeState) {
         for (Swipe swp : swipeState){
-            if (swp.getId_1()== actUsr_id && usr_id == swp.getId_2())return true;
+            if((actUsr_id == swp.getId_1() && usr_id == swp.getId_2()) || (actUsr_id == swp.getId_2() && usr_id == swp.getId_1())) {
+                if (actUsr_id < usr_id) {
+                    if (swp.isSwipe_1() != null) return true;
+                } else {
+                    if (swp.isSwipe_2() != null) return true;
+                }
+            }
         }
         return false;
     }
