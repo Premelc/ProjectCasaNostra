@@ -260,6 +260,7 @@ public class SwipeFragment extends Fragment {
             String idFaculty = String.valueOf(databaseHelper.queryKorisnik(whereClause, whereArgs, null, null, null).get(0).getId_fakultet());
             whereArgs[0] = idFaculty;
 
+
             faculty.setText(databaseHelper
                     .queryFakultet("id_fakultet = ?", whereArgs, null, null, null)
                     .get(0)

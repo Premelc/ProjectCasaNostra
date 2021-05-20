@@ -71,9 +71,6 @@ public class SimilarityGradeSorting {
             Collections.sort(othrUsr);
             return othrUsr;
         }
-        else{
-            othrUsr.add(new UsableOtherUser("EMPTY LIST PLACEHOLDER"));
-        }
         return othrUsr;
     }
 
@@ -202,6 +199,7 @@ public class SimilarityGradeSorting {
                 if (stan != null) {
                     activeUser.setCijenaMax((int) stan.getCijena());
                     activeUser.setZasebna_soba(stan.isZasebna_soba());
+                    activeUser.setApt(true);
                     return activeUser;
                 } else if (stan == null) {
                     List<TrazimStan> needAptPrice = dbh.queryTrazimStan(null, null, null, null, null);
