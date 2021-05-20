@@ -8,8 +8,8 @@ public class UsableActiveUser extends UsableUser {
     private boolean zasebna_soba;
     private int cijena_max;
     private int id_kvart;
-    private int id_lokacija;
-    private int hasApt;
+    private int[] id_lokacija = {0,0,0,0};
+    private boolean apt;
 
     public UsableActiveUser() {
     }
@@ -32,6 +32,43 @@ public class UsableActiveUser extends UsableUser {
         this.setCimer_godine_do(cimer_godine_do);
         this.setCimer_ljubimac(cimer_ljubimac);
         this.setCimer_pusac(cimer_pusac);
+    }
+
+    public void setId_lokacija(int lok) {
+        this.id_lokacija[lok] = 1;
+    }
+
+    @Override
+    public int getId_lokacija() {
+        return 0;
+    }
+
+
+    public int[] getIdLokacija() {
+        return this.id_lokacija;
+    }
+
+    public String getLocName(){
+        String finalString = new String();
+
+        for (int i : this.id_lokacija){
+            if (i == 1){
+                finalString += UsableOtherUser.lok_names[i] + ", ";
+            }
+        }
+        return finalString;
+    }
+
+    public void setCijena_max(int cijena_max) {
+        this.cijena_max = cijena_max;
+    }
+
+    public boolean isApt() {
+        return apt;
+    }
+
+    public void setApt(boolean apt) {
+        this.apt = apt;
     }
 
     public boolean isZasebna_soba() {
@@ -103,15 +140,6 @@ public class UsableActiveUser extends UsableUser {
     @Override
     public int getId_kvart() {
         return this.id_kvart;
-    }
-
-    @Override
-    public void setId_lokacija(int b) {
-    this.id_lokacija = b;
-    }
-    @Override
-    public int getId_lokacija() {
-        return this.id_lokacija;
     }
 
     @Override

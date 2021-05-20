@@ -127,7 +127,7 @@ public class SwipeFragment extends Fragment {
                 } else if (sessionUser.getId_korisnik() > usableOtherUser.get(0).getId_korisnik()){
                     swipe = databaseHelper.checkSwipe(String.valueOf(usableOtherUser.get(0).getId_korisnik()), String.valueOf(sessionUser.getId_korisnik()));
 
-                    if(swipe != null){
+                    if(swipe != null && swipe.getId_1() > 0 && swipe.getId_2() > 0){
                         swipe.setSwipe_2(true);
                         databaseHelper.updateSwipe(swipe);
                     } else{
@@ -135,6 +135,7 @@ public class SwipeFragment extends Fragment {
                         swipe.setId_2(sessionUser.getId_korisnik());
                         swipe.setSwipe_2(true);
                         databaseHelper.insertSwipe(swipe);
+
                     }
                 }
 
@@ -159,10 +160,11 @@ public class SwipeFragment extends Fragment {
                         swipe.setSwipe_1(false);
                         databaseHelper.insertSwipe(swipe);
                     }
+
                 } else if (sessionUser.getId_korisnik() > usableOtherUser.get(0).getId_korisnik()){
                     swipe = databaseHelper.checkSwipe(String.valueOf(usableOtherUser.get(0).getId_korisnik()), String.valueOf(sessionUser.getId_korisnik()));
 
-                    if(swipe != null){
+                    if(swipe != null && swipe.getId_1() > 0 && swipe.getId_2() > 0){
                         swipe.setSwipe_2(false);
                         databaseHelper.updateSwipe(swipe);
                     } else{
@@ -171,8 +173,8 @@ public class SwipeFragment extends Fragment {
                         swipe.setSwipe_2(false);
                         databaseHelper.insertSwipe(swipe);
                     }
-                }
 
+                }
                 usableOtherUser.remove(usableOtherUser.get(0));
                 display(usableOtherUser);
 
@@ -260,6 +262,7 @@ public class SwipeFragment extends Fragment {
             String idFaculty = String.valueOf(databaseHelper.queryKorisnik(whereClause, whereArgs, null, null, null).get(0).getId_fakultet());
             whereArgs[0] = idFaculty;
 
+
             faculty.setText(databaseHelper
                     .queryFakultet("id_fakultet = ?", whereArgs, null, null, null)
                     .get(0)
@@ -272,7 +275,7 @@ public class SwipeFragment extends Fragment {
             haveApt = databaseHelper.queryNudimStan(whereClause, whereArgs, null, null, null);
             // ako user ima stan, pokaze se redak sa cijenom i lokacijom
             // ako nema, postavi se na GONE
-            if (!haveApt.isEmpty()) {
+            if (/*!haveApt.isEmpty()*/ usableOtherUser.get(0).isApt()) {
                 hasApartment.setVisibility(View.VISIBLE);
                 whereClause = "id_kvart = ?";
                 whereArgs[0] = String.valueOf(haveApt.get(0).getId_kvart());
