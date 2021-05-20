@@ -272,7 +272,7 @@ public class SwipeFragment extends Fragment {
             haveApt = databaseHelper.queryNudimStan(whereClause, whereArgs, null, null, null);
             // ako user ima stan, pokaze se redak sa cijenom i lokacijom
             // ako nema, postavi se na GONE
-            if (!haveApt.isEmpty()) {
+            if (/*!haveApt.isEmpty()*/ usableOtherUser.get(0).isApt()) {
                 hasApartment.setVisibility(View.VISIBLE);
                 whereClause = "id_kvart = ?";
                 whereArgs[0] = String.valueOf(haveApt.get(0).getId_kvart());

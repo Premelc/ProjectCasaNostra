@@ -8,10 +8,10 @@ public class UsableOtherUser extends UsableUser implements Comparable {
     private int grade = 0;
     private int id_kvart;
     private String kvart_ime;
-    private String lokacija_ime;
-    private int id_lokacija;
+    private int[] id_lokacija = {0,0,0,0};
     private boolean apt;
     private int[] ljubimci;
+    static public String[] lok_names = {"Zapad", "Istok" , "Centar" , "Prigrad"};
 
     public UsableOtherUser(int id_korisnik, String ime, int godina_rodenja, String opis, char spol, int id_fakultet, boolean pusac, boolean ljubimac, boolean miran_zivot) {
             this.setId_korisnik(id_korisnik);
@@ -52,20 +52,29 @@ public class UsableOtherUser extends UsableUser implements Comparable {
         this.kvart_ime = kvart_ime;
     }
 
-    public String getLokacija_ime() {
-        return lokacija_ime;
+    public void setId_lokacija(int lok) {
+        this.id_lokacija[lok] = 1;
     }
 
-    public void setLokacija_ime(String lokacija_ime) {
-        this.lokacija_ime = lokacija_ime;
-    }
-
+    @Override
     public int getId_lokacija() {
-        return id_lokacija;
+        return 0;
     }
 
-    public void setId_lokacija(int id_lokacija) {
-        this.id_lokacija = id_lokacija;
+
+    public int[] getIdLokacija() {
+        return this.id_lokacija;
+    }
+
+    public String getLocName(){
+        String finalString = new String();
+
+        for (int i : this.id_lokacija){
+            if (i == 1){
+                finalString += UsableOtherUser.lok_names[i] + ", ";
+            }
+        }
+        return finalString;
     }
 
     public int getId_kvart() {

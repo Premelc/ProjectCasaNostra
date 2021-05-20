@@ -25,7 +25,6 @@ public class SimilarityGradeSorting {
 
         List<UsableOtherUser> othrUsr = pullData(dbh, activeUser);
         UsableActiveUser actUsr = writeActiveUserData(activeUser, dbh);
-        List<UsableOtherUser> toRemove = new ArrayList<>();
 
         if (!othrUsr.isEmpty()) {
             boolean[] explicitReq = {actUsr.isCimer_pusac(), actUsr.isCimer_ljubimac(), actUsr.isMiran_zivot(), actUsr.isTrazimStan()};
@@ -48,12 +47,6 @@ public class SimilarityGradeSorting {
                     usr.setModifier(usr.getModifier() * 2);
                 }
 
-                // Cimer_spol je 'S' ako je korisniku svejedno
-                if (actUsr.getCimer_spol() != 'S' && actUsr.getCimer_spol() != usr.getSpol()) {
-                        //toRemove.add(usr);
-                    usr.setModifier(usr.getModifier() * 50);
-                    }
-
                 //provjera sličnosti
                 if (actUsr.getId_fakultet() == usr.getId_fakultet()) {
                     usr.setGrade(usr.getGrade() + 50);
@@ -61,7 +54,7 @@ public class SimilarityGradeSorting {
                 if (actUsr.getId_kvart() == usr.getId_kvart()) {
                     usr.setGrade(usr.getGrade() + 50);
                 }
-                if (actUsr.getId_lokacija() == usr.getId_lokacija()) {
+                if (compareLocData(actUsr, usr)) {
                     usr.setGrade(usr.getGrade() + 30);
                 }
                 if (actUsr.getCimer_godine_od() >= usr.getGodina_rodenja() && actUsr.getCimer_godine_do() <= usr.getGodina_rodenja()) {
@@ -92,133 +85,151 @@ public class SimilarityGradeSorting {
 
 
 
-        List<Korisnik> modelHaveApt = (dbh.queryKorisnik(whereClause, whereArgs, null, null, null));
-        List<Korisnik> modelNeedApt = (dbh.queryKorisnik(whereClause, whereArgs, null, null, null));
-        List<UsableOtherUser> haveApt = writeData(modelHaveApt);
-        List<UsableOtherUser> needApt = writeData(modelNeedApt);
+        List<Korisnik> users = (dbh.queryKorisnik(whereClause, whereArgs, null, null, null));
+
+        List<UsableOtherUser> allUsers = writeData(users);
+
+        List<UsableOtherUser> haveApt = new ArrayList<>();
+        List<UsableOtherUser> needApt = new ArrayList<>();
+
+        UsableActiveUser actUsr = writeActiveUserData(au, dbh);
 
         whereClause = "id_1 != ?";
         List<Swipe> swipeState = (dbh.querySwipe(whereClause, whereArgs, null, null, null));
 
-
-
         List<NudimStan>haveAptPrice = dbh.queryNudimStan(null, null, null, null, null);
         List<TrazimStan>needAptPrice = dbh.queryTrazimStan(null, null, null, null, null);
 
+        List<UsableOtherUser> toRemove1 = new ArrayList<>();
+
         //ljudi koji imaju stan
         whereClause = "id_kvart = ?";
-        for (UsableOtherUser usr:haveApt) {
+        for (UsableOtherUser usr:allUsers) {
             NudimStan stan = findUserWithApt(usr.getId_korisnik() , haveAptPrice);
-            usr.setId_kvart(stan.getId_kvart());
+            if(stan != null) {
+                if (getIfUserSwiped(usr.getId_korisnik(), au.getId_korisnik() , swipeState)){
+                    toRemove1.add(usr);
+                }else{
+                    if (actUsr.getCimer_spol() != 'S' && actUsr.getCimer_spol() != usr.getSpol()) {
+                        toRemove1.add(usr);
+                    }else {
+                        usr.setId_kvart(stan.getId_kvart());
 
-            whereArgs[0] = Integer.toString(stan.getId_kvart());
-            Kvart kvartLokacija = dbh.singleQueryKvart(whereClause,whereArgs,null,null,null);
+                        whereArgs[0] = Integer.toString(stan.getId_kvart());
+                        Kvart kvartLokacija = dbh.singleQueryKvart(whereClause, whereArgs, null, null, null);
 
-            usr.setCijenaMax((int)stan.getCijena());
-            usr.setApt(true);
-            usr.setZasebnaSoba(stan.isZasebna_soba());
-            usr.setId_lokacija(kvartLokacija.getId_lokacija());
-            usr.setKvart_ime(kvartLokacija.getNaziv());
-            usr.setId_kvart(kvartLokacija.getId_kvart());
-
-            if(getIfUserSwiped(usr.getId_korisnik(), au.getId_korisnik() , swipeState))haveApt.remove(usr);
+                        usr.setCijenaMax((int) stan.getCijena());
+                        usr.setApt(true);
+                        usr.setZasebnaSoba(stan.isZasebna_soba());
+                        setKvartData(usr,kvartLokacija);
+                        haveApt.add(usr);
+                        toRemove1.add(usr);
+                    }
+                }
+            }
         }
+        allUsers.removeAll(toRemove1);
 
+        List<UsableOtherUser> toRemove2 = new ArrayList<>();
         //ljudi koji nemaju stan
 
-        for (UsableOtherUser usr:needApt) {
+        for (UsableOtherUser usr:allUsers) {
             TrazimStan stan = findUserNeedApt(usr.getId_korisnik() , needAptPrice);
 
-            whereClause = "id_potraga = ?";
-            whereArgs[0] = Integer.toString(stan.getId_potraga());
-            PotragaLokacija lokacija = dbh.singleQueryPotragaLokacija(whereClause,whereArgs,null,null,null);
+            if (stan != null) {
+                if(getIfUserSwiped(usr.getId_korisnik(), au.getId_korisnik() , swipeState)){
+                    toRemove2.add(usr);
+                }else{
+                    if (actUsr.getCimer_spol() != 'S' && actUsr.getCimer_spol() != usr.getSpol()) {
+                        toRemove2.add(usr);
+                    }else {
+                        whereClause = "id_potraga = ?";
+                        whereArgs[0] = Integer.toString(stan.getId_potraga());
+                        List<PotragaLokacija> lokacija = dbh.queryPotragaLokacija(whereClause, whereArgs, null, null, null);
 
-            whereClause = "id_lokacija = ?";
-            whereArgs[0] = Integer.toString(lokacija.getId_lokacija());
-            Lokacija lok = dbh.singleQueryLokacija(whereClause,whereArgs,null,null,null);
+                        usr.setCijenaMax((int) stan.getCijena_do());
+                        usr.setApt(false);
 
-            usr.setCijenaMax((int) stan.getCijena_do());
-            usr.setApt(false);
-            usr.setLokacija_ime(lok.getNaziv());
-            usr.setZasebnaSoba(stan.isZasebna_soba());
-            usr.setId_lokacija(lokacija.getId_lokacija());
-
-            if(getIfUserSwiped(usr.getId_korisnik(), au.getId_korisnik() , swipeState))needApt.remove(usr);
+                        setOtherUserLocationData(usr , lokacija);
+                        needApt.add(usr);
+                        toRemove2.add(usr);
+                    }
+                }
+            }
         }
+        allUsers.removeAll(toRemove2);
 
-        if(findUser(au.getId_korisnik(),needApt).getId_korisnik() == au.getId_korisnik()){
-            haveApt.addAll(needApt);
-            return haveApt;
+        if(actUsr.isApt()){
+            return needApt;
         }else{
+            needApt.addAll(haveApt);
             return needApt;
         }
     }
 
-    public Korisnik findUser(int id , List<UsableOtherUser>list){
-        for (Korisnik item:list) {
-            if (item.getId_korisnik() == id)return item;
-        }
-        return new Korisnik();
-    }
+
 
     public NudimStan findUserWithApt(int id , List<NudimStan> apts){
         for(NudimStan usr : apts){
             if (id == usr.getId_korisnik()) return usr;
         }
-        return new NudimStan();
+        return null;
     }
     public TrazimStan findUserNeedApt(int id  , List<TrazimStan> apts){
         for(TrazimStan usr : apts){
             if (id == usr.getId_korisnik()) return usr;
         }
-        return new TrazimStan();
-    }
-
-    public List<UsableOtherUser> sort(List<UsableOtherUser>list){
-        Collections.sort(list);
-        return list;
+        return null;
     }
 
     public List<UsableOtherUser> writeData(List<Korisnik> users){
         List<UsableOtherUser> usableOtherUsers = new ArrayList<>();
-            for (Korisnik usr : users){
-                usableOtherUsers.add(new UsableOtherUser(usr.getId_korisnik(), usr.getIme(),usr.getGodina_rodenja(),usr.getOpis(),usr.getSpol(),usr.getId_fakultet(),usr.isPusac(),usr.isLjubimac(),usr.isMiran_zivot()));
-            }
+        for (Korisnik usr : users){
+            usableOtherUsers.add(new UsableOtherUser(usr.getId_korisnik(), usr.getIme(),usr.getGodina_rodenja(),usr.getOpis(),usr.getSpol(),usr.getId_fakultet(),usr.isPusac(),usr.isLjubimac(),usr.isMiran_zivot()));
+        }
 
-                return usableOtherUsers;
+        return usableOtherUsers;
     }
 
-    public UsableActiveUser writeActiveUserData(Korisnik usr, DatabaseHelper dbh){
-        UsableActiveUser activeUser = new UsableActiveUser(usr.getId_korisnik(),usr.getUsername(),usr.getEmail(),usr.getPassword(), usr.getIme(),usr.getGodina_rodenja(),usr.getOpis(),usr.getSpol(),usr.getId_fakultet(),usr.isPusac(),usr.isLjubimac(),usr.isMiran_zivot(),usr.getCimer_spol(),usr.getCimer_godine_od(),usr.getCimer_godine_do(),usr.isCimer_pusac(),usr.isCimer_ljubimac());
+    public UsableActiveUser writeActiveUserData(Korisnik usr, DatabaseHelper dbh) {
+        UsableActiveUser activeUser = new UsableActiveUser(usr.getId_korisnik(), usr.getUsername(), usr.getEmail(), usr.getPassword(), usr.getIme(), usr.getGodina_rodenja(), usr.getOpis(), usr.getSpol(), usr.getId_fakultet(), usr.isPusac(), usr.isLjubimac(), usr.isMiran_zivot(), usr.getCimer_spol(), usr.getCimer_godine_od(), usr.getCimer_godine_do(), usr.isCimer_pusac(), usr.isCimer_ljubimac());
 
-        List<Korisnik> haveApt = (dbh.queryKorisnik(null, null, null, null, null));
-        for (Korisnik user : haveApt){
-            if(user.getId_korisnik() == usr.getId_korisnik()){
-                List<NudimStan>haveAptPrice = dbh.queryNudimStan(null, null, null, null, null);
-                NudimStan stan = findUserWithApt(usr.getId_korisnik() , haveAptPrice);
-                activeUser.setCijenaMax((int)stan.getCijena());
-                activeUser.setZasebna_soba(stan.isZasebna_soba());
-                return activeUser;
-            }
-        }
-        List<Korisnik> needApt = (dbh.queryKorisnik(null, null, null, null, null));
-        for(Korisnik user : needApt){
-            if(user.getId_korisnik() == usr.getId_korisnik()){
-                List<TrazimStan>needAptPrice = dbh.queryTrazimStan(null, null, null, null, null);
-                TrazimStan stan = findUserNeedApt(usr.getId_korisnik() , needAptPrice);
-                String whereClause = "id_potraga = ?";
-                String[] whereArgs = new String[1];
-                whereArgs[0] = Integer.toString(stan.getId_potraga());
-                PotragaLokacija potragaLokacija = dbh.singleQueryPotragaLokacija(whereClause,whereArgs,null,null,null);
+        List<Korisnik> users = (dbh.queryKorisnik(null, null, null, null, null));
+        for (Korisnik user : users) {
+            if (user.getId_korisnik() == usr.getId_korisnik()) {
+                List<NudimStan> haveAptPrice = dbh.queryNudimStan(null, null, null, null, null);
+                NudimStan stan = findUserWithApt(usr.getId_korisnik(), haveAptPrice);
+                if (stan != null) {
+                    activeUser.setCijenaMax((int) stan.getCijena());
+                    activeUser.setZasebna_soba(stan.isZasebna_soba());
+                    return activeUser;
+                } else if (stan == null) {
+                    List<TrazimStan> needAptPrice = dbh.queryTrazimStan(null, null, null, null, null);
+                    TrazimStan stan2 = findUserNeedApt(usr.getId_korisnik(), needAptPrice);
+                    if (stan2 != null) {
+                        String whereClause = "id_potraga = ?";
+                        String[] whereArgs = new String[1];
+                        whereArgs[0] = Integer.toString(stan2.getId_potraga());
+                        List<PotragaLokacija> potragaLokacija = dbh.queryPotragaLokacija(whereClause, whereArgs, null, null, null);
+                        if (!potragaLokacija.isEmpty()) {
 
-                activeUser.setId_lokacija(potragaLokacija.getId_lokacija());
-                activeUser.setCijenaMax((int)stan.getCijena_do());
-                activeUser.setZasebna_soba(stan.isZasebna_soba());
-                return activeUser;
+                            setActiveUserLocationData(activeUser,potragaLokacija);
+                            activeUser.setCijenaMax((int) stan2.getCijena_do());
+                            activeUser.setZasebna_soba(stan2.isZasebna_soba());
+
+                            return activeUser;
+                        }else{
+                            return new UsableActiveUser();
+                        }
+                    } else if (stan2 == null) {
+                        return new UsableActiveUser();
+                    }
+                }
             }
         }
         return new UsableActiveUser();
-        }
+    }
+
 
     public boolean getIfUserSwiped(int usr_id , int actUsr_id , List<Swipe> swipeState) {
         for (Swipe swp : swipeState){
@@ -226,4 +237,32 @@ public class SimilarityGradeSorting {
         }
         return false;
     }
+
+    public void setKvartData(UsableOtherUser usr , Kvart kvart){
+        usr.setId_lokacija(kvart.getId_lokacija());
+        usr.setKvart_ime(kvart.getNaziv());
+        usr.setId_kvart(kvart.getId_kvart());
+    }
+    public void setOtherUserLocationData(UsableOtherUser usr , List<PotragaLokacija> pot){
+        for (PotragaLokacija pl : pot){
+            usr.setId_lokacija(pl.getId_lokacija()-1);
+        }
+    }
+    public void setActiveUserLocationData(UsableActiveUser usr , List<PotragaLokacija> pot){
+        for (PotragaLokacija pl : pot){
+            usr.setId_lokacija(pl.getId_lokacija()-1);
+        }
+    }
+
+    public boolean compareLocData(UsableActiveUser au , UsableOtherUser ou){
+        int count = 0;
+        for (int i : au.getIdLokacija()){
+            if (i == 1 && ou.getIdLokacija()[count] == i)return true;
+            count++;
+        }
+        return false;
+    }
 }
+
+
+
