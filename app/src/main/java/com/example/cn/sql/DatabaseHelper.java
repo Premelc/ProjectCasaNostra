@@ -513,10 +513,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(swipe.isSwipe_2() != null){
             if(swipe.isSwipe_2() == true){
                 int swipe2 = 1;
-                values.put(SWIPE_SWIPE1, swipe2);
+                values.put(SWIPE_SWIPE2, swipe2);
             } else if(swipe.isSwipe_2() == false){
                 int swipe2 = 0;
-                values.put(SWIPE_SWIPE1, swipe2);
+                values.put(SWIPE_SWIPE2, swipe2);
             }
         }
 
@@ -552,7 +552,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             swipe.setId_1(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_ID1))));
             swipe.setId_2(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_ID2))));
-            if(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE2)) != null){
+            if(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE1)) != null){
                 if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE1))) == 1){
                     swipe.setSwipe_1(true);
                 } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE1))) == 0){
@@ -595,10 +595,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(swipe.isSwipe_2() != null){
             if(swipe.isSwipe_2() == true){
                 int swipe2 = 1;
-                values.put(SWIPE_SWIPE1, swipe2);
+                values.put(SWIPE_SWIPE2, swipe2);
             } else if(swipe.isSwipe_2() == false){
                 int swipe2 = 0;
-                values.put(SWIPE_SWIPE1, swipe2);
+                values.put(SWIPE_SWIPE2, swipe2);
             }
         }
 

@@ -91,8 +91,7 @@ public class SimilarityGradeSorting {
 
         UsableActiveUser actUsr = writeActiveUserData(au, dbh);
 
-        whereClause = "id_1 != ?";
-        List<Swipe> swipeState = (dbh.querySwipe(whereClause, whereArgs, null, null, null));
+        List<Swipe> swipeState = (dbh.querySwipe(null, null, null, null, null));
 
         List<NudimStan>haveAptPrice = dbh.queryNudimStan(null, null, null, null, null);
         List<TrazimStan>needAptPrice = dbh.queryTrazimStan(null, null, null, null, null);
@@ -104,7 +103,7 @@ public class SimilarityGradeSorting {
         for (UsableOtherUser usr:allUsers) {
             NudimStan stan = findUserWithApt(usr.getId_korisnik() , haveAptPrice);
             if(stan != null) {
-                if (getIfUserSwiped(usr.getId_korisnik(), au.getId_korisnik() , swipeState)){
+                if (getIfUserSwiped(usr.getId_korisnik(), au.getId_korisnik() , dbh)){
                     toRemove1.add(usr);
                 }else{
                     if (actUsr.getCimer_spol() != 'S' && actUsr.getCimer_spol() != usr.getSpol()) {
@@ -134,7 +133,7 @@ public class SimilarityGradeSorting {
             TrazimStan stan = findUserNeedApt(usr.getId_korisnik() , needAptPrice);
 
             if (stan != null) {
-                if(getIfUserSwiped(usr.getId_korisnik(), au.getId_korisnik() , swipeState)){
+                if(getIfUserSwiped(usr.getId_korisnik(), au.getId_korisnik() , dbh)){
                     toRemove2.add(usr);
                 }else{
                     if (actUsr.getCimer_spol() != 'S' && actUsr.getCimer_spol() != usr.getSpol()) {
@@ -229,16 +228,21 @@ public class SimilarityGradeSorting {
     }
 
 
-    public boolean getIfUserSwiped(int usr_id , int actUsr_id , List<Swipe> swipeState) {
-        for (Swipe swp : swipeState){
-            if((actUsr_id == swp.getId_1() && usr_id == swp.getId_2()) || (actUsr_id == swp.getId_2() && usr_id == swp.getId_1())) {
-                if (actUsr_id < usr_id) {
-                    if (swp.isSwipe_1() != null) return true;
-                } else {
-                    if (swp.isSwipe_2() != null) return true;
-                }
+    public boolean getIfUserSwiped(int usr_id , int actUsr_id , DatabaseHelper dbh) {
+        Swipe swipe = new Swipe();
+
+        if(actUsr_id < usr_id){
+            swipe = dbh.checkSwipe(String.valueOf(actUsr_id), String.valueOf(usr_id));
+            if(swipe != null && swipe.getId_1() > 0 && swipe.getId_2() > 0){
+                if(swipe.isSwipe_1() != null) return true;
+            }
+        } else if(actUsr_id > usr_id){
+            swipe = dbh.checkSwipe(String.valueOf(usr_id), String.valueOf(actUsr_id));
+            if(swipe != null && swipe.getId_1() > 0 && swipe.getId_2() > 0){
+                if(swipe.isSwipe_2() != null) return true;
             }
         }
+
         return false;
     }
 
