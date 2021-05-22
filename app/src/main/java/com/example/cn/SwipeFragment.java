@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.cn.Utils.SquareImageView;
+import com.example.cn.Utils.SwipeImageView;
 import com.example.cn.model.Korisnik;
 import com.example.cn.model.KorisnikLjubimac;
 import com.example.cn.model.Ljubimac;
@@ -40,6 +43,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SwipeFragment extends Fragment {
 
@@ -49,12 +53,16 @@ public class SwipeFragment extends Fragment {
 
     private ImageButton swipeRight, swipeLeft;
     private TextView name, description, faculty, age, apartment, pets;
-    private ImageView clear, check;
+    private ImageView clear, check, forward, back;
     private LinearLayout hasApartment, separateRoom, hasPets;
 
     // Za slike:
     private StorageReference mStorageReference;
-    private ImageView imageView;
+    private SwipeImageView imageView;
+    private final String FOLDER_NAME = "jakovic";
+    ArrayList<Bitmap> images;
+    int i = 0;
+    int cnt = 0;
 
     public static SwipeFragment newInstance(Korisnik user){
         SwipeFragment fragment = new SwipeFragment();
@@ -77,6 +85,8 @@ public class SwipeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        images = new ArrayList<Bitmap>();
+
         databaseHelper = new DatabaseHelper(getActivity());
         SimilarityGradeSorting sgs = new SimilarityGradeSorting();
         usableOtherUser = new ArrayList<>();
@@ -91,6 +101,10 @@ public class SwipeFragment extends Fragment {
     public void initViews(){
         swipeRight = (ImageButton) getView().findViewById(R.id.swipeRight);
         swipeLeft = (ImageButton) getView().findViewById(R.id.swipeLeft);
+        forward = (ImageView) getView().findViewById(R.id.forward);
+        forward.setVisibility(View.GONE);
+        back = (ImageView) getView().findViewById(R.id.back);
+        back.setVisibility(View.GONE);
 
         name = (TextView) getView().findViewById(R.id.name);
         description = (TextView) getView().findViewById(R.id.description);
@@ -105,6 +119,8 @@ public class SwipeFragment extends Fragment {
         hasApartment = (LinearLayout) getView().findViewById(R.id.hasApartment);
         separateRoom = (LinearLayout) getView().findViewById(R.id.separateRoom);
         hasPets = (LinearLayout) getView().findViewById(R.id.hasPets);
+
+        imageView = (SwipeImageView) getView().findViewById(R.id.pictureOfUser);
     }
 
     public void initListeners(){
@@ -137,6 +153,12 @@ public class SwipeFragment extends Fragment {
                         databaseHelper.insertSwipe(swipe);
 
                     }
+                }
+
+                // MATCH
+                swipe = databaseHelper.checkSwipe(String.valueOf(sessionUser.getId_korisnik()), String.valueOf(usableOtherUser.get(0).getId_korisnik()));
+                if(swipe.isSwipe_1() != null && swipe.isSwipe_1() == true && swipe.isSwipe_2() != null && swipe.isSwipe_2() == true){
+                    Toast.makeText(getActivity(), "IT'S A MATCH!", Toast.LENGTH_SHORT).show();
                 }
 
                 usableOtherUser.remove(usableOtherUser.get(0));
@@ -180,6 +202,30 @@ public class SwipeFragment extends Fragment {
 
             }
         });
+
+        forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i++;
+                imageView.setImageBitmap(images.get(i));
+                back.setVisibility(View.VISIBLE);
+                if(i == images.size()-1){
+                    forward.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i--;
+                imageView.setImageBitmap(images.get(i));
+                forward.setVisibility(View.VISIBLE);
+                if(i == 0){
+                    back.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
 
@@ -208,47 +254,14 @@ public class SwipeFragment extends Fragment {
             alert.show();
         }
         else{
-            // Slike:
-        /*int idOfUser = usableOtherUser.get(0).getId_korisnik();
-        String number = Integer.toString(idOfUser);
-        String nameOfPic = "usr" + number;
-        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser);
+            images.clear(); // lista bitmapa sa slikama korisnika koji se prikazuje
+            i = 0; // index slike u listi images koja se trenutno prikazuje
+            cnt = 0; // counter da se zna koliko se slika mora ucitati (4 pokusaja dohvacanja)
 
-        imageView = (ImageView) getView().findViewById(R.id.pictureOfUser);
-        try {
-            final File localFile = File.createTempFile(nameOfPic, "jpg");
-            mStorageReference.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-
-                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-
-                            (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
-                            (getView().findViewById(R.id.pictureOfUser)).setVisibility(View.VISIBLE);
-
-                            ((ImageView) getView().findViewById(R.id.pictureOfUser)).setImageBitmap(bitmap);
-
-                        }
-                    }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
-                    (getView().findViewById(R.id.pictureOfUser)).setVisibility(View.INVISIBLE);
-                    (getView().findViewById(R.id.progressBar2)).setVisibility(View.VISIBLE);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
-                    (getView().findViewById(R.id.pictureOfUser)).setVisibility(View.INVISIBLE);
-                    Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-            //
-
+            fetchImage(1);
+            fetchImage(2);
+            fetchImage(3);
+            fetchImage(4);
 
             name.setText(usableOtherUser.get(0).getIme());
             description.setText(usableOtherUser.get(0).getOpis());
@@ -326,6 +339,82 @@ public class SwipeFragment extends Fragment {
             }
         }
 
+    }
 
+    private void fetchImage(int num){
+        int idOfUser = usableOtherUser.get(0).getId_korisnik();
+        String number = Integer.toString(idOfUser);
+        String nameOfPic = "usr" + number;
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr"+ idOfUser + "/pic" + num);
+
+        try {
+            final File localFile = File.createTempFile(nameOfPic, "jpg");
+            mStorageReference.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+
+                            images.add(bitmap);
+                            if(images.size() == 1) {
+                                ((SwipeImageView) getView().findViewById(R.id.pictureOfUser)).setImageBitmap(bitmap);
+                                (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
+                                (getView().findViewById(R.id.pictureOfUser)).setVisibility(View.VISIBLE);
+                            } else if (images.size() > 1){
+                                    // kad se uspjesno ucitaju barem dvije slike, moze se poceti navigirati po slikama
+                                    forward.setVisibility(View.VISIBLE);
+                                }
+
+                            cnt++;
+                            if (cnt == 4){
+                                // kad su sve slike ucitane, mogu se kliknuti svi buttoni
+                                getActivity().findViewById(R.id.nav_profile).setClickable(true);
+                                getActivity().findViewById(R.id.nav_swipe).setClickable(true);
+                                getActivity().findViewById(R.id.nav_chat).setClickable(true);
+                                swipeRight.setClickable(true);
+                                swipeLeft.setClickable(true);
+                            }
+                        }
+                    }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
+                    // blokirano prebacivanje na chat i moj profil dok se ucitavaju slike
+                    getActivity().findViewById(R.id.nav_profile).setClickable(false);
+                    getActivity().findViewById(R.id.nav_swipe).setClickable(false);
+                    getActivity().findViewById(R.id.nav_chat).setClickable(false);
+                    swipeRight.setClickable(false);
+                    swipeLeft.setClickable(false);
+
+                    if(images.isEmpty()){
+                        (getView().findViewById(R.id.pictureOfUser)).setVisibility(View.INVISIBLE);
+                        (getView().findViewById(R.id.progressBar2)).setVisibility(View.VISIBLE);
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    cnt++;
+                    if (cnt == 4){
+                        // kad su sve slike ucitane, mogu se kliknuti svi buttoni
+                        getActivity().findViewById(R.id.nav_profile).setClickable(true);
+                        getActivity().findViewById(R.id.nav_swipe).setClickable(true);
+                        getActivity().findViewById(R.id.nav_chat).setClickable(true);
+                        swipeRight.setClickable(true);
+                        swipeLeft.setClickable(true);
+
+                        if(images.isEmpty()){
+                            // placeholder ako korisnik nema nijednu sliku
+                            ((SwipeImageView) getView().findViewById(R.id.pictureOfUser)).setImageResource(R.drawable.ic_baseline_person_24);
+                            (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
+                            (getView().findViewById(R.id.pictureOfUser)).setVisibility(View.VISIBLE);
+                        }
+                    }
+                    //Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

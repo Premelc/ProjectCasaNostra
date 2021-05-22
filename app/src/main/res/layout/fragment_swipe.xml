@@ -16,16 +16,18 @@
         android:textSize="30dp"
         android:layout_centerInParent="true"/> -->
 
-    <ImageView
+
+    <com.example.cn.Utils.SwipeImageView
         android:id="@+id/pictureOfUser"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/secondary_text"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
-        android:background="@color/black"
         app:srcCompat="@drawable/ic_baseline_person_24" />
+
 
     <ProgressBar
         android:id="@+id/progressBar2"
@@ -43,7 +45,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:text="'99"
         android:textColor="@color/white"
         android:textSize="30dp"
         android:textStyle="bold"
@@ -55,7 +56,7 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ime, "
+        android:paddingStart="10dp"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="30dp"
@@ -67,146 +68,154 @@
         android:id="@+id/faculty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="10dp"
         android:paddingBottom="4dp"
-        android:text="Tehnički fakultet u Rijeci"
         android:textColor="@color/white"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/pictureOfUser"
-        app:layout_constraintEnd_toStartOf="@+id/swipeRight"
-        app:layout_constraintStart_toEndOf="@+id/swipeLeft" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout6"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="1dp">
-
-
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis Opis"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swipeLeft">
 
         <LinearLayout
-            android:id="@+id/hasApartment"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:padding="10dp"
-                android:id="@+id/imageView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                app:srcCompat="@drawable/ic_baseline_home_24" />
-            <TextView
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:id="@+id/apartment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Traži cimera za stan u kvartu Trsat, po cijeni 1000 kuna po osobi."
-                android:textSize="18dp" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/separateRoom"
-            android:visibility="gone"
+            android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pictureOfUser"
+            tools:layout_editor_absoluteX="1dp">
 
-            <ImageView
-                android:padding="10dp"
-                android:id="@+id/check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                app:srcCompat="@drawable/ic_baseline_check_24" />
 
-            <ImageView
-                android:padding="10dp"
-                android:id="@+id/clear"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
+                android:padding="10dp"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/hasApartment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/ic_baseline_home_24" />
+
+                <TextView
+                    android:id="@+id/apartment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="18dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/separateRoom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/ic_baseline_check_24" />
+
+                <ImageView
+                    android:id="@+id/clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_baseline_clear_24" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Zasebna soba"
+                    android:layout_gravity="center"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="18dp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/hasPets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:srcCompat="@drawable/ic_baseline_clear_24" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Zasebna soba"
-                android:textSize="18dp" />
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/ic_baseline_pets_24" />
+
+                <TextView
+                    android:id="@+id/pets"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
 
         </LinearLayout>
+    </ScrollView>
 
-        <ImageView
-            android:id="@+id/pictureOfUser2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/black"
-            app:srcCompat="@drawable/ic_baseline_person_24" />
-
-        <LinearLayout
-            android:id="@+id/hasPets"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:padding="10dp"
-                android:id="@+id/imageView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                app:srcCompat="@drawable/ic_baseline_pets_24" />
-
-            <TextView
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:id="@+id/pets"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Ima ljubimce: pas, mačka"
-                android:textSize="18dp" />
-        </LinearLayout>
-
-
-    </LinearLayout>
 
     <ImageButton
         android:id="@+id/swipeLeft"
-        android:layout_width="80dp"
-        android:layout_height="65dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/pictureOfUser"
+        app:layout_constraintEnd_toStartOf="@id/guidelineVertical"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pictureOfUser"
         app:srcCompat="@drawable/ic_baseline_thumb_down_24" />
 
     <ImageButton
         android:id="@+id/swipeRight"
-        android:layout_width="80dp"
-        android:layout_height="65dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/pictureOfUser"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guidelineVertical"
+        app:layout_constraintTop_toBottomOf="@+id/pictureOfUser"
         app:srcCompat="@drawable/ic_baseline_thumb_up_24" />
 
     <ImageView
@@ -228,5 +237,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_left_24" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="1" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrierHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:barrierMargin="0dp"
+        app:layout_constraintTop_toBottomOf="@id/guidelineHorizontal"
+        tools:layout_editor_absoluteY="731dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

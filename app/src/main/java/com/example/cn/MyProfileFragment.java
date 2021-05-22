@@ -8,13 +8,16 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.Editable;
 import android.os.FileUtils;
 import android.provider.MediaStore;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,6 +32,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.cn.Utils.SquareImageView;
+import com.example.cn.Utils.SwipeImageView;
 import com.example.cn.helpers.SaveSharedPreference;
 import com.example.cn.model.Korisnik;
 import com.example.cn.sql.DatabaseHelper;
@@ -58,6 +63,7 @@ public class MyProfileFragment extends Fragment {
     private Button logout;
     private TextView deleteAccount;
     private ImageButton editButton;
+    private EditText description;
 
     // Buttoni itd. za Firebase
     private Uri filePath1, filePath2, filePath3, filePath4;
@@ -66,6 +72,8 @@ public class MyProfileFragment extends Fragment {
     //Firebase - za choose i upload
     FirebaseStorage storage;
     StorageReference storageReference;
+    private final String FOLDER_NAME = "jakovic";
+    int cnt = 0;
 
     // Za dohvacanje
     private StorageReference mStorageReference;
@@ -73,7 +81,7 @@ public class MyProfileFragment extends Fragment {
     // Za popup
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
-    private ImageView pic1, pic2, pic3, pic4;
+    private SquareImageView pic1, pic2, pic3, pic4;
     private ProgressBar progressBar1, progressBar2, progressBar3, progressBar4;
     private ImageButton deleteButton1, deleteButton2, deleteButton3, deleteButton4;
     private Button uploadButton;
@@ -120,7 +128,7 @@ public class MyProfileFragment extends Fragment {
         final TextView name = (TextView) getView().findViewById(R.id.textView19);
         name.setText(sessionUser.getIme());
 
-        final EditText description = (EditText) getView().findViewById(R.id.editTextTextPersonName3);
+        description = (EditText) getView().findViewById(R.id.editTextTextPersonName3);
         description.setText(sessionUser.getOpis());
 
         final TextView faculty = (TextView) getView().findViewById(R.id.textView20);
@@ -136,29 +144,32 @@ public class MyProfileFragment extends Fragment {
 
 
 
+    private void initListeners() {
 
+        description.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        description.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        description.setHorizontallyScrolling(false);
+        description.setLines(3);
 
-        private void initListeners() {
+        description.addTextChangedListener(new TextWatcher() {
 
-            EditText description = (EditText) getView().findViewById(R.id.editTextTextPersonName3);
-            description.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
 
-                @Override
-                public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+            }
 
-                }
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 
-                @Override
-                public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            }
 
-                }
-
-                @Override
-                public void afterTextChanged(Editable arg0) {
-                    sessionUser.setOpis(arg0.toString());
-                    databaseHelper.updateKorisnik(sessionUser);
-                }
-            });
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                sessionUser.setOpis(arg0.toString());
+                databaseHelper.updateKorisnik(sessionUser);
+                SaveSharedPreference.setSessionUser(getActivity(), sessionUser);
+            }
+        });
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,15 +199,6 @@ public class MyProfileFragment extends Fragment {
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
                                 deleteUser();
-                                int idOfUser = sessionUser.getId_korisnik();
-                                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic1");
-                                mStorageReference.delete();
-                                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic2");
-                                mStorageReference.delete();
-                                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic3");
-                                mStorageReference.delete();
-                                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic4");
-                                mStorageReference.delete();
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 //No button clicked
@@ -214,6 +216,17 @@ public class MyProfileFragment extends Fragment {
     }
 
     public void deleteUser(){
+        // brisanje slika
+        int idOfUser = sessionUser.getId_korisnik();
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic1");
+        mStorageReference.delete();
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic2");
+        mStorageReference.delete();
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic3");
+        mStorageReference.delete();
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic4");
+        mStorageReference.delete();
+
         databaseHelper.deleteKorisnik(sessionUser); // brisanje korisnika
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -242,10 +255,10 @@ public class MyProfileFragment extends Fragment {
         dialogBuilder = new AlertDialog.Builder(getActivity());
         final View popup = getLayoutInflater().inflate(R.layout.popup_upload, null);
 
-        pic1 = (ImageView) popup.findViewById(R.id.pic1);
-        pic2 = (ImageView) popup.findViewById(R.id.pic2);
-        pic3 = (ImageView) popup.findViewById(R.id.pic3);
-        pic4 = (ImageView) popup.findViewById(R.id.pic4);
+        pic1 = (SquareImageView) popup.findViewById(R.id.pic1);
+        pic2 = (SquareImageView) popup.findViewById(R.id.pic2);
+        pic3 = (SquareImageView) popup.findViewById(R.id.pic3);
+        pic4 = (SquareImageView) popup.findViewById(R.id.pic4);
 
         progressBar1 = (ProgressBar) popup.findViewById(R.id.progressBar1);
         progressBar2 = (ProgressBar) popup.findViewById(R.id.progressBar2);
@@ -271,6 +284,8 @@ public class MyProfileFragment extends Fragment {
         pic2.setVisibility(View.INVISIBLE);
         pic3.setVisibility(View.INVISIBLE);
         pic4.setVisibility(View.INVISIBLE);
+
+        cnt = 0;
         // dohvacanje slika koje su vec uploadane na firebase
         fetchImage(pic1, progressBar1, deleteButton1, 1);
         fetchImage(pic2, progressBar2, deleteButton2,2);
@@ -308,12 +323,12 @@ public class MyProfileFragment extends Fragment {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cnt = 0;
                 uploadImage(filePath1, 1);
                 uploadImage(filePath2, 2);
                 uploadImage(filePath3, 3);
                 uploadImage(filePath4, 4);
 
-                fetchProfilePicture();
                 dialog.dismiss();
             }
         });
@@ -322,7 +337,7 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 int idOfUser = sessionUser.getId_korisnik();
-                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic1");
+                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic1");
                 mStorageReference.delete();
                 filePath1 = null;
                 deleteButton1.setVisibility(View.GONE);
@@ -334,7 +349,7 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 int idOfUser = sessionUser.getId_korisnik();
-                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic2");
+                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic2");
                 mStorageReference.delete();
                 filePath2 = null;
                 deleteButton2.setVisibility(View.GONE);
@@ -346,7 +361,7 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 int idOfUser = sessionUser.getId_korisnik();
-                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic3");
+                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic3");
                 mStorageReference.delete();
                 filePath3 = null;
                 deleteButton3.setVisibility(View.GONE);
@@ -358,7 +373,7 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 int idOfUser = sessionUser.getId_korisnik();
-                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic4");
+                mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic4");
                 mStorageReference.delete();
                 filePath4 = null;
                 deleteButton4.setVisibility(View.GONE);
@@ -448,8 +463,8 @@ public class MyProfileFragment extends Fragment {
 
 
     private void uploadImage(Uri filePath, int num) {
-        if(filePath != null)
-        {
+        if(filePath != null) {
+
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
@@ -461,11 +476,21 @@ public class MyProfileFragment extends Fragment {
             int i = 1;
             StorageReference ref = storageReference.child("images/usr/"+ idOfUser + "_" + i);*/
 
-            StorageReference ref = storageReference.child("images/jan/usr"+ idOfUser + "/pic" + num);
+            StorageReference ref = storageReference.child("images/"+FOLDER_NAME+"/usr"+ idOfUser + "/pic" + num);
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            cnt++;
+                            if(cnt == 4){
+                                // kad se sve 4 slike uploadaju, stavi sve buttone da su opet clickable
+                                getActivity().findViewById(R.id.nav_profile).setClickable(true);
+                                getActivity().findViewById(R.id.nav_swipe).setClickable(true);
+                                getActivity().findViewById(R.id.nav_chat).setClickable(true);
+                                fetchProfilePicture();
+                            }
+
+                            if(num == 1) fetchProfilePicture();
                             progressDialog.dismiss();
                             //Toast.makeText(MyProfileFragment.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
@@ -473,6 +498,15 @@ public class MyProfileFragment extends Fragment {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            cnt++;
+                            if(cnt == 4){
+                                // kad se sve 4 slike uploadaju, stavi sve buttone da su opet clickable
+                                getActivity().findViewById(R.id.nav_profile).setClickable(true);
+                                getActivity().findViewById(R.id.nav_swipe).setClickable(true);
+                                getActivity().findViewById(R.id.nav_chat).setClickable(true);
+                                fetchProfilePicture();
+                            }
+
                             progressDialog.dismiss();
                             // Toast.makeText(MyProfileFragment.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -480,6 +514,13 @@ public class MyProfileFragment extends Fragment {
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            if(cnt == 0){
+                                // kad se pocnu uploadati slike, stavi sve buttone da nisu clickable
+                                getActivity().findViewById(R.id.nav_profile).setClickable(false);
+                                getActivity().findViewById(R.id.nav_swipe).setClickable(false);
+                                getActivity().findViewById(R.id.nav_chat).setClickable(false);
+                            }
+
                             double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
                                     .getTotalByteCount());
                             progressDialog.setMessage("Uploaded "+(int)progress+"%");
@@ -488,12 +529,12 @@ public class MyProfileFragment extends Fragment {
         }
     };
 
-    private void fetchImage(ImageView imageView, ProgressBar progressBar, ImageButton imageButton, int num){
+    private void fetchImage(SquareImageView imageView, ProgressBar progressBar, ImageButton imageButton, int num){
         // Ime slike sam stavila usr + broj jer za ime filea mora biti najmanje duzine 3
         int idOfUser = sessionUser.getId_korisnik();
         String number = Integer.toString(idOfUser);
         String nameOfPic = "usr" + number;
-        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic" + num);
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic" + num);
 
         try {
             final File localFile = File.createTempFile(nameOfPic, "jpg");
@@ -504,17 +545,31 @@ public class MyProfileFragment extends Fragment {
                             //Toast.makeText(getActivity(), "Slika je dohvacena", Toast.LENGTH_SHORT).show();
                             Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
 
-                            //  !!!!!!
                             progressBar.setVisibility(View.INVISIBLE);
                             imageView.setVisibility(View.VISIBLE);
                             imageButton.setVisibility(View.VISIBLE);
 
                             imageView.setImageBitmap(bitmap);
 
+                            cnt++;
+                            if(cnt == 4){
+                                // kad se sve 4 slike ucitaju, stavi sve buttone da su opet clickable
+                                getActivity().findViewById(R.id.nav_profile).setClickable(true);
+                                getActivity().findViewById(R.id.nav_swipe).setClickable(true);
+                                getActivity().findViewById(R.id.nav_chat).setClickable(true);
+                            }
                         }
                     }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
+
+                    if(cnt == 0){
+                        // kad se pocnu ucitavati slike, stavi sve buttone da nisu clickable
+                        getActivity().findViewById(R.id.nav_profile).setClickable(false);
+                        getActivity().findViewById(R.id.nav_swipe).setClickable(false);
+                        getActivity().findViewById(R.id.nav_chat).setClickable(false);
+                    }
+
                     imageView.setVisibility(View.INVISIBLE);
                     imageButton.setVisibility(View.INVISIBLE);
                     progressBar.setVisibility(View.VISIBLE);
@@ -522,11 +577,18 @@ public class MyProfileFragment extends Fragment {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
+
                     progressBar.setVisibility(View.INVISIBLE);
                     imageView.setVisibility(View.VISIBLE);
                     imageButton.setVisibility(View.INVISIBLE);
 
-                    imageView.setImageResource(R.drawable.ic_baseline_image_search_24);
+                    cnt++;
+                    if(cnt == 4){
+                        // kad se sve 4 slike ucitaju, stavi sve buttone da su opet clickable
+                        getActivity().findViewById(R.id.nav_profile).setClickable(true);
+                        getActivity().findViewById(R.id.nav_swipe).setClickable(true);
+                        getActivity().findViewById(R.id.nav_chat).setClickable(true);
+                    }
 
                     //Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
                 }
@@ -540,7 +602,7 @@ public class MyProfileFragment extends Fragment {
         int idOfUser = sessionUser.getId_korisnik();
         String number = Integer.toString(idOfUser);
         String nameOfPic = "pic1";
-        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/jan/usr" + idOfUser + "/pic1");
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic1");
 
         CircleImageView imageView = (CircleImageView) getView().findViewById(R.id.imageView7);
         try {
@@ -555,20 +617,33 @@ public class MyProfileFragment extends Fragment {
                             (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
                             (getView().findViewById(R.id.imageView7)).setVisibility(View.VISIBLE);
 
+                            getActivity().findViewById(R.id.nav_profile).setClickable(true);
+                            getActivity().findViewById(R.id.nav_swipe).setClickable(true);
+                            getActivity().findViewById(R.id.nav_chat).setClickable(true);
+
                             ((CircleImageView) getView().findViewById(R.id.imageView7)).setImageBitmap(bitmap);
 
                         }
                     }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
+                    getActivity().findViewById(R.id.nav_profile).setClickable(false);
+                    getActivity().findViewById(R.id.nav_swipe).setClickable(false);
+                    getActivity().findViewById(R.id.nav_chat).setClickable(false);
+
                     (getView().findViewById(R.id.imageView7)).setVisibility(View.INVISIBLE);
                     (getView().findViewById(R.id.progressBar2)).setVisibility(View.VISIBLE);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
+                    ((CircleImageView) getView().findViewById(R.id.imageView7)).setImageResource(R.drawable.ic_baseline_person_24);
                     (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
-                    (getView().findViewById(R.id.imageView7)).setVisibility(View.INVISIBLE);
+                    (getView().findViewById(R.id.imageView7)).setVisibility(View.VISIBLE);
+
+                    getActivity().findViewById(R.id.nav_profile).setClickable(true);
+                    getActivity().findViewById(R.id.nav_swipe).setClickable(true);
+                    getActivity().findViewById(R.id.nav_chat).setClickable(true);
                 }
             });
         } catch (IOException e) {
