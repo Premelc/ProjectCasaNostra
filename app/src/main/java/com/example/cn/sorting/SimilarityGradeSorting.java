@@ -216,7 +216,9 @@ public class SimilarityGradeSorting {
 
                             return activeUser;
                         }else{
-                            return new UsableActiveUser();
+                            activeUser.setCijenaMax((int) stan2.getCijena_do());
+                            activeUser.setZasebna_soba(stan2.isZasebna_soba());
+                            return activeUser;
                         }
                     } else if (stan2 == null) {
                         return new UsableActiveUser();
