@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cn.ChatAdapter;
+import com.example.cn.model.Chat;
 import com.example.cn.model.Fakultet;
 import com.example.cn.model.Korisnik;
 import com.example.cn.model.Swipe;
@@ -91,7 +92,7 @@ public class ChatFragment extends Fragment {
     private void setOnClickListener() {
         listener = new ChatAdapter.RecyclerViewClickListener() {
             @Override
-            public void onClick(View v, int position) {
+            public void onClick(View v, int position, ArrayList<Korisnik> chatUsers) {
                 Fragment selectedFragment = null;
                 selectedFragment = new MessagesFragment().newInstance(sessionUser, chatUsers.get(position));
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

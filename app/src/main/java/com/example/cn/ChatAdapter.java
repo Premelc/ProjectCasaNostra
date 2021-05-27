@@ -1,6 +1,8 @@
 package com.example.cn;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +14,23 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cn.R;
+import com.example.cn.model.Chat;
 import com.example.cn.model.Fakultet;
 import com.example.cn.model.Korisnik;
 import com.example.cn.model.Swipe;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Viewholder> {
 
@@ -24,6 +38,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Viewholder> {
     private ArrayList<Korisnik> chatUsers;
     private Korisnik sessionUser;
     private RecyclerViewClickListener listener;
+
+    Bitmap bitmap;
 
     // Constructor
     public ChatAdapter(FragmentActivity context, ArrayList<Korisnik> chatUsers, Korisnik sessionUser, RecyclerViewClickListener listener) {
@@ -48,7 +64,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Viewholder> {
         holder.name.setText(String.valueOf(model.getIme()));
         holder.message.setText("" + model.getId_korisnik());
 
+        if(model.getBitmap() != null){
+            holder.profilePic.setImageBitmap(model.getBitmap());
+        } else {
+            holder.profilePic.setImageResource(R.drawable.ic_baseline_person_24);
+        }
+
         //holder.courseIV.setImageResource(model.getCourse_image());
+        //holder.profilePic.setImageResource();
+
     }
 
     @Override
@@ -59,13 +83,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Viewholder> {
     }
 
     public interface RecyclerViewClickListener{
-        void onClick(View v, int position);
+        void onClick(View v, int position, ArrayList<Korisnik> chatUsers);
     }
 
     // View holder class for initializing of
     // your views such as TextView and Imageview.
     public class Viewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView profilePic;
+        private CircleImageView profilePic;
         private TextView name, message;
 
         public Viewholder(@NonNull View itemView) {
@@ -80,7 +104,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Viewholder> {
 
         @Override
         public void onClick(View v) {
-            listener.onClick(v, getAdapterPosition());
+            listener.onClick(v, getAdapterPosition(), chatUsers);
         }
     }
+
+
 }

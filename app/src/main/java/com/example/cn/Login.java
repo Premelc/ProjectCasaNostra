@@ -2,6 +2,7 @@ package com.example.cn;
 
 import com.example.cn.helpers.InputValidation;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -21,9 +22,16 @@ import com.example.cn.helpers.InputValidation;
 import com.example.cn.helpers.SaveSharedPreference;
 import com.example.cn.model.Korisnik;
 import com.example.cn.sql.DatabaseHelper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +54,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     public static final int LENGTH_LONG = 2;
 
+    FirebaseAuth auth;
+    DatabaseReference reference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +65,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         initViews();
         initListeners();
         initObjects();
+
+        auth = FirebaseAuth.getInstance();
     }
 
 
@@ -156,6 +169,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             whereArgs[0] = textInputEditTextUsername.getText().toString().trim(); // zamjenjuje ?
             userList.addAll(databaseHelper.queryKorisnik(whereClause, whereArgs, null, null, null));
             userActive = userList.get(0);
+
+            String email = userActive.getEmail();
+            String password = userActive.getPassword();
+
+            auth.signInWithEmailAndPassword(email, password);
+
 
             return true;
         } else {

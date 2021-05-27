@@ -1,5 +1,6 @@
 package com.example.cn;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,8 +25,18 @@ import com.example.cn.model.KorisnikLjubimac;
 import com.example.cn.model.Kvart;
 import com.example.cn.model.NudimStan;
 import com.example.cn.sql.DatabaseHelper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class OnlyRoommate extends AppCompatActivity implements View.OnClickListener {
@@ -47,6 +58,9 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
     private Button button;
     private TextView error;
     private ScrollView scrollView;
+
+    private FirebaseAuth auth;
+    private DatabaseReference reference;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -70,6 +84,7 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
 
+        auth = FirebaseAuth.getInstance();
 
     }
 
@@ -236,6 +251,29 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
                 }
             }
 
+            // Firebase
+            String email = userActive.getEmail();
+            String password = userActive.getPassword();
+            String username = userActive.getUsername();
+            auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                FirebaseUser firebaseUser = auth.getCurrentUser();
+                                String userId = Integer.toString(userActive.getId_korisnik());
+
+                                reference = FirebaseDatabase.getInstance("https://com-example-cn-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(userId);
+
+                                HashMap<String,String> hashMap = new HashMap<>();
+                                hashMap.put("id", userId);
+                                hashMap.put("username", username);
+                                hashMap.put("password", password);
+
+                                reference.setValue(hashMap);
+                            }
+                        }
+                    });
         } else{
             // Dodati alert: Doslo je do greske
         }
