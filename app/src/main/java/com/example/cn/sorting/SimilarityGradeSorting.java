@@ -21,10 +21,30 @@ public class SimilarityGradeSorting {
     //klasa u kojoj odredjujemo ocjenu slicnosti aktivnog korisnika sa svim ostalim korisnicima u bazi
     //Instancira se jednom prilikom ulaska u aplikaciju te vraca popis svih korisnika sortiran po slicnosti
 
-    public List<UsableOtherUser> Grade(Korisnik activeUser , DatabaseHelper dbh) {
-
+    public List<UsableOtherUser> Grade(Korisnik activeUser , DatabaseHelper dbh){
         List<UsableOtherUser> othrUsr = pullData(dbh, activeUser);
         UsableActiveUser actUsr = writeActiveUserData(activeUser, dbh);
+        return Execute(actUsr , othrUsr);
+    }
+
+    public List<UsableOtherUser> GradingTestInterface(UsableActiveUser actUsr, List<UsableOtherUser> othrUsr , List<Swipe> swipes){
+        List<UsableOtherUser> toRemove = new ArrayList<>();
+        for (UsableOtherUser usr : othrUsr){
+            if (actUsr.getCimer_spol() != 'S' && actUsr.getCimer_spol() != usr.getSpol()) {
+                toRemove.add(usr);
+            }
+            if (actUsr.isApt() && usr.isApt()){
+                toRemove.add(usr);
+            }
+            if(getIfUserSwiped(swipes,actUsr.getId_korisnik(),usr.getId_korisnik())){
+                toRemove.add(usr);
+            }
+        }
+        othrUsr.removeAll(toRemove);
+        return Execute(actUsr , othrUsr);
+    }
+
+    public List<UsableOtherUser> Execute(UsableActiveUser actUsr, List<UsableOtherUser> othrUsr) {
 
         if (!othrUsr.isEmpty()) {
             boolean[] explicitReq = {actUsr.isCimer_pusac(), actUsr.isCimer_ljubimac(), actUsr.isMiran_zivot(), actUsr.isTrazimStan()};
@@ -245,6 +265,17 @@ public class SimilarityGradeSorting {
             }
         }
 
+        return false;
+    }
+
+    public boolean getIfUserSwiped(List<Swipe> swipes ,int actUsr_id , int usr_id) {
+        for (Swipe swp : swipes){
+            if(swp.getId_1() == actUsr_id && swp.getId_2() == usr_id){
+                if(swp.isSwipe_1() != null) return true;
+            }if(swp.getId_2() == actUsr_id && swp.getId_1() > usr_id){
+                if(swp.isSwipe_2() != null) return true;
+            }
+        }
         return false;
     }
 

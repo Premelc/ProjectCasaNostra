@@ -24,9 +24,31 @@ public class UsableOtherUser extends UsableUser implements Comparable {
             this.setLjubimac(ljubimac);
             this.setMiran_zivot(miran_zivot);
         }
+
+    public UsableOtherUser(int id_korisnik, String ime, int godina_rodenja, String opis, char spol, int id_fakultet, boolean pusac, boolean ljubimac, boolean miran_zivot,boolean zasebna_soba,int[] lok , int cijenaMax , boolean apt,int id_kvart) {
+        this.setId_korisnik(id_korisnik);
+        this.setIme(ime);
+        this.setGodina_rodenja(godina_rodenja);
+        this.setOpis(opis);
+        this.setSpol(spol);
+        this.setId_fakultet(id_fakultet);
+        this.setPusac(pusac);
+        this.setLjubimac(ljubimac);
+        this.setMiran_zivot(miran_zivot);
+
+        this.setZasebnaSoba(zasebna_soba);
+        this.setApt(apt);
+        this.setCijenaMax(cijenaMax);
+        this.setId_kvart(id_kvart);
+        this.setId_lokacija(lok);
+    }
         public UsableOtherUser(String name){
         this.setIme(name);
         }
+
+    public void setId_lokacija(int[] lok){
+        this.id_lokacija = lok;
+    }
 
     public boolean isApt() {
         return apt;
