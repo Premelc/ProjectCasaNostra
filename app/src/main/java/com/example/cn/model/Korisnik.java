@@ -1,5 +1,7 @@
 package com.example.cn.model;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public /*abstract*/ class Korisnik /*implements Comparable*/ implements Serializable {
@@ -23,6 +25,8 @@ public /*abstract*/ class Korisnik /*implements Comparable*/ implements Serializ
     private int cimer_godine_do;
     private boolean cimer_pusac;
     private boolean cimer_ljubimac;
+
+    private Bitmap bitmap;
 
     @Override
     public String toString() {
@@ -185,6 +189,14 @@ public /*abstract*/ class Korisnik /*implements Comparable*/ implements Serializ
 
     public void setMiran_zivot(boolean miran_zivot) {
         this.miran_zivot = miran_zivot;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 
     /*public abstract void setCijenaMin(int cijena);

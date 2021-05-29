@@ -16,8 +16,8 @@ import com.example.cn.sql.DatabaseHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.io.Serializable;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
@@ -42,6 +42,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private ConstraintLayout constraint;
     Korisnik userActive = new Korisnik();
 
+    private FirebaseAuth auth;
+    private DatabaseReference reference;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         initViews();
         initListeners();
         initObjects();
+
+        auth = FirebaseAuth.getInstance();
+
     }
 
     /**
@@ -161,7 +167,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             userActive.setIme(name);
             userActive.setEmail(email);
             userActive.setPassword(password);
-
 
             /*
             Dio za bazu - kada se sve unese u privremene varijable onda se koristi

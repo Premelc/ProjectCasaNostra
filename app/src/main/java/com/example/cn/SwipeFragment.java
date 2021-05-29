@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,11 +18,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.cn.Utils.SquareImageView;
 import com.example.cn.Utils.SwipeImageView;
 import com.example.cn.model.Korisnik;
 import com.example.cn.model.KorisnikLjubimac;
-import com.example.cn.model.Ljubimac;
 import com.example.cn.model.NudimStan;
 import com.example.cn.model.Swipe;
 import com.example.cn.sorting.SimilarityGradeSorting;
@@ -43,7 +40,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class SwipeFragment extends Fragment {
 
