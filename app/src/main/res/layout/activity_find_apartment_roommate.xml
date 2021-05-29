@@ -15,19 +15,19 @@
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="81dp"
-            android:layout_height="66dp"
-            android:layout_marginTop="80dp"
+            android:layout_width="128dp"
+            android:layout_height="102dp"
+            android:layout_marginTop="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_android_black_24dp" />
+            app:srcCompat="@drawable/logo" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="205dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="164dp"
+            android:layout_marginTop="20dp"
             android:text="@string/to_to_no_tra_i"
             android:textAlignment="center"
             android:textAllCaps="true"
@@ -36,33 +36,36 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
         <RadioGroup
             android:id="@+id/radioGroup"
-            android:layout_width="243dp"
+            android:layout_width="wrap_content"
             android:layout_height="84dp"
-            android:layout_marginTop="204dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/textView3">
 
             <RadioButton
 
                 android:id="@+id/roommateApartment"
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
                 android:onClick="roommateApartment"
-                android:text="@string/tra_im_i_cimera_i_stan" />
+                android:textSize="18sp"
+                android:text="@string/tra_im_i_cimera_i_stan"
+                android:textColor="@color/primary_text" />
 
             <RadioButton
                 android:id="@+id/roommate"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onlyRoommate"
-                android:text="@string/imam_stan_tra_im_cimera" />
+                android:textSize="18sp"
+                android:text="@string/imam_stan_tra_im_cimera"
+                android:textColor="@color/primary_text" />
 
         </RadioGroup>
 

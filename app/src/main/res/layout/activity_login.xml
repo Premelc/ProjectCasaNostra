@@ -15,19 +15,19 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="106dp"
-            android:layout_height="74dp"
-            android:layout_marginStart="108dp"
-            android:layout_marginTop="56dp"
+            android:layout_width="213dp"
+            android:layout_height="137dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_android_black_24dp" />
+            app:srcCompat="@drawable/logo" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,8 +42,8 @@
                 android:id="@+id/textInputEditTextUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Korisničko ime"
                 android:gravity="center"
+                android:hint="Korisničko ime"
                 android:inputType="text"
                 android:maxLines="1" />
 
@@ -56,8 +56,8 @@
                 android:id="@+id/textInputEditTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="@string/zaporka"
                 android:inputType="textPassword" />
 
@@ -71,6 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="@string/text_login"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linearLayout" />
