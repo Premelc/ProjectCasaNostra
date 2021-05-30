@@ -22,6 +22,8 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/round_button"
             android:text="@string/dalje"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tt2" />
@@ -50,18 +52,21 @@
                 android:id="@+id/male"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/primary_text"
                 android:text="@string/mu_ko" />
 
             <RadioButton
                 android:id="@+id/female"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/primary_text"
                 android:text="@string/ensko" />
 
             <RadioButton
                 android:id="@+id/femaleMale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/primary_text"
                 android:checked="true"
                 android:text="@string/svejedno" />
 
@@ -138,12 +143,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true"
+                    android:textColor="@color/primary_text"
                     android:text="Želim zasebnu sobu. " />
 
                 <RadioButton
                     android:id="@+id/sharedRoom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/primary_text"
                     android:text="Mogu dijeliti sobu s cimerom. " />
 
             </RadioGroup>
@@ -166,6 +173,7 @@
                 android:id="@+id/pet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/primary_text"
                 android:text="@string/ne_elim_da_cimer_ima_ku_nog_ljubimca"
                 android:textSize="18sp" />
 
@@ -174,6 +182,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
+                android:textColor="@color/primary_text"
                 android:text="@string/svejedno_mi_je"
                 android:textSize="18sp" />
 
@@ -286,6 +295,7 @@
                     android:id="@+id/year1"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
+                    android:textColor="@color/secondary_text"
                     android:scaleX="1.25"
                     android:scaleY="1.25" />
 
@@ -302,6 +312,7 @@
                     android:id="@+id/year2"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
+                    android:textColor="@color/secondary_text"
                     android:scaleX="1.25"
                     android:scaleY="1.25" />
 
@@ -326,6 +337,7 @@
                 android:id="@+id/smoke"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/primary_text"
                 android:text="@string/ne_elim_da_je_cimer_pu_a"
                 android:textSize="18sp" />
 
@@ -334,6 +346,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
+                android:textColor="@color/primary_text"
                 android:text="@string/svejedno_mi_je"
                 android:textSize="18sp" />
 
