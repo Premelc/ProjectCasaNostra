@@ -32,8 +32,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.cn.Utils.SquareImageView;
 import com.example.cn.Utils.SwipeImageView;
+import com.example.cn.helpers.GlideApp;
 import com.example.cn.helpers.SaveSharedPreference;
 import com.example.cn.model.Korisnik;
 import com.example.cn.sql.DatabaseHelper;
@@ -72,7 +78,7 @@ public class MyProfileFragment extends Fragment {
     //Firebase - za choose i upload
     FirebaseStorage storage;
     StorageReference storageReference;
-    private final String FOLDER_NAME = "jakovic";
+    private final String FOLDER_NAME = "volarevic";
     int cnt = 0;
 
     // Za dohvacanje
@@ -101,8 +107,6 @@ public class MyProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         sessionUser = (Korisnik) getArguments().getSerializable("Session");
         return inflater.inflate(R.layout.fragment_my_profile, container, false);
-
-
     }
 
 
@@ -287,10 +291,10 @@ public class MyProfileFragment extends Fragment {
 
         cnt = 0;
         // dohvacanje slika koje su vec uploadane na firebase
-        fetchImage(pic1, progressBar1, deleteButton1, 1);
-        fetchImage(pic2, progressBar2, deleteButton2,2);
-        fetchImage(pic3, progressBar3, deleteButton3,3);
-        fetchImage(pic4, progressBar4, deleteButton4,4);
+        fetchImage(pic1, deleteButton1, 1);
+        fetchImage(pic2, deleteButton2,2);
+        fetchImage(pic3, deleteButton3,3);
+        fetchImage(pic4, deleteButton4,4);
 
         pic1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -340,8 +344,12 @@ public class MyProfileFragment extends Fragment {
                 mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic1");
                 mStorageReference.delete();
                 filePath1 = null;
+                GlideApp.with(getActivity())
+                        .load(R.drawable.ic_baseline_image_search_24)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(pic1);
                 deleteButton1.setVisibility(View.GONE);
-                pic1.setImageResource(R.drawable.ic_baseline_image_search_24);
             }
         });
 
@@ -352,8 +360,12 @@ public class MyProfileFragment extends Fragment {
                 mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic2");
                 mStorageReference.delete();
                 filePath2 = null;
+                GlideApp.with(getActivity())
+                        .load(R.drawable.ic_baseline_image_search_24)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(pic2);
                 deleteButton2.setVisibility(View.GONE);
-                pic2.setImageResource(R.drawable.ic_baseline_image_search_24);
             }
         });
 
@@ -364,8 +376,12 @@ public class MyProfileFragment extends Fragment {
                 mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic3");
                 mStorageReference.delete();
                 filePath3 = null;
+                GlideApp.with(getActivity())
+                        .load(R.drawable.ic_baseline_image_search_24)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(pic3);
                 deleteButton3.setVisibility(View.GONE);
-                pic3.setImageResource(R.drawable.ic_baseline_image_search_24);
             }
         });
 
@@ -376,8 +392,12 @@ public class MyProfileFragment extends Fragment {
                 mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic4");
                 mStorageReference.delete();
                 filePath4 = null;
+                GlideApp.with(getActivity())
+                        .load(R.drawable.ic_baseline_image_search_24)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(pic4);
                 deleteButton4.setVisibility(View.GONE);
-                pic4.setImageResource(R.drawable.ic_baseline_image_search_24);
             }
         });
 
@@ -403,7 +423,11 @@ public class MyProfileFragment extends Fragment {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath1);
                 pic1.setImageBitmap(bitmap);
-                pic1.setVisibility(View.VISIBLE);
+                GlideApp.with(getActivity())
+                        .load(bitmap)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(pic1);
                 deleteButton1.setVisibility(View.VISIBLE);
             }
             catch (IOException e)
@@ -419,8 +443,13 @@ public class MyProfileFragment extends Fragment {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath2);
                 pic2.setImageBitmap(bitmap);
-                pic2.setVisibility(View.VISIBLE);
+                GlideApp.with(getActivity())
+                        .load(bitmap)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(pic2);
                 deleteButton2.setVisibility(View.VISIBLE);
+
             }
             catch (IOException e)
             {
@@ -434,8 +463,11 @@ public class MyProfileFragment extends Fragment {
             filePath3 = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath3);
-                pic3.setImageBitmap(bitmap);
-                pic3.setVisibility(View.VISIBLE);
+                GlideApp.with(getActivity())
+                        .load(bitmap)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(pic3);
                 deleteButton3.setVisibility(View.VISIBLE);
             }
             catch (IOException e)
@@ -451,7 +483,11 @@ public class MyProfileFragment extends Fragment {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath4);
                 pic4.setImageBitmap(bitmap);
-                pic4.setVisibility(View.VISIBLE);
+                GlideApp.with(getActivity())
+                        .load(bitmap)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(pic4);
                 deleteButton4.setVisibility(View.VISIBLE);
             }
             catch (IOException e)
@@ -469,12 +505,7 @@ public class MyProfileFragment extends Fragment {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            // Promijeniti naziv slike - pomocu id-a
             int idOfUser = sessionUser.getId_korisnik();
-            /*
-            String usr = "user" + idOfUser;
-            int i = 1;
-            StorageReference ref = storageReference.child("images/usr/"+ idOfUser + "_" + i);*/
 
             StorageReference ref = storageReference.child("images/"+FOLDER_NAME+"/usr"+ idOfUser + "/pic" + num);
             ref.putFile(filePath)
@@ -482,13 +513,13 @@ public class MyProfileFragment extends Fragment {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             cnt++;
-                            if(cnt == 4){
+                            /*if(cnt == 4){
                                 // kad se sve 4 slike uploadaju, stavi sve buttone da su opet clickable
                                 getActivity().findViewById(R.id.nav_profile).setClickable(true);
                                 getActivity().findViewById(R.id.nav_swipe).setClickable(true);
                                 getActivity().findViewById(R.id.nav_chat).setClickable(true);
                                 fetchProfilePicture();
-                            }
+                            }*/
 
                             if(num == 1) fetchProfilePicture();
                             progressDialog.dismiss();
@@ -499,13 +530,13 @@ public class MyProfileFragment extends Fragment {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             cnt++;
-                            if(cnt == 4){
+                            /*if(cnt == 4){
                                 // kad se sve 4 slike uploadaju, stavi sve buttone da su opet clickable
                                 getActivity().findViewById(R.id.nav_profile).setClickable(true);
                                 getActivity().findViewById(R.id.nav_swipe).setClickable(true);
                                 getActivity().findViewById(R.id.nav_chat).setClickable(true);
                                 fetchProfilePicture();
-                            }
+                            }*/
 
                             progressDialog.dismiss();
                             // Toast.makeText(MyProfileFragment.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -514,12 +545,12 @@ public class MyProfileFragment extends Fragment {
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            if(cnt == 0){
+                            /*if(cnt == 0){
                                 // kad se pocnu uploadati slike, stavi sve buttone da nisu clickable
                                 getActivity().findViewById(R.id.nav_profile).setClickable(false);
                                 getActivity().findViewById(R.id.nav_swipe).setClickable(false);
                                 getActivity().findViewById(R.id.nav_chat).setClickable(false);
-                            }
+                            }*/
 
                             double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
                                     .getTotalByteCount());
@@ -529,125 +560,49 @@ public class MyProfileFragment extends Fragment {
         }
     };
 
-    private void fetchImage(SquareImageView imageView, ProgressBar progressBar, ImageButton imageButton, int num){
+    private void fetchImage(SquareImageView imageView, ImageButton imageButton, int num) {
         // Ime slike sam stavila usr + broj jer za ime filea mora biti najmanje duzine 3
         int idOfUser = sessionUser.getId_korisnik();
-        String number = Integer.toString(idOfUser);
-        String nameOfPic = "usr" + number;
-        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic" + num);
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/" + FOLDER_NAME + "/usr" + idOfUser + "/pic" + num);
 
-        try {
-            final File localFile = File.createTempFile(nameOfPic, "jpg");
-            mStorageReference.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            //Toast.makeText(getActivity(), "Slika je dohvacena", Toast.LENGTH_SHORT).show();
-                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-
-                            progressBar.setVisibility(View.INVISIBLE);
-                            imageView.setVisibility(View.VISIBLE);
-                            imageButton.setVisibility(View.VISIBLE);
-
-                            imageView.setImageBitmap(bitmap);
-
-                            cnt++;
-                            if(cnt == 4){
-                                // kad se sve 4 slike ucitaju, stavi sve buttone da su opet clickable
-                                getActivity().findViewById(R.id.nav_profile).setClickable(true);
-                                getActivity().findViewById(R.id.nav_swipe).setClickable(true);
-                                getActivity().findViewById(R.id.nav_chat).setClickable(true);
-                            }
-                        }
-                    }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
-
-                    if(cnt == 0){
-                        // kad se pocnu ucitavati slike, stavi sve buttone da nisu clickable
-                        getActivity().findViewById(R.id.nav_profile).setClickable(false);
-                        getActivity().findViewById(R.id.nav_swipe).setClickable(false);
-                        getActivity().findViewById(R.id.nav_chat).setClickable(false);
+        GlideApp.with(this)
+                .load(mStorageReference)
+                .error(R.drawable.ic_baseline_image_search_24)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        imageButton.setVisibility(View.GONE);
+                        return false;
                     }
 
-                    imageView.setVisibility(View.INVISIBLE);
-                    imageButton.setVisibility(View.INVISIBLE);
-                    progressBar.setVisibility(View.VISIBLE);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                    progressBar.setVisibility(View.INVISIBLE);
-                    imageView.setVisibility(View.VISIBLE);
-                    imageButton.setVisibility(View.INVISIBLE);
-
-                    cnt++;
-                    if(cnt == 4){
-                        // kad se sve 4 slike ucitaju, stavi sve buttone da su opet clickable
-                        getActivity().findViewById(R.id.nav_profile).setClickable(true);
-                        getActivity().findViewById(R.id.nav_swipe).setClickable(true);
-                        getActivity().findViewById(R.id.nav_chat).setClickable(true);
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        imageButton.setVisibility(View.VISIBLE);
+                        return false;
                     }
+                })
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(imageView);
 
-                    //Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        imageView.setVisibility(View.VISIBLE);
+
     }
 
     public void fetchProfilePicture(){
         int idOfUser = sessionUser.getId_korisnik();
-        String number = Integer.toString(idOfUser);
-        String nameOfPic = "pic1";
         mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic1");
 
         CircleImageView imageView = (CircleImageView) getView().findViewById(R.id.imageView7);
-        try {
-            final File localFile = File.createTempFile(nameOfPic, "jpg");
-            mStorageReference.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
 
-                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+        GlideApp.with(this)
+                .load(mStorageReference)
+                .error(R.drawable.ic_baseline_person_24)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(imageView);
 
-                            (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
-                            (getView().findViewById(R.id.imageView7)).setVisibility(View.VISIBLE);
+        (getView().findViewById(R.id.imageView7)).setVisibility(View.VISIBLE);
 
-                            getActivity().findViewById(R.id.nav_profile).setClickable(true);
-                            getActivity().findViewById(R.id.nav_swipe).setClickable(true);
-                            getActivity().findViewById(R.id.nav_chat).setClickable(true);
-
-                            ((CircleImageView) getView().findViewById(R.id.imageView7)).setImageBitmap(bitmap);
-
-                        }
-                    }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
-                    getActivity().findViewById(R.id.nav_profile).setClickable(false);
-                    getActivity().findViewById(R.id.nav_swipe).setClickable(false);
-                    getActivity().findViewById(R.id.nav_chat).setClickable(false);
-
-                    (getView().findViewById(R.id.imageView7)).setVisibility(View.INVISIBLE);
-                    (getView().findViewById(R.id.progressBar2)).setVisibility(View.VISIBLE);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    ((CircleImageView) getView().findViewById(R.id.imageView7)).setImageResource(R.drawable.ic_baseline_person_24);
-                    (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
-                    (getView().findViewById(R.id.imageView7)).setVisibility(View.VISIBLE);
-
-                    getActivity().findViewById(R.id.nav_profile).setClickable(true);
-                    getActivity().findViewById(R.id.nav_swipe).setClickable(true);
-                    getActivity().findViewById(R.id.nav_chat).setClickable(true);
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
