@@ -56,7 +56,7 @@ public class MessagesFragment extends Fragment {
     private EditText textMessage;
 
     ArrayList<Chat> chatList;
-
+    static ArrayList<Chat> lastMessage;
 
     public static MessagesFragment newInstance(Korisnik sessionUser, Korisnik chatUser){
         MessagesFragment fragment = new MessagesFragment();
@@ -102,10 +102,6 @@ public class MessagesFragment extends Fragment {
             recyclerView.setAdapter(messageAdapter);
 
             recyclerView.scrollToPosition(messageAdapter.getItemCount()-1);
-
-
-
-
 
         initViews();
         initListeners();
@@ -168,7 +164,9 @@ public class MessagesFragment extends Fragment {
                         recyclerView.setLayoutManager(linearLayoutManager);
                         recyclerView.setAdapter(messageAdapter);
 
-                        recyclerView.scrollToPosition(messageAdapter.getItemCount()-1);                    }
+                        recyclerView.scrollToPosition(messageAdapter.getItemCount()-1);
+
+                    }
                 }
             }
 

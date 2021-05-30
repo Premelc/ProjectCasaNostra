@@ -5,12 +5,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.Editable;
+import android.os.FileUtils;
 import android.provider.MediaStore;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +21,20 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.cn.Utils.SquareImageView;
+import com.example.cn.Utils.SwipeImageView;
+import com.example.cn.helpers.GlideApp;
 import com.example.cn.helpers.SaveSharedPreference;
 import com.example.cn.model.Korisnik;
 import com.example.cn.sql.DatabaseHelper;
@@ -65,7 +73,7 @@ public class MyProfileFragment extends Fragment {
     //Firebase - za choose i upload
     FirebaseStorage storage;
     StorageReference storageReference;
-    private final String FOLDER_NAME = "jakovic";
+    private final String FOLDER_NAME = "volarevic";
     int cnt = 0;
 
     // Za dohvacanje
@@ -94,8 +102,6 @@ public class MyProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         sessionUser = (Korisnik) getArguments().getSerializable("Session");
         return inflater.inflate(R.layout.fragment_my_profile, container, false);
-
-
     }
 
 
@@ -280,10 +286,10 @@ public class MyProfileFragment extends Fragment {
 
         cnt = 0;
         // dohvacanje slika koje su vec uploadane na firebase
-        fetchImage(pic1, progressBar1, deleteButton1, 1);
-        fetchImage(pic2, progressBar2, deleteButton2,2);
-        fetchImage(pic3, progressBar3, deleteButton3,3);
-        fetchImage(pic4, progressBar4, deleteButton4,4);
+        fetchImage(pic1, deleteButton1, 1);
+        fetchImage(pic2, deleteButton2,2);
+        fetchImage(pic3, deleteButton3,3);
+        fetchImage(pic4, deleteButton4,4);
 
         pic1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -462,12 +468,7 @@ public class MyProfileFragment extends Fragment {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            // Promijeniti naziv slike - pomocu id-a
             int idOfUser = sessionUser.getId_korisnik();
-            /*
-            String usr = "user" + idOfUser;
-            int i = 1;
-            StorageReference ref = storageReference.child("images/usr/"+ idOfUser + "_" + i);*/
 
             StorageReference ref = storageReference.child("images/"+FOLDER_NAME+"/usr"+ idOfUser + "/pic" + num);
             ref.putFile(filePath)
@@ -522,125 +523,30 @@ public class MyProfileFragment extends Fragment {
         }
     };
 
-    private void fetchImage(SquareImageView imageView, ProgressBar progressBar, ImageButton imageButton, int num){
+    private void fetchImage(SquareImageView imageView, ImageButton imageButton, int num) {
         // Ime slike sam stavila usr + broj jer za ime filea mora biti najmanje duzine 3
         int idOfUser = sessionUser.getId_korisnik();
-        String number = Integer.toString(idOfUser);
-        String nameOfPic = "usr" + number;
-        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic" + num);
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/" + FOLDER_NAME + "/usr" + idOfUser + "/pic" + num);
 
-        try {
-            final File localFile = File.createTempFile(nameOfPic, "jpg");
-            mStorageReference.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            //Toast.makeText(getActivity(), "Slika je dohvacena", Toast.LENGTH_SHORT).show();
-                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+        GlideApp.with(this)
+                .load(mStorageReference)
+                .into(imageView);
 
-                            progressBar.setVisibility(View.INVISIBLE);
-                            imageView.setVisibility(View.VISIBLE);
-                            imageButton.setVisibility(View.VISIBLE);
+        imageView.setVisibility(View.VISIBLE);
 
-                            imageView.setImageBitmap(bitmap);
-
-                            cnt++;
-                            if(cnt == 4){
-                                // kad se sve 4 slike ucitaju, stavi sve buttone da su opet clickable
-                                getActivity().findViewById(R.id.nav_profile).setClickable(true);
-                                getActivity().findViewById(R.id.nav_swipe).setClickable(true);
-                                getActivity().findViewById(R.id.nav_chat).setClickable(true);
-                            }
-                        }
-                    }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
-
-                    if(cnt == 0){
-                        // kad se pocnu ucitavati slike, stavi sve buttone da nisu clickable
-                        getActivity().findViewById(R.id.nav_profile).setClickable(false);
-                        getActivity().findViewById(R.id.nav_swipe).setClickable(false);
-                        getActivity().findViewById(R.id.nav_chat).setClickable(false);
-                    }
-
-                    imageView.setVisibility(View.INVISIBLE);
-                    imageButton.setVisibility(View.INVISIBLE);
-                    progressBar.setVisibility(View.VISIBLE);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                    progressBar.setVisibility(View.INVISIBLE);
-                    imageView.setVisibility(View.VISIBLE);
-                    imageButton.setVisibility(View.INVISIBLE);
-
-                    cnt++;
-                    if(cnt == 4){
-                        // kad se sve 4 slike ucitaju, stavi sve buttone da su opet clickable
-                        getActivity().findViewById(R.id.nav_profile).setClickable(true);
-                        getActivity().findViewById(R.id.nav_swipe).setClickable(true);
-                        getActivity().findViewById(R.id.nav_chat).setClickable(true);
-                    }
-
-                    //Toast.makeText(getActivity(), "Slika nije dohvacena", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void fetchProfilePicture(){
         int idOfUser = sessionUser.getId_korisnik();
-        String number = Integer.toString(idOfUser);
-        String nameOfPic = "pic1";
         mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic1");
 
         CircleImageView imageView = (CircleImageView) getView().findViewById(R.id.imageView7);
-        try {
-            final File localFile = File.createTempFile(nameOfPic, "jpg");
-            mStorageReference.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
 
-                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+        GlideApp.with(this)
+                .load(mStorageReference)
+                .into(imageView);
 
-                            (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
-                            (getView().findViewById(R.id.imageView7)).setVisibility(View.VISIBLE);
+        (getView().findViewById(R.id.imageView7)).setVisibility(View.VISIBLE);
 
-                            getActivity().findViewById(R.id.nav_profile).setClickable(true);
-                            getActivity().findViewById(R.id.nav_swipe).setClickable(true);
-                            getActivity().findViewById(R.id.nav_chat).setClickable(true);
-
-                            ((CircleImageView) getView().findViewById(R.id.imageView7)).setImageBitmap(bitmap);
-
-                        }
-                    }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull @NotNull FileDownloadTask.TaskSnapshot snapshot) {
-                    getActivity().findViewById(R.id.nav_profile).setClickable(false);
-                    getActivity().findViewById(R.id.nav_swipe).setClickable(false);
-                    getActivity().findViewById(R.id.nav_chat).setClickable(false);
-
-                    (getView().findViewById(R.id.imageView7)).setVisibility(View.INVISIBLE);
-                    (getView().findViewById(R.id.progressBar2)).setVisibility(View.VISIBLE);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    ((CircleImageView) getView().findViewById(R.id.imageView7)).setImageResource(R.drawable.ic_baseline_person_24);
-                    (getView().findViewById(R.id.progressBar2)).setVisibility(View.INVISIBLE);
-                    (getView().findViewById(R.id.imageView7)).setVisibility(View.VISIBLE);
-
-                    getActivity().findViewById(R.id.nav_profile).setClickable(true);
-                    getActivity().findViewById(R.id.nav_swipe).setClickable(true);
-                    getActivity().findViewById(R.id.nav_chat).setClickable(true);
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

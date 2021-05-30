@@ -55,7 +55,7 @@ public class SwipeFragment extends Fragment {
     // Za slike:
     private StorageReference mStorageReference;
     private SwipeImageView imageView;
-    private final String FOLDER_NAME = "jakovic";
+    private final String FOLDER_NAME = "volarevic";
     ArrayList<Bitmap> images;
     int i = 0;
     int cnt = 0;

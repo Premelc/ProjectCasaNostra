@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cn.R;
+import com.example.cn.helpers.GlideApp;
 import com.example.cn.model.Chat;
 import com.example.cn.model.Fakultet;
 import com.example.cn.model.Korisnik;
@@ -23,6 +24,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,7 +41,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Viewholder> {
     private Korisnik sessionUser;
     private RecyclerViewClickListener listener;
 
-    Bitmap bitmap;
+    private StorageReference mStorageReference;
+    private final String FOLDER_NAME = "volarevic";
 
     // Constructor
     public ChatAdapter(FragmentActivity context, ArrayList<Korisnik> chatUsers, Korisnik sessionUser, RecyclerViewClickListener listener) {
@@ -62,13 +65,29 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Viewholder> {
         // to set data to textview and imageview of each card layout
         Korisnik model = chatUsers.get(position);
         holder.name.setText(String.valueOf(model.getIme()));
-        holder.message.setText("" + model.getId_korisnik());
 
-        if(model.getBitmap() != null){
-            holder.profilePic.setImageBitmap(model.getBitmap());
-        } else {
+       /*ArrayList<Chat> last = model.getMessage();
+
+        if(last.isEmpty()){
+            holder.message.setText("Nemate poruka");
+        }else{
+            holder.message.setText(last.toString());
+        }*/
+
+        int idOfUser = model.getId_korisnik();
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic1");
+
+        if(mStorageReference != null){
+            Context cont = context.getApplicationContext();
+            GlideApp.with(cont)
+                    .load(mStorageReference)
+                    .into(holder.profilePic);
+        }else{
             holder.profilePic.setImageResource(R.drawable.ic_baseline_person_24);
         }
+
+
+
 
         //holder.courseIV.setImageResource(model.getCourse_image());
         //holder.profilePic.setImageResource();
@@ -107,6 +126,5 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Viewholder> {
             listener.onClick(v, getAdapterPosition(), chatUsers);
         }
     }
-
 
 }
