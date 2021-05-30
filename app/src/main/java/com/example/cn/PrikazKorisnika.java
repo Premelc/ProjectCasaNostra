@@ -1,12 +1,9 @@
 package com.example.cn;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,7 +44,7 @@ public class PrikazKorisnika extends AppCompatActivity {
                 s2[i] = "Email: " + userList.get(i).getEmail();
                 Log.d("aa", s1[i]);
                 final Korisnik a = userList.get(i);
-                detaljiButton.setOnClickListener(new View.OnClickListener() {
+                /*detaljiButton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(PrikazKorisnika.this);
 
@@ -69,7 +66,7 @@ public class PrikazKorisnika extends AppCompatActivity {
                         alert.show();
                     }
 
-                });
+                });*/
             }
         }else{
             Log.d("abb", "dfsosdfji");
