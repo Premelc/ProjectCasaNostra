@@ -145,9 +145,6 @@
     <string name="email">Email</string>
 
 
-
-
-
     <string name="text_accounts">All Accounts</string>
     <string name="hint_name">Name</string>
     <string name="hint_email">Email</string>
@@ -176,7 +173,6 @@
     <string name="izbrisi_racun"><u>Izbriši račun</u></string>
     <string name="prijavise">Već imate račun? <u>Prijavite se!</u></string>
     <string name="admin"><u>Prijavite se</u> kao administrator</string>
-
 
 
 </resources>
