@@ -33,6 +33,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -343,7 +344,12 @@ public class MyProfileFragment extends Fragment {
                 mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic1");
                 mStorageReference.delete();
                 filePath1 = null;
-                fetchImage(pic1, deleteButton1, 1);
+                GlideApp.with(getActivity())
+                        .load(R.drawable.ic_baseline_image_search_24)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(pic1);
+                deleteButton1.setVisibility(View.GONE);
             }
         });
 
@@ -356,6 +362,8 @@ public class MyProfileFragment extends Fragment {
                 filePath2 = null;
                 GlideApp.with(getActivity())
                         .load(R.drawable.ic_baseline_image_search_24)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .into(pic2);
                 deleteButton2.setVisibility(View.GONE);
             }
@@ -370,6 +378,8 @@ public class MyProfileFragment extends Fragment {
                 filePath3 = null;
                 GlideApp.with(getActivity())
                         .load(R.drawable.ic_baseline_image_search_24)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .into(pic3);
                 deleteButton3.setVisibility(View.GONE);
             }
@@ -384,6 +394,8 @@ public class MyProfileFragment extends Fragment {
                 filePath4 = null;
                 GlideApp.with(getActivity())
                         .load(R.drawable.ic_baseline_image_search_24)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .into(pic4);
                 deleteButton4.setVisibility(View.GONE);
             }
@@ -411,7 +423,12 @@ public class MyProfileFragment extends Fragment {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath1);
                 pic1.setImageBitmap(bitmap);
-                fetchImage(pic1, deleteButton1, 1);
+                GlideApp.with(getActivity())
+                        .load(bitmap)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(pic1);
+                deleteButton1.setVisibility(View.VISIBLE);
             }
             catch (IOException e)
             {
@@ -426,7 +443,12 @@ public class MyProfileFragment extends Fragment {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath2);
                 pic2.setImageBitmap(bitmap);
-                fetchImage(pic2, deleteButton2, 2);
+                GlideApp.with(getActivity())
+                        .load(bitmap)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(pic2);
+                deleteButton2.setVisibility(View.VISIBLE);
 
             }
             catch (IOException e)
@@ -441,7 +463,12 @@ public class MyProfileFragment extends Fragment {
             filePath3 = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath3);
-                fetchImage(pic3, deleteButton3, 3);
+                GlideApp.with(getActivity())
+                        .load(bitmap)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(pic3);
+                deleteButton3.setVisibility(View.VISIBLE);
             }
             catch (IOException e)
             {
@@ -456,7 +483,12 @@ public class MyProfileFragment extends Fragment {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath4);
                 pic4.setImageBitmap(bitmap);
-                fetchImage(pic4, deleteButton4, 4);
+                GlideApp.with(getActivity())
+                        .load(bitmap)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(pic4);
+                deleteButton4.setVisibility(View.VISIBLE);
             }
             catch (IOException e)
             {
@@ -481,13 +513,13 @@ public class MyProfileFragment extends Fragment {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             cnt++;
-                            if(cnt == 4){
+                            /*if(cnt == 4){
                                 // kad se sve 4 slike uploadaju, stavi sve buttone da su opet clickable
                                 getActivity().findViewById(R.id.nav_profile).setClickable(true);
                                 getActivity().findViewById(R.id.nav_swipe).setClickable(true);
                                 getActivity().findViewById(R.id.nav_chat).setClickable(true);
                                 fetchProfilePicture();
-                            }
+                            }*/
 
                             if(num == 1) fetchProfilePicture();
                             progressDialog.dismiss();
@@ -498,13 +530,13 @@ public class MyProfileFragment extends Fragment {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             cnt++;
-                            if(cnt == 4){
+                            /*if(cnt == 4){
                                 // kad se sve 4 slike uploadaju, stavi sve buttone da su opet clickable
                                 getActivity().findViewById(R.id.nav_profile).setClickable(true);
                                 getActivity().findViewById(R.id.nav_swipe).setClickable(true);
                                 getActivity().findViewById(R.id.nav_chat).setClickable(true);
                                 fetchProfilePicture();
-                            }
+                            }*/
 
                             progressDialog.dismiss();
                             // Toast.makeText(MyProfileFragment.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -513,12 +545,12 @@ public class MyProfileFragment extends Fragment {
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            if(cnt == 0){
+                            /*if(cnt == 0){
                                 // kad se pocnu uploadati slike, stavi sve buttone da nisu clickable
                                 getActivity().findViewById(R.id.nav_profile).setClickable(false);
                                 getActivity().findViewById(R.id.nav_swipe).setClickable(false);
                                 getActivity().findViewById(R.id.nav_chat).setClickable(false);
-                            }
+                            }*/
 
                             double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
                                     .getTotalByteCount());
@@ -549,6 +581,8 @@ public class MyProfileFragment extends Fragment {
                         return false;
                     }
                 })
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(imageView);
 
         imageView.setVisibility(View.VISIBLE);
@@ -564,6 +598,8 @@ public class MyProfileFragment extends Fragment {
         GlideApp.with(this)
                 .load(mStorageReference)
                 .error(R.drawable.ic_baseline_person_24)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(imageView);
 
         (getView().findViewById(R.id.imageView7)).setVisibility(View.VISIBLE);
