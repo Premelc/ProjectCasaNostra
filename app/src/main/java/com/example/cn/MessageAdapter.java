@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cn.R;
+import com.example.cn.helpers.GlideApp;
 import com.example.cn.model.Chat;
 import com.example.cn.model.Fakultet;
 import com.example.cn.model.Korisnik;
@@ -21,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +36,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.Viewhold
 
     private ArrayList<Chat> chatList;
     Korisnik sessionUser;
+
+    private StorageReference mStorageReference;
+    private final String FOLDER_NAME = "volarevic";
 
     // Constructor
     public MessageAdapter(Context context, Korisnik sessionUser, Korisnik chatUser, ArrayList<Chat> chatList) {
@@ -91,6 +97,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.Viewhold
             othersMessage = itemView.findViewById(R.id.othersMessage);
             myMessage = itemView.findViewById(R.id.myMessage);
             othersLayout = itemView.findViewById(R.id.othersLayout);
+
+            int idOfUser = chatUser.getId_korisnik();
+            mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic1");
+
+            Context cont = context.getApplicationContext();
+            GlideApp.with(cont)
+                    .load(mStorageReference)
+                    .error(R.drawable.ic_baseline_person_24)
+                    .into(othersProfilePic);
         }
     }
 }

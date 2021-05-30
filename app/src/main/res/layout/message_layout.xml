@@ -17,6 +17,7 @@
             android:id="@+id/othersProfilePic"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:src="@drawable/ic_baseline_person_24" />
 
@@ -30,6 +31,7 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="60dp"
             android:text="blabla"
             android:textColor="@color/black" />
     </LinearLayout>
@@ -43,6 +45,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
+        android:layout_marginStart="70dp"
         android:background="@drawable/right_message_layout"
         android:padding="10dp"
         android:text="blabla"

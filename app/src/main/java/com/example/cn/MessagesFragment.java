@@ -1,5 +1,6 @@
 package com.example.cn;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,8 +16,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.Scroller;
+import android.widget.TextView;
 
 import com.example.cn.MessageAdapter;
+import com.example.cn.helpers.GlideApp;
 import com.example.cn.model.Chat;
 import com.example.cn.model.Fakultet;
 import com.example.cn.model.Korisnik;
@@ -28,6 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,6 +40,8 @@ import java.security.cert.PolicyNode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,9 +58,14 @@ public class MessagesFragment extends Fragment {
 
     FirebaseUser fuser;
     DatabaseReference reference;
+    private StorageReference mStorageReference;
+    final String FOLDER_NAME = "volarevic";
 
     private ImageButton sendButton;
     private EditText textMessage;
+    private TextView name;
+    private ImageButton backButton;
+    private CircleImageView profilePic;
 
     ArrayList<Chat> chatList;
     static ArrayList<Chat> lastMessage;
@@ -114,6 +126,19 @@ public class MessagesFragment extends Fragment {
     public void initViews(){
         sendButton = getView().findViewById(R.id.sendButton);
         textMessage = getView().findViewById(R.id.textMessage);
+        name = getView().findViewById(R.id.name);
+        name.setText(chatUser.getIme());
+        backButton = getView().findViewById(R.id.back);
+        profilePic = getView().findViewById(R.id.profilePic);
+
+        int idOfUser = chatUser.getId_korisnik();
+        mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic1");
+
+        Context cont = getActivity().getApplicationContext();
+        GlideApp.with(cont)
+                .load(mStorageReference)
+                .error(R.drawable.ic_baseline_person_24)
+                .into(profilePic);
     }
 
     public void initListeners(){
@@ -127,6 +152,16 @@ public class MessagesFragment extends Fragment {
                     sendMessage(sendUser, recUser, msg);
                 }
                 textMessage.setText("");
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment selectedFragment = null;
+                selectedFragment = new ChatFragment().newInstance(sessionUser);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        selectedFragment).commit();
             }
         });
     }

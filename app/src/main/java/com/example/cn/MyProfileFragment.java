@@ -32,6 +32,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.cn.Utils.SquareImageView;
 import com.example.cn.Utils.SwipeImageView;
 import com.example.cn.helpers.GlideApp;
@@ -339,8 +343,7 @@ public class MyProfileFragment extends Fragment {
                 mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic1");
                 mStorageReference.delete();
                 filePath1 = null;
-                deleteButton1.setVisibility(View.GONE);
-                pic1.setImageResource(R.drawable.ic_baseline_image_search_24);
+                fetchImage(pic1, deleteButton1, 1);
             }
         });
 
@@ -351,8 +354,10 @@ public class MyProfileFragment extends Fragment {
                 mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic2");
                 mStorageReference.delete();
                 filePath2 = null;
+                GlideApp.with(getActivity())
+                        .load(R.drawable.ic_baseline_image_search_24)
+                        .into(pic2);
                 deleteButton2.setVisibility(View.GONE);
-                pic2.setImageResource(R.drawable.ic_baseline_image_search_24);
             }
         });
 
@@ -363,8 +368,10 @@ public class MyProfileFragment extends Fragment {
                 mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic3");
                 mStorageReference.delete();
                 filePath3 = null;
+                GlideApp.with(getActivity())
+                        .load(R.drawable.ic_baseline_image_search_24)
+                        .into(pic3);
                 deleteButton3.setVisibility(View.GONE);
-                pic3.setImageResource(R.drawable.ic_baseline_image_search_24);
             }
         });
 
@@ -375,8 +382,10 @@ public class MyProfileFragment extends Fragment {
                 mStorageReference = FirebaseStorage.getInstance().getReference().child("images/"+FOLDER_NAME+"/usr" + idOfUser + "/pic4");
                 mStorageReference.delete();
                 filePath4 = null;
+                GlideApp.with(getActivity())
+                        .load(R.drawable.ic_baseline_image_search_24)
+                        .into(pic4);
                 deleteButton4.setVisibility(View.GONE);
-                pic4.setImageResource(R.drawable.ic_baseline_image_search_24);
             }
         });
 
@@ -402,8 +411,7 @@ public class MyProfileFragment extends Fragment {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath1);
                 pic1.setImageBitmap(bitmap);
-                pic1.setVisibility(View.VISIBLE);
-                deleteButton1.setVisibility(View.VISIBLE);
+                fetchImage(pic1, deleteButton1, 1);
             }
             catch (IOException e)
             {
@@ -418,8 +426,8 @@ public class MyProfileFragment extends Fragment {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath2);
                 pic2.setImageBitmap(bitmap);
-                pic2.setVisibility(View.VISIBLE);
-                deleteButton2.setVisibility(View.VISIBLE);
+                fetchImage(pic2, deleteButton2, 2);
+
             }
             catch (IOException e)
             {
@@ -433,9 +441,7 @@ public class MyProfileFragment extends Fragment {
             filePath3 = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath3);
-                pic3.setImageBitmap(bitmap);
-                pic3.setVisibility(View.VISIBLE);
-                deleteButton3.setVisibility(View.VISIBLE);
+                fetchImage(pic3, deleteButton3, 3);
             }
             catch (IOException e)
             {
@@ -450,8 +456,7 @@ public class MyProfileFragment extends Fragment {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath4);
                 pic4.setImageBitmap(bitmap);
-                pic4.setVisibility(View.VISIBLE);
-                deleteButton4.setVisibility(View.VISIBLE);
+                fetchImage(pic4, deleteButton4, 4);
             }
             catch (IOException e)
             {
@@ -530,6 +535,20 @@ public class MyProfileFragment extends Fragment {
 
         GlideApp.with(this)
                 .load(mStorageReference)
+                .error(R.drawable.ic_baseline_image_search_24)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        imageButton.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        imageButton.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                })
                 .into(imageView);
 
         imageView.setVisibility(View.VISIBLE);
@@ -544,6 +563,7 @@ public class MyProfileFragment extends Fragment {
 
         GlideApp.with(this)
                 .load(mStorageReference)
+                .error(R.drawable.ic_baseline_person_24)
                 .into(imageView);
 
         (getView().findViewById(R.id.imageView7)).setVisibility(View.VISIBLE);
