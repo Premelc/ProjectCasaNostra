@@ -2,17 +2,13 @@ package com.example.cn.sorting;
 
 import com.example.cn.model.Korisnik;
 import com.example.cn.model.Kvart;
-import com.example.cn.model.Lokacija;
 import com.example.cn.model.NudimStan;
 import com.example.cn.model.PotragaLokacija;
 import com.example.cn.model.Swipe;
 import com.example.cn.model.TrazimStan;
 import com.example.cn.sql.DatabaseHelper;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -88,12 +84,14 @@ public class SimilarityGradeSorting {
                 usr.setGrade(usr.getGrade() / usr.getModifier());
             }
             //othrUsr.removeAll(toRemove);
+            //noinspection unchecked
             Collections.sort(othrUsr);
             return othrUsr;
         }
         return othrUsr;
     }
 
+    @SuppressWarnings("IfStatementWithIdenticalBranches")
     public List<UsableOtherUser> pullData(DatabaseHelper dbh , Korisnik au){
 
         String whereClause = "id_korisnik != ?"; // uvjet koji ide odmah iza WHERE
@@ -110,8 +108,6 @@ public class SimilarityGradeSorting {
         List<UsableOtherUser> needApt = new ArrayList<>();
 
         UsableActiveUser actUsr = writeActiveUserData(au, dbh);
-
-        List<Swipe> swipeState = (dbh.querySwipe(null, null, null, null, null));
 
         List<NudimStan>haveAptPrice = dbh.queryNudimStan(null, null, null, null, null);
         List<TrazimStan>needAptPrice = dbh.queryTrazimStan(null, null, null, null, null);
@@ -207,6 +203,7 @@ public class SimilarityGradeSorting {
         return usableOtherUsers;
     }
 
+    @SuppressWarnings("IfStatementWithIdenticalBranches")
     public UsableActiveUser writeActiveUserData(Korisnik usr, DatabaseHelper dbh) {
         UsableActiveUser activeUser = new UsableActiveUser(usr.getId_korisnik(), usr.getUsername(), usr.getEmail(), usr.getPassword(), usr.getIme(), usr.getGodina_rodenja(), usr.getOpis(), usr.getSpol(), usr.getId_fakultet(), usr.isPusac(), usr.isLjubimac(), usr.isMiran_zivot(), usr.getCimer_spol(), usr.getCimer_godine_od(), usr.getCimer_godine_do(), usr.isCimer_pusac(), usr.isCimer_ljubimac());
 
@@ -220,7 +217,7 @@ public class SimilarityGradeSorting {
                     activeUser.setZasebna_soba(stan.isZasebna_soba());
                     activeUser.setApt(true);
                     return activeUser;
-                } else if (stan == null) {
+                } else{
                     List<TrazimStan> needAptPrice = dbh.queryTrazimStan(null, null, null, null, null);
                     TrazimStan stan2 = findUserNeedApt(usr.getId_korisnik(), needAptPrice);
                     if (stan2 != null) {
@@ -240,7 +237,7 @@ public class SimilarityGradeSorting {
                             activeUser.setZasebna_soba(stan2.isZasebna_soba());
                             return activeUser;
                         }
-                    } else if (stan2 == null) {
+                    } else{
                         return new UsableActiveUser();
                     }
                 }
@@ -251,17 +248,17 @@ public class SimilarityGradeSorting {
 
 
     public boolean getIfUserSwiped(int usr_id , int actUsr_id , DatabaseHelper dbh) {
-        Swipe swipe = new Swipe();
+        Swipe swipe;
 
         if(actUsr_id < usr_id){
             swipe = dbh.checkSwipe(String.valueOf(actUsr_id), String.valueOf(usr_id));
             if(swipe != null && swipe.getId_1() > 0 && swipe.getId_2() > 0){
-                if(swipe.isSwipe_1() != null) return true;
+                return swipe.isSwipe_1() != null;
             }
         } else if(actUsr_id > usr_id){
             swipe = dbh.checkSwipe(String.valueOf(usr_id), String.valueOf(actUsr_id));
             if(swipe != null && swipe.getId_1() > 0 && swipe.getId_2() > 0){
-                if(swipe.isSwipe_2() != null) return true;
+                return swipe.isSwipe_2() != null;
             }
         }
 
