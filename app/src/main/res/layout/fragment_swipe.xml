@@ -76,6 +76,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
@@ -157,10 +158,10 @@
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Zasebna soba"
                     android:layout_gravity="center"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
+                    android:text="Zasebna soba"
                     android:textSize="18dp" />
 
             </LinearLayout>
@@ -170,8 +171,8 @@
                 android:id="@+id/hasPets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/imageView7"
@@ -200,8 +201,10 @@
         android:id="@+id/swipeLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@null"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toStartOf="@id/guidelineVertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pictureOfUser"
@@ -211,12 +214,14 @@
         android:id="@+id/swipeRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@null"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guidelineVertical"
         app:layout_constraintTop_toBottomOf="@+id/pictureOfUser"
-        app:srcCompat="@drawable/ic_baseline_thumb_up_24" />
+        app:srcCompat="@drawable/ic_baseline_thumb_up_color" />
 
     <ImageView
         android:id="@+id/forward"

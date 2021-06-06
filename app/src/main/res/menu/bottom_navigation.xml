@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/nav_swipe"
-        android:icon="@drawable/ic_baseline_android_24"
+        android:icon="@drawable/logo_roof"
         android:title="Swipe" />
 
     <item
