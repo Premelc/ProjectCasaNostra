@@ -31,9 +31,9 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="54dp"
-                    android:layout_height="38dp"
-                    app:srcCompat="@drawable/ic_android_black_24dp" />
+                    android:layout_width="80dp"
+                    android:layout_height="59dp"
+                    app:srcCompat="@drawable/logo" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -66,6 +66,7 @@
                     android:id="@+id/yearOfBirth"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
+                    android:textColor="@color/primary_text"
                     android:scaleX="1.25"
                     android:scaleY="1.25" />
 
@@ -106,6 +107,7 @@
                         android:id="@+id/female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/primary_text"
                         android:onClick="onRadioButtonClicked"
                         android:text="@string/ensko" />
 
@@ -225,6 +227,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="3dp"
                     android:checked="true"
+                    android:textSize="18sp"
+                    android:textColor="@color/primary_text"
                     android:onClick="onRadioButtonClicked"
                     android:text="@string/volim_miran_ivot" />
 
@@ -232,6 +236,8 @@
                     android:id="@+id/party"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/primary_text"
+                    android:textSize="18sp"
                     android:onClick="onRadioButtonClicked"
                     android:text="@string/volim_partijati" />
 
@@ -243,6 +249,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="16dp"
                 android:onClick="findApartmentRoommate"
                 android:text="@string/dalje" />
 

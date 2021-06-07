@@ -499,14 +499,112 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(SWIPE_ID1, swipe.getId_1());
         values.put(SWIPE_ID2, swipe.getId_2());
 
-        int swipe1 = (swipe.isSwipe_1()) ? 1 : 0;
-        values.put(SWIPE_SWIPE1, swipe1);
+        if(swipe.isSwipe_1() != null){
+            if(swipe.isSwipe_1() == true){
+                int swipe1 = 1;
+                values.put(SWIPE_SWIPE1, swipe1);
+            } else if(swipe.isSwipe_1() == false){
+                int swipe1 = 0;
+                values.put(SWIPE_SWIPE1, swipe1);
+            }
+        }
 
-        int swipe2 = (swipe.isSwipe_2()) ? 1 : 0;
-        values.put(SWIPE_SWIPE2, swipe2);
+
+        if(swipe.isSwipe_2() != null){
+            if(swipe.isSwipe_2() == true){
+                int swipe2 = 1;
+                values.put(SWIPE_SWIPE2, swipe2);
+            } else if(swipe.isSwipe_2() == false){
+                int swipe2 = 0;
+                values.put(SWIPE_SWIPE2, swipe2);
+            }
+        }
+
 
         // Inserting Row
         db.insert(TABLE_SWIPE, null, values);
+        db.close();
+    }
+
+    public Swipe checkSwipe(String id_1, String id_2) {
+        // array of columns to fetch
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        // selection criteria
+        String selection = "id_1 = ? AND id_2 = ?";
+        // selection argument
+        String[] selectionArgs = {id_1, id_2};
+        // query user table with condition
+        /**
+         * Here query function is used to fetch records from user table this function works like we use sql query.
+         * SQL query equivalent to this query function is
+         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com';
+         */
+        Cursor cursor = db.query(TABLE_SWIPE, //Table to query
+                null,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                      //filter by row groups
+                null);                      //The sort order
+
+        Swipe swipe = new Swipe();
+        if (cursor.moveToFirst()) {
+            swipe.setId_1(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_ID1))));
+            swipe.setId_2(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_ID2))));
+            if(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE1)) != null){
+                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE1))) == 1){
+                    swipe.setSwipe_1(true);
+                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE1))) == 0){
+                    swipe.setSwipe_1(false);
+                }
+            }
+
+            if(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE2)) != null){
+                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE2))) == 1){
+                    swipe.setSwipe_2(true);
+                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE2))) == 0){
+                    swipe.setSwipe_2(false);
+                }
+            }
+
+        }
+        cursor.close();
+        db.close();
+        // return user list
+        return swipe;
+    }
+
+    public void updateSwipe(Swipe swipe) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(SWIPE_ID1, swipe.getId_1());
+        values.put(SWIPE_ID2, swipe.getId_2());
+
+        if(swipe.isSwipe_1() != null){
+            if(swipe.isSwipe_1() == true){
+                int swipe1 = 1;
+                values.put(SWIPE_SWIPE1, swipe1);
+            } else if(swipe.isSwipe_1() == false){
+                int swipe1 = 0;
+                values.put(SWIPE_SWIPE1, swipe1);
+            }
+        }
+
+
+        if(swipe.isSwipe_2() != null){
+            if(swipe.isSwipe_2() == true){
+                int swipe2 = 1;
+                values.put(SWIPE_SWIPE2, swipe2);
+            } else if(swipe.isSwipe_2() == false){
+                int swipe2 = 0;
+                values.put(SWIPE_SWIPE2, swipe2);
+            }
+        }
+
+        // updating row
+        db.update(TABLE_SWIPE, values, SWIPE_ID1 + " = ? AND " + SWIPE_ID2 + " = ?",
+                new String[]{String.valueOf(swipe.getId_1()), String.valueOf(swipe.getId_2())});
         db.close();
     }
 
@@ -923,16 +1021,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Swipe swipe = new Swipe();
                 swipe.setId_1(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_ID1))));
                 swipe.setId_2(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_ID2))));
-                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE1))) == 1){
-                    swipe.setSwipe_1(true);
-                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE1))) == 0){
-                    swipe.setSwipe_1(false);
+                if(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE1)) != null){
+                    if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE1))) == 1){
+                        swipe.setSwipe_1(true);
+                    } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE1))) == 0){
+                        swipe.setSwipe_1(false);
+                    }
                 }
-                if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE2))) == 1){
-                    swipe.setSwipe_2(true);
-                } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE2))) == 0){
-                    swipe.setSwipe_2(false);
+                if(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE2)) != null){
+                    if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE2))) == 1){
+                        swipe.setSwipe_2(true);
+                    } else if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SWIPE_SWIPE2))) == 0){
+                        swipe.setSwipe_2(false);
+                    }
                 }
+
 
                 // Adding user record to list
                 swipeList.add(swipe);

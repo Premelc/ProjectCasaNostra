@@ -20,20 +20,12 @@
             android:layout_marginTop="16dp"
             android:onClick="toMainPageRoomate"
             android:text="Dalje"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tt2" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="73dp"
-            android:layout_height="49dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_android_black_24dp" />
 
         <RadioGroup
             android:id="@+id/tt"
@@ -50,6 +42,8 @@
                 android:id="@+id/smoke"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/primary_text"
                 android:text="@string/ne_elim_da_je_cimer_pu_a" />
 
 
@@ -58,6 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
+                android:textSize="18sp"
+                android:textColor="@color/primary_text"
                 android:text="@string/svejedno_mi_je" />
 
         </RadioGroup>
@@ -77,6 +73,8 @@
                 android:id="@+id/pet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/primary_text"
                 android:text="@string/ne_elim_da_cimer_ima_ku_nog_ljubimca" />
 
             <RadioButton
@@ -84,6 +82,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
+                android:textSize="18sp"
+                android:textColor="@color/primary_text"
                 android:text="@string/svejedno_mi_je" />
 
         </RadioGroup>
@@ -94,27 +94,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3">
-
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
                 android:text="Cijena stana po osobi: "
                 android:textAllCaps="true"
-                android:fontFamily="@font/poppins_medium"
-                android:textSize="18dp"/>
+                android:textSize="18dp" />
 
             <LinearLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/price"
@@ -127,21 +125,20 @@
                     android:id="@+id/textView15"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" kn"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/poppins_medium" />
+                    android:fontFamily="@font/poppins_medium"
+                    android:text=" kn" />
 
                 <TextView
                     android:id="@+id/error"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ovo polje je obavezno!"
                     android:gravity="center"
+                    android:text="Ovo polje je obavezno!"
                     android:textColor="#B30000"
                     android:visibility="gone" />
 
             </LinearLayout>
-
 
 
         </LinearLayout>
@@ -207,12 +204,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true"
+                    android:textColor="@color/primary_text"
                     android:text="@string/zasebnu_sobu" />
 
                 <RadioButton
                     android:id="@+id/sharedRoom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/primary_text"
                     android:text="@string/sobu_koju_emo_dijeliti" />
 
             </RadioGroup>
@@ -248,18 +247,21 @@
                     android:id="@+id/male"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/primary_text"
                     android:text="@string/mu_ko" />
 
                 <RadioButton
                     android:id="@+id/female"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/primary_text"
                     android:text="@string/ensko" />
 
                 <RadioButton
                     android:id="@+id/femaleMale"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/primary_text"
                     android:checked="true"
                     android:text="@string/svejedno" />
 
@@ -296,6 +298,7 @@
                     android:id="@+id/yearFrom"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
+                    android:textColor="@color/primary_text"
                     android:scaleX="1.25"
                     android:scaleY="1.25" />
 
@@ -305,6 +308,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="9dp"
                     android:text="  i  "
+                    android:textColor="@color/primary_text"
                     android:layout_gravity="center"
                     android:textSize="18sp" />
 
@@ -312,6 +316,7 @@
                     android:id="@+id/yearTo"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
+                    android:textColor="@color/primary_text"
                     android:scaleX="1.25"
                     android:scaleY="1.25" />
 

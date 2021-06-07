@@ -1,5 +1,6 @@
 package com.example.cn;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -27,10 +28,21 @@ import com.example.cn.model.NudimStan;
 import com.example.cn.model.PotragaLokacija;
 import com.example.cn.model.TrazimStan;
 import com.example.cn.sql.DatabaseHelper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class ApartmentAndRoommate extends AppCompatActivity implements View.OnClickListener{
@@ -48,6 +60,9 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
     private Button button;
     private DatabaseHelper databaseHelper = new DatabaseHelper(activity);
 
+    private FirebaseAuth auth;
+    private DatabaseReference reference;
+
     TrazimStan needApt = new TrazimStan();
     KorisnikLjubimac havePet = new KorisnikLjubimac();
     PotragaLokacija area = new PotragaLokacija();
@@ -61,6 +76,7 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
         initViews();
         initListeners();
 
+        auth = FirebaseAuth.getInstance();
 
     }
 
@@ -268,6 +284,32 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
                     databaseHelper.insertPotragaLokacija(area);
                 }
             }
+
+            // Firebase
+            String email = userActive.getEmail();
+            String password = userActive.getPassword();
+            String username = userActive.getUsername();
+            String id = Integer.toString(userActive.getId_korisnik());
+            auth.createUserWithEmailAndPassword(email, password)
+
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                FirebaseUser firebaseUser = auth.getCurrentUser();
+                                String userId = id;
+
+                                reference = FirebaseDatabase.getInstance("https://com-example-cn-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users").child(userId);
+
+                                HashMap<String,String> hashMap = new HashMap<>();
+                                hashMap.put("id", userId);
+                                hashMap.put("username", username);
+                                hashMap.put("password", password);
+
+                                reference.setValue(hashMap);
+                            }
+                        }
+                    });
 
         } else{
             // Mozda dodati alert: Doslo je do greske

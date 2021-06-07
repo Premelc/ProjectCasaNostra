@@ -8,8 +8,8 @@ public class UsableActiveUser extends UsableUser {
     private boolean zasebna_soba;
     private int cijena_max;
     private int id_kvart;
-    private int id_lokacija;
-    private int hasApt;
+    private int[] id_lokacija = {0,0,0,0};
+    private boolean apt;
 
     public UsableActiveUser() {
     }
@@ -32,6 +32,72 @@ public class UsableActiveUser extends UsableUser {
         this.setCimer_godine_do(cimer_godine_do);
         this.setCimer_ljubimac(cimer_ljubimac);
         this.setCimer_pusac(cimer_pusac);
+    }
+
+    public UsableActiveUser(int id_korisnik, String username, String email, String password, String ime, int godina_rodenja, String opis, char spol, int id_fakultet, boolean pusac, boolean ljubimac, boolean miran_zivot , char cimer_spol , int cimer_godine_od , int cimer_godine_do, boolean cimer_pusac, boolean cimer_ljubimac,boolean apt,int id_kvart,int cijena_max,boolean zasebna_soba,int[] lok) {
+        this.setId_korisnik(id_korisnik);
+        this.setUsername(username);
+        this.setEmail(email);
+        this.setPassword(password);
+        this.setIme(ime);
+        this.setGodina_rodenja(godina_rodenja);
+        this.setOpis(opis);
+        this.setSpol(spol);
+        this.setId_fakultet(id_fakultet);
+        this.setPusac(pusac);
+        this.setLjubimac(ljubimac);
+        this.setMiran_zivot(miran_zivot);
+        this.setCimer_spol(cimer_spol);
+        this.setCimer_godine_od(cimer_godine_od);
+        this.setCimer_godine_do(cimer_godine_do);
+        this.setCimer_ljubimac(cimer_ljubimac);
+        this.setCimer_pusac(cimer_pusac);
+        this.setApt(apt);
+        this.setId_kvart(id_kvart);
+        this.setCijena_max(cijena_max);
+        this.setZasebna_soba(zasebna_soba);
+        this.setId_lokacija(lok);
+    }
+
+    public void setId_lokacija(int lok) {
+        this.id_lokacija[lok] = 1;
+    }
+
+    public void setId_lokacija(int[] lok){
+        this.id_lokacija=lok;
+    }
+
+    @Override
+    public int getId_lokacija() {
+        return 0;
+    }
+
+
+    public int[] getIdLokacija() {
+        return this.id_lokacija;
+    }
+
+    public String getLocName(){
+        String finalString = new String();
+
+        for (int i : this.id_lokacija){
+            if (i == 1){
+                finalString += UsableOtherUser.lok_names[i] + ", ";
+            }
+        }
+        return finalString;
+    }
+
+    public void setCijena_max(int cijena_max) {
+        this.cijena_max = cijena_max;
+    }
+
+    public boolean isApt() {
+        return apt;
+    }
+
+    public void setApt(boolean apt) {
+        this.apt = apt;
     }
 
     public boolean isZasebna_soba() {
@@ -103,15 +169,6 @@ public class UsableActiveUser extends UsableUser {
     @Override
     public int getId_kvart() {
         return this.id_kvart;
-    }
-
-    @Override
-    public void setId_lokacija(int b) {
-    this.id_lokacija = b;
-    }
-    @Override
-    public int getId_lokacija() {
-        return this.id_lokacija;
     }
 
     @Override

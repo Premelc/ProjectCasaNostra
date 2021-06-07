@@ -1,6 +1,9 @@
 package com.example.cn.model;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public /*abstract*/ class Korisnik /*implements Comparable*/ implements Serializable {
     private int id_korisnik;
@@ -23,6 +26,10 @@ public /*abstract*/ class Korisnik /*implements Comparable*/ implements Serializ
     private int cimer_godine_do;
     private boolean cimer_pusac;
     private boolean cimer_ljubimac;
+
+    private ArrayList<Chat> zadnjaPoruka;
+
+    private Bitmap bitmap;
 
     @Override
     public String toString() {
@@ -186,6 +193,24 @@ public /*abstract*/ class Korisnik /*implements Comparable*/ implements Serializ
     public void setMiran_zivot(boolean miran_zivot) {
         this.miran_zivot = miran_zivot;
     }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+
+    public void setMessage(ArrayList<Chat> zadnjaPoruka){
+        this.zadnjaPoruka = zadnjaPoruka;
+    }
+
+    public ArrayList<Chat> getMessage(){
+        return zadnjaPoruka;
+    }
+
+
 
     /*public abstract void setCijenaMin(int cijena);
 

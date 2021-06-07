@@ -6,15 +6,24 @@
     android:layout_height="wrap_content">
 
 
-    <ImageView
-        android:id="@+id/pic1"
+    <FrameLayout
+        android:id="@+id/frameLayout1"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:padding="10dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_image_search_24" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.example.cn.Utils.SquareImageView
+            android:id="@+id/pic1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_baseline_image_search_24" />
+    </FrameLayout>
+
+
 
     <ProgressBar
         android:id="@+id/progressBar1"
@@ -22,20 +31,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/pic1"
-        app:layout_constraintEnd_toEndOf="@+id/pic1"
-        app:layout_constraintStart_toStartOf="@id/pic1"
-        app:layout_constraintTop_toTopOf="@+id/pic1" />
+        app:layout_constraintBottom_toBottomOf="@id/frameLayout1"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout1"
+        app:layout_constraintStart_toStartOf="@id/frameLayout1"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout1" />
 
-    <ImageView
-        android:id="@+id/pic2"
+    <FrameLayout
+        android:id="@+id/frameLayout2"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_image_search_24" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.example.cn.Utils.SquareImageView
+            android:id="@+id/pic2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_baseline_image_search_24" />
+    </FrameLayout>
+
+
 
     <ProgressBar
         android:id="@+id/progressBar2"
@@ -43,21 +61,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/pic2"
-        app:layout_constraintEnd_toEndOf="@+id/pic2"
-        app:layout_constraintStart_toStartOf="@id/pic2"
-        app:layout_constraintTop_toTopOf="@+id/pic2" />
+        app:layout_constraintBottom_toBottomOf="@id/frameLayout2"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout2"
+        app:layout_constraintStart_toStartOf="@id/frameLayout2"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout2" />
 
-    <ImageView
-        android:id="@+id/pic3"
+    <FrameLayout
+        android:id="@+id/frameLayout3"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="10dp"
         android:padding="10dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pic1"
-        app:srcCompat="@drawable/ic_baseline_image_search_24" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout1">
+
+        <com.example.cn.Utils.SquareImageView
+            android:id="@+id/pic3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_baseline_image_search_24" />
+    </FrameLayout>
+
+
 
     <ProgressBar
         android:id="@+id/progressBar3"
@@ -65,21 +92,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/pic3"
-        app:layout_constraintEnd_toEndOf="@+id/pic3"
-        app:layout_constraintStart_toStartOf="@id/pic3"
-        app:layout_constraintTop_toTopOf="@+id/pic3" />
+        app:layout_constraintBottom_toBottomOf="@id/frameLayout3"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout3"
+        app:layout_constraintStart_toStartOf="@id/frameLayout3"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout3" />
 
-    <ImageView
-        android:id="@+id/pic4"
+    <FrameLayout
+        android:id="@+id/frameLayout4"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="10dp"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/pic2"
-        app:srcCompat="@drawable/ic_baseline_image_search_24" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout2">
+
+        <com.example.cn.Utils.SquareImageView
+            android:id="@+id/pic4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_baseline_image_search_24" />
+    </FrameLayout>
 
     <ProgressBar
         android:id="@+id/progressBar4"
@@ -87,10 +121,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/pic4"
-        app:layout_constraintEnd_toEndOf="@+id/pic4"
-        app:layout_constraintStart_toStartOf="@id/pic4"
-        app:layout_constraintTop_toTopOf="@+id/pic4" />
+        app:layout_constraintBottom_toBottomOf="@id/frameLayout4"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout4"
+        app:layout_constraintStart_toStartOf="@id/frameLayout4"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout4" />
 
     <Button
         android:id="@+id/upload"
@@ -98,11 +132,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:text="Upload"
+        android:text="Spremi"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pic4" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout4" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -117,39 +151,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/pic1"
-        app:layout_constraintTop_toTopOf="@+id/pic1"
+        android:padding="8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout1"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout1"
         app:srcCompat="@drawable/ic_baseline_clear_24_red" />
 
     <ImageButton
         android:id="@+id/deleteButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:background="@null"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/pic2"
-        app:layout_constraintTop_toTopOf="@+id/pic2"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout2"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout2"
         app:srcCompat="@drawable/ic_baseline_clear_24_red" />
 
     <ImageButton
         android:id="@+id/deleteButton3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:background="@null"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/pic3"
-        app:layout_constraintTop_toTopOf="@+id/pic3"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout3"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout3"
         app:srcCompat="@drawable/ic_baseline_clear_24_red" />
 
     <ImageButton
         android:id="@+id/deleteButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:background="@null"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/pic4"
-        app:layout_constraintTop_toTopOf="@+id/pic4"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout4"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout4"
         app:srcCompat="@drawable/ic_baseline_clear_24_red" />
 
 
