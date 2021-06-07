@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".AdminPage">
 
+    <Button
+        android:id="@+id/prikaz"
+        android:layout_width="187dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="114dp"
+        android:text="PRIKAZ KORISNIKA"
+        android:onClick="pkPage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user"
+        tools:text="PRIKAZ KORISNIKA" />
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="114dp"

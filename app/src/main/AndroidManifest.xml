@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CN">
-        <activity android:name=".AdminPage"></activity>
+        <activity android:name=".PrikazKorisnika"></activity>
+        <activity android:name=".AdminPage" />
         <activity android:name=".OnlyRoommate" />
         <activity android:name=".ApartmentAndRoommate" />
         <activity android:name=".FindApartmentRoommate" />

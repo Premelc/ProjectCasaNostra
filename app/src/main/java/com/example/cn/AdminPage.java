@@ -1,20 +1,20 @@
 package com.example.cn;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.cn.model.Korisnik;
+import com.example.cn.sql.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.cn.sql.DatabaseHelper;
 
 public class AdminPage extends AppCompatActivity {
 
@@ -91,6 +91,9 @@ public class AdminPage extends AppCompatActivity {
             }
         });
 
+
+
+
     }
 
     public void deleteUser(){
@@ -113,4 +116,11 @@ public class AdminPage extends AppCompatActivity {
         alert.setTitle("USPJEH");
         alert.show();
     }
+
+    public void pkPage(View v){
+        Intent pkPage = new Intent(this, PrikazKorisnika.class);
+        startActivity(pkPage);
+    }
+
+
 }
