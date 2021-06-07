@@ -13,14 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 
 public class RvAdaptor extends RecyclerView.Adapter<RvAdaptor.MyViewHolder> {
-    String s1[],s2[];
+    String s1[],s2[],s3[],s4[];
     int images[];
     Context c;
 
-    public  RvAdaptor(Context ct, String s1[], String s2[], int images[]){
+    public  RvAdaptor(Context ct, String s1[], String s2[], String s3[], String s4[],int images[]){
+
         c = ct;
         this.s1 = s1;
         this.s2 = s2;
+        this.s3 = s3;
+        this.s4 = s4;
         this.images = images;
     }
 
@@ -36,9 +39,11 @@ public class RvAdaptor extends RecyclerView.Adapter<RvAdaptor.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull RvAdaptor.MyViewHolder holder, int position) {
-    holder.t1.setText(s1[position]);
-    holder.t2.setText(s2[position]);
-    //TODO:ovdje sliku jos doadat koristiti holder.myImage.setImageResource
+        holder.t1.setText(s1[position]);
+        holder.t2.setText(s2[position]);
+        holder.t3.setText(s3[position]);
+        holder.t4.setText(s4[position]);
+        //TODO:ovdje sliku jos doadat koristiti holder.myImage.setImageResource
 
 
     }
@@ -49,13 +54,15 @@ public class RvAdaptor extends RecyclerView.Adapter<RvAdaptor.MyViewHolder> {
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView t1,t2;
+        TextView t1,t2,t3,t4;
         ImageView img1;
         public MyViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             t1 = itemView.findViewById(R.id.pktxt);
             t2 = itemView.findViewById(R.id.pktxt2);
-           // img1 = itemView.findViewById(R.id.pkimg);
+            t3 = itemView.findViewById(R.id.pktxt3);
+            t4 = itemView.findViewById(R.id.pktxt4);
+            // img1 = itemView.findViewById(R.id.pkimg);
         }
     }
 }

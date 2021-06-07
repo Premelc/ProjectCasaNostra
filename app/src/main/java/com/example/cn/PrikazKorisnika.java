@@ -18,8 +18,10 @@ import java.util.List;
 public class PrikazKorisnika extends AppCompatActivity {
     RecyclerView rv;
     Button detaljiButton;
-    String s1[] = {"Baza podataka"};
-    String s2[] = {"Prikaz korisnika"};
+    String s1[] = {"","","","","","","","","",""};
+    String s2[] = {"","","","","","","","","",""};
+    String s3[] = {"","","","","","","","","",""};
+    String s4[] = {"","","","","","","","","",""};
     int images[] = {1,2,3,4,5,6,7};
     private DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
@@ -27,12 +29,13 @@ public class PrikazKorisnika extends AppCompatActivity {
 
     Korisnik user;
     List<Korisnik> userList = new ArrayList<Korisnik>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prikaz_korisnika);
         rv = findViewById(R.id.rv);
-        detaljiButton = (Button) findViewById(R.id.detalji);
+        //detaljiButton = (Button) findViewById(R.id.detalji);
         int p1 = 0,p2 = 0;
         Log.d("aa","ss");
         userList.clear();
@@ -40,33 +43,13 @@ public class PrikazKorisnika extends AppCompatActivity {
 
         if(!userList.isEmpty()) {
             for (int i = 0; i < userList.size(); i++) {
-                s1[i] = "Username: " + userList.get(i).getUsername();
-                s2[i] = "Email: " + userList.get(i).getEmail();
+                s1[i] = "Username:" + userList.get(i).getUsername();
+                s2[i] = "Email:" + userList.get(i).getEmail();
+                s3[i] = "Ime:" + userList.get(i).getIme();
+                s4[i] = "ID:" + userList.get(i).getId_korisnik();
                 Log.d("aa", s1[i]);
                 final Korisnik a = userList.get(i);
-                /*detaljiButton.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(PrikazKorisnika.this);
 
-                        builder.setMessage("ID: " + a.getId_korisnik() + "\n" +
-                                "Godina rođenja: " + a.getGodina_rodenja() + "\n" +
-                                "Spol: " + a.getSpol() + "\n" +
-                                "ID fakulteta: " + a.getId_fakultet() + "\n" +
-                                "Spol cimera: " + a.getCimer_spol() + "\n")
-                                .setCancelable(false)
-                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-
-                                    }
-                                });
-
-                        AlertDialog alert = builder.create();
-
-                        alert.setTitle("DETALJI");
-                        alert.show();
-                    }
-
-                });*/
             }
         }else{
             Log.d("abb", "dfsosdfji");
@@ -76,7 +59,7 @@ public class PrikazKorisnika extends AppCompatActivity {
 
 
 
-        RvAdaptor myAdaptor = new RvAdaptor(this,s1,s2,images);
+        RvAdaptor myAdaptor = new RvAdaptor(this,s1,s2,s3,s4,images);
         rv.setAdapter(myAdaptor);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
