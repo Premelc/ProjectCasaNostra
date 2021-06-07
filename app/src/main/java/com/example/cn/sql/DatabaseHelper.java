@@ -21,7 +21,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database Version
-    private static final int DATABASE_VERSION = 62;
+    private static final int DATABASE_VERSION = 63;
     // Database Name
     private static final String DATABASE_NAME = "CasaNostra.db";
 
@@ -241,6 +241,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FAKULTET_NAZIV, "Građevinski fakultet u Rijeci");
         db.insert(TABLE_FAKULTET, null, values);
         values.put(FAKULTET_NAZIV, "Pravni fakultet u Rijeci");
+        db.insert(TABLE_FAKULTET, null, values);
+        values.put(FAKULTET_NAZIV, "Pomorski fakultet Rijeka");
+        db.insert(TABLE_FAKULTET, null, values);
+        values.put(FAKULTET_NAZIV, "Učiteljski fakultet Rijeka");
+        db.insert(TABLE_FAKULTET, null, values);
+        values.put(FAKULTET_NAZIV, "Fakultet zdravstvenih studija Rijeka");
         db.insert(TABLE_FAKULTET, null, values);
         values.clear();
 

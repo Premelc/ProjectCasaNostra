@@ -155,7 +155,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/frameLayout1"
         app:layout_constraintTop_toTopOf="@+id/frameLayout1"
-        app:srcCompat="@drawable/ic_baseline_clear_24_red" />
+        app:srcCompat="@drawable/ic_baseline_clear_24" />
 
     <ImageButton
         android:id="@+id/deleteButton2"
@@ -166,7 +166,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/frameLayout2"
         app:layout_constraintTop_toTopOf="@+id/frameLayout2"
-        app:srcCompat="@drawable/ic_baseline_clear_24_red" />
+        app:srcCompat="@drawable/ic_baseline_clear_24" />
 
     <ImageButton
         android:id="@+id/deleteButton3"
@@ -177,7 +177,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/frameLayout3"
         app:layout_constraintTop_toTopOf="@+id/frameLayout3"
-        app:srcCompat="@drawable/ic_baseline_clear_24_red" />
+        app:srcCompat="@drawable/ic_baseline_clear_24" />
 
     <ImageButton
         android:id="@+id/deleteButton4"
@@ -188,7 +188,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/frameLayout4"
         app:layout_constraintTop_toTopOf="@+id/frameLayout4"
-        app:srcCompat="@drawable/ic_baseline_clear_24_red" />
+        app:srcCompat="@drawable/ic_baseline_clear_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

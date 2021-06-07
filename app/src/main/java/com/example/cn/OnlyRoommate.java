@@ -27,6 +27,8 @@ import com.example.cn.model.NudimStan;
 import com.example.cn.sql.DatabaseHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.slider.LabelFormatter;
+import com.google.android.material.slider.RangeSlider;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +38,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,6 +62,8 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
     private Button button;
     private TextView error;
     private ScrollView scrollView;
+    private com.google.android.material.slider.RangeSlider rangeSlider;
+    private TextView yearRange;
 
     private FirebaseAuth auth;
     private DatabaseReference reference;
@@ -108,17 +114,6 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
         maleGender = findViewById(R.id.male);
         maleFemale = findViewById(R.id.femaleMale);
 
-        yearFrom = findViewById(R.id.yearFrom);
-        yearFrom.setMaxValue(2021);
-        yearFrom.setMinValue(1900);
-        yearFrom.setValue(2000);
-        yearFrom.setWrapSelectorWheel(false);
-
-        yearTo = findViewById(R.id.yearTo);
-        yearTo.setMaxValue(2021);
-        yearTo.setMinValue(1900);
-        yearTo.setValue(2000);
-        yearTo.setWrapSelectorWheel(false);
 
         roommateSmoker = findViewById(R.id.smoke);
         roommateNonSmoker = findViewById(R.id.noSmoke);
@@ -131,10 +126,24 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
         error = findViewById(R.id.error);
 
         scrollView = findViewById(R.id.imageView1);
+
+        rangeSlider = findViewById(R.id.rangeSlider);
+        rangeSlider.setLabelBehavior(LabelFormatter.LABEL_GONE);
+        yearRange = findViewById(R.id.yearRange);
     }
 
     private void initListeners() {
         button.setOnClickListener(this);
+
+        rangeSlider.addOnChangeListener(new RangeSlider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull @NotNull RangeSlider slider, float value, boolean fromUser) {
+                List<Float> values = slider.getValues();
+                int yearFrom = Collections.min(values).intValue();
+                int yearTo = Collections.max(values).intValue();
+                yearRange.setText(yearFrom + " - " + yearTo);
+            }
+        });
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
@@ -166,8 +175,10 @@ public class OnlyRoommate extends AppCompatActivity implements View.OnClickListe
 
         int priceIntTo = Integer.parseInt(price.getText().toString().trim());
 
-        int yearOfRoommateFrom = yearFrom.getValue();
-        int yearOfRoommateTo = yearTo.getValue();
+        List<Float> values = rangeSlider.getValues();
+        int yearOfRoommateFrom = 2021 - Collections.min(values).intValue();
+        int yearOfRoommateTo = 2021 - Collections.max(values).intValue();
+
 
         char gender = 0;
         if(maleGender.isChecked()){

@@ -280,47 +280,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linearLayout11">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/poppins_medium"
-                android:text="@string/godi_te_cimera_izme_u"
+                android:text="Raspon godina cimera: "
                 android:textAllCaps="true"
                 android:textSize="18dp" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/yearRange"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/poppins_medium"
+                android:text="18-25"
+                android:textAllCaps="true"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/rangeSlider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:valueFrom="18"
+                android:valueTo="30"
+                app:values="@array/slider_values"
+                android:stepSize="1.0"/>
 
-                <NumberPicker
-                    android:id="@+id/yearFrom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:textColor="@color/primary_text"
-                    android:scaleX="1.25"
-                    android:scaleY="1.25" />
-
-                <TextView
-                    android:id="@+id/textView13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="9dp"
-                    android:text="  i  "
-                    android:textColor="@color/primary_text"
-                    android:layout_gravity="center"
-                    android:textSize="18sp" />
-
-                <NumberPicker
-                    android:id="@+id/yearTo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:textColor="@color/primary_text"
-                    android:scaleX="1.25"
-                    android:scaleY="1.25" />
-
-            </LinearLayout>
 
         </LinearLayout>
 

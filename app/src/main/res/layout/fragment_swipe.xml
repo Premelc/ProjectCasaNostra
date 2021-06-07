@@ -208,7 +208,7 @@
         app:layout_constraintEnd_toStartOf="@id/guidelineVertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pictureOfUser"
-        app:srcCompat="@drawable/ic_baseline_thumb_down_24" />
+        app:srcCompat="@drawable/dislike_press_effect" />
 
     <ImageButton
         android:id="@+id/swipeRight"
@@ -221,7 +221,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guidelineVertical"
         app:layout_constraintTop_toBottomOf="@+id/pictureOfUser"
-        app:srcCompat="@drawable/ic_baseline_thumb_up_color" />
+        app:srcCompat="@drawable/like_press_efect" />
 
     <ImageView
         android:id="@+id/forward"

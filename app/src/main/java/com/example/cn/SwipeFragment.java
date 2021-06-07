@@ -260,7 +260,11 @@ public class SwipeFragment extends Fragment {
             fetchImage(4);
 
             name.setText(usableOtherUser.get(0).getIme());
-            description.setText(usableOtherUser.get(0).getOpis());
+            if(usableOtherUser.get(0).getOpis() == null || usableOtherUser.get(0).getOpis().equals("")){
+                description.setVisibility(View.GONE);
+            } else{
+                description.setText(usableOtherUser.get(0).getOpis());
+            }
             age.setText(Integer.toString(2021 - usableOtherUser.get(0).getGodina_rodenja()));
 
             // dohvacanje naziva fakulteta

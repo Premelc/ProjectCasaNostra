@@ -30,6 +30,8 @@ import com.example.cn.model.TrazimStan;
 import com.example.cn.sql.DatabaseHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.slider.LabelFormatter;
+import com.google.android.material.slider.RangeSlider;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,6 +44,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,6 +62,8 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
     private RadioButton soloRoom, sharedRoom;
     private Button button;
     private DatabaseHelper databaseHelper = new DatabaseHelper(activity);
+    private com.google.android.material.slider.RangeSlider rangeSlider;
+    private TextView yearRange;
 
     private FirebaseAuth auth;
     private DatabaseReference reference;
@@ -113,6 +118,16 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
             }
         });
 
+        rangeSlider.addOnChangeListener(new RangeSlider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull @NotNull RangeSlider slider, float value, boolean fromUser) {
+                List<Float> values = slider.getValues();
+                int yearFrom = Collections.min(values).intValue();
+                int yearTo = Collections.max(values).intValue();
+                yearRange.setText(yearFrom + " - " + yearTo);
+            }
+        });
+
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
@@ -132,18 +147,6 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
         maleGender = findViewById(R.id.male);
         maleFemale = findViewById(R.id.femaleMale);
 
-        yearFrom = findViewById(R.id.year1);
-        yearFrom.setMaxValue(2021);
-        yearFrom.setMinValue(1900);
-        yearFrom.setValue(2000);
-        yearFrom.setWrapSelectorWheel(false);
-
-        yearTo = findViewById(R.id.year2);
-        yearTo.setMaxValue(2021);
-        yearTo.setMinValue(1900);
-        yearTo.setValue(2000);
-        yearTo.setWrapSelectorWheel(false);
-
         roommateSmoker = findViewById(R.id.smoke);
         roommateNonSmoker = findViewById(R.id.noSmoke);
 
@@ -154,6 +157,10 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
         sharedRoom = findViewById(R.id.sharedRoom);
 
         button = findViewById(R.id.apartmentAndRoommateButton);
+
+        rangeSlider = findViewById(R.id.rangeSlider);
+        rangeSlider.setLabelBehavior(LabelFormatter.LABEL_GONE);
+        yearRange = findViewById(R.id.yearRange);
     }
 
 
@@ -166,8 +173,9 @@ public class ApartmentAndRoommate extends AppCompatActivity implements View.OnCl
 
     private void inputData(){
 
-        int yearOfRoommateFrom = yearFrom.getValue();
-        int yearOfRoommateTo = yearTo.getValue();
+        List<Float> values = rangeSlider.getValues();
+        int yearOfRoommateFrom = 2021 - Collections.min(values).intValue();
+        int yearOfRoommateTo = 2021 - Collections.max(values).intValue();
 
         boolean separateRoom = false;
         if(soloRoom.isChecked()){

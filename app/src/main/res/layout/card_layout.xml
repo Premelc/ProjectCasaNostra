@@ -42,7 +42,7 @@
                 android:id="@+id/message"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Poruka" />
+                android:text="Započnite razgovor!" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

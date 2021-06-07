@@ -142,7 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="@string/register"
+            android:text="Registriraj se"
             android:fontFamily="@font/poppins_medium"
             android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
