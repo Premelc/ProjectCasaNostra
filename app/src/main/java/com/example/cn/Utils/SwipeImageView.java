@@ -30,10 +30,10 @@ public class SwipeImageView extends AppCompatImageView {
         int height;
         if(widthMeasureSpec < heightMeasureSpec){
             height = getMeasuredHeight();
-            width = Math.round(height * .75f);
+            width = Math.round(height * 1.0f);
         } else{
             width = getMeasuredWidth();
-            height = Math.round(width * 1.25f);
+            height = Math.round(width * 1.0f);
         }
 
         setMeasuredDimension(width, height);
